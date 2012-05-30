@@ -1,0 +1,8 @@
+*.dll
+*.exe
+*.o
+*.suo
+*.manifest
+
+/regis/regis/bin/
+/regis/regis/obj/
