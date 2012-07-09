@@ -3,6 +3,11 @@
 *.o
 *.suo
 *.manifest
+*.pdb
+*.opensdf
+*.sdf
+*.vcxproj.user
+
 
 /regis/regis/bin/
 /regis/regis/obj/
