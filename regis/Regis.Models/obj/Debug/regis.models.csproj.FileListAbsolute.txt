@@ -1,0 +1,5 @@
+C:\git\fydp\regis\regis.models\bin\Debug\regis.models.dll
+C:\git\fydp\regis\regis.models\bin\Debug\regis.models.pdb
+C:\git\fydp\regis\regis.models\obj\Debug\ResolveAssemblyReference.cache
+C:\git\fydp\regis\regis.models\obj\Debug\regis.models.dll
+C:\git\fydp\regis\regis.models\obj\Debug\regis.models.pdb

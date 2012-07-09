@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="regis">
+</Property><Property Name="Solution File" Value="C:\git\fydp\regis\regis.sln">
+</Property><Property Name="Date" Value="June-13-12">
+</Property><Property Name="Time" Value="19:45:06 PM">
+</Property></Properties><Event ErrorLevel="0" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Converting project file 'C:\git\fydp\regis\BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj'.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="0" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Done converting to new project file 'C:\git\fydp\regis\BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="Bluewave.Interop.Asio" Source="BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcproj" Description="Converted">
+</Event></UpgradeLog>
