@@ -10,6 +10,8 @@
 *.obj
 *.tlog
 *.baml
+*.xml
+*.sdf
 
 
 bin
