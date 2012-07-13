@@ -9,7 +9,7 @@ namespace Regis.Plugins
 {
     public interface IPlugin
     {
-        void Load(NoteStream noteStream);
+        void Load();
         FrameworkElement GetVisualContent();
         string PluginName { get; }
         string FriendlyPluginName { get; }

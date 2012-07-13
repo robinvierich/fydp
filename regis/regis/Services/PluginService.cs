@@ -39,15 +39,13 @@ namespace Regis.Services
     [Export(typeof(IPluginService))]
     public class PluginService : IPluginService//, IPartImportsSatisfiedNotification
     {
-        [ImportMany(typeof(IPlugin))]
-        ObservableCollection<IPlugin> _plugins;
-
-        NoteStream _noteStream;
+        [ImportMany]
+        ObservableCollection<IPlugin> _plugins = null;
 
         [ImportingConstructor]
-        public PluginService([Import(Regis.Strings.DefaulNoteStreamString)] NoteStream noteStream)
+        public PluginService()
         {
-            _noteStream = noteStream;
+         //   _noteStream = noteStream;
 
 
         }
@@ -62,8 +60,7 @@ namespace Regis.Services
             if (pluginToLoad == null)
                 throw new PluginLoadException("Cannot find plugin with name: " + pluginName);
 
-
-            pluginToLoad.Load(_noteStream);
+            pluginToLoad.Load();
             RaisePluginLoaded(pluginToLoad);
         }
 

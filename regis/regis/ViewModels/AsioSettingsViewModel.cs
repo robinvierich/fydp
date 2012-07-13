@@ -7,17 +7,20 @@ using System.Collections.ObjectModel;
 using BlueWave.Interop.Asio;
 using System.ComponentModel;
 using Regis.AudioCapture.Services;
+using Regis.Services.Realtime;
+using System.ComponentModel.Composition;
+using Regis.Commands;
 
-namespace Regis.AudioCapture.ViewModels
+namespace Regis.ViewModels
 {
+    [Export]
     public class AsioSettingsViewModel: BaseViewModel
     {
-
         public AsioSettingsViewModel()
         {
             AsioDrivers = AsioDeviceService.GetAsioDrivers();
             
-            // TODO This will leak because AsioDeviceService is static. We should either
+            // TODO: This will leak because AsioDeviceService is static. We should either
             // use a weak reference here or make AsioDeviceService a singleton.
             AsioDeviceService.DriverLoaded += new EventHandler<DriverLoadedEventArgs>(AsioDeviceService_DriverLoaded);
         }
@@ -38,7 +41,6 @@ namespace Regis.AudioCapture.ViewModels
             }
         }
 
-
         private AsioDriver _LoadedDriver;
         private PropertyChangedEventArgs _LoadedDriverChangedEventArgs = new PropertyChangedEventArgs("LoadedDriver");
         public AsioDriver LoadedDriver
@@ -55,5 +57,36 @@ namespace Regis.AudioCapture.ViewModels
             }
         }
 
+        #region SelectedChannel
+        private Channel _SelectedChannel;
+        private static PropertyChangedEventArgs _SelectedChannel_ChangedEventArgs = new PropertyChangedEventArgs("SelectedChannel");
+
+        public Channel SelectedChannel
+        {
+            get { return _SelectedChannel; }
+            set
+            {
+                _SelectedChannel = value;
+                NotifyPropertyChanged(_SelectedChannel_ChangedEventArgs);
+            }
+        }
+        #endregion
+
+
+        #region RestartSamplingServiceCommand
+        private RestartSamplingServiceCommand _RestartSamplingServiceCommand;
+        private static PropertyChangedEventArgs _RestartSamplingServiceCommand_ChangedEventArgs = new PropertyChangedEventArgs("RestartSamplingServiceCommand");
+
+        [Import]
+        public RestartSamplingServiceCommand RestartSamplingServiceCommand
+        {
+            get { return _RestartSamplingServiceCommand; }
+            set
+            {
+                _RestartSamplingServiceCommand = value;
+                NotifyPropertyChanged(_RestartSamplingServiceCommand_ChangedEventArgs);
+            }
+        }
+        #endregion
     }
 }

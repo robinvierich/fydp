@@ -13,11 +13,11 @@ using Regis.Base.ViewModels;
 
 namespace Regis.ViewModels
 {
-    [Export(typeof(MainWindowViewModel))]
+    [Export]
     public class MainWindowViewModel : BaseViewModel, IPartImportsSatisfiedNotification
     {
-        [Import(typeof(IPluginService))]
-        private IPluginService _pluginService;
+        [Import]
+        private IPluginService _pluginService = null;
         private IPlugin _currentPlugin;
 
         public void OnImportsSatisfied()

@@ -24,12 +24,13 @@ namespace RegisTunerPlugin
     [Export(typeof(IPlugin))]
     public partial class TunerControl : UserControl, IPlugin
     {
-
         public TunerControl()
         {
             InitializeComponent();
         }
 
+        #region IPlugin
+        
         public FrameworkElement GetVisualContent()
         {
             return this;
@@ -44,15 +45,21 @@ namespace RegisTunerPlugin
             }
         }
 
-        public void Load(NoteStream noteStream)
+        public void Load()
         {
             
         }
-
 
         public string FriendlyPluginName
         {
             get { return "Tuner"; }
         }
+
+
+        public NoteDetectionAlgorithm Algorithm
+        {
+            get { throw new NotImplementedException(); }
+        }
+        #endregion
     }
 }

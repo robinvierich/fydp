@@ -22,25 +22,24 @@ namespace Regis.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IPartImportsSatisfiedNotification
     {
-        Importer _importer;
-
         public MainWindow()
         {
             InitializeComponent();
-            _importer = new Importer();
-            _importer.Compose(this);
-
-            DataContext = ViewModel;
+            //Importer.Compose(this);
         }
 
-        [Import(typeof(MainWindowViewModel))]
+        [Import]
         public MainWindowViewModel ViewModel
         {
             get;
-            private set;
+            set;
         }
 
+        public void OnImportsSatisfied()
+        {
+            DataContext = ViewModel;
+        }
     }
 }

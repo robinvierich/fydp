@@ -34,7 +34,8 @@ namespace HelloWorldPlugin
             b.Content = "HELLO WORLD";
         }
 
-        public void Load(Regis.Plugins.Models.NoteStream noteStream)
+        #region IPlugin
+        public void Load()
         {
             
         }
@@ -59,5 +60,6 @@ namespace HelloWorldPlugin
         {
             get { throw new NotImplementedException(); }
         }
+        #endregion
     }
 }

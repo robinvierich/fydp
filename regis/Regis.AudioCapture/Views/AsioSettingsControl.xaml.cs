@@ -50,17 +50,16 @@ namespace Regis.AudioCapture.Views
             if (e.AddedItems.Count > 1) return;
             InstalledDriver driver = e.AddedItems[0] as InstalledDriver;
 
-            
-            foreach (object item in e.AddedItems)
-            {
-
-            }
-
-
             LoadDriverCommand cmd = new LoadDriverCommand();
-            //LoadDriverCommandArgs args = new LoadDriverCommandArgs(
+            LoadDriverCommandArgs args = new LoadDriverCommandArgs(driver, 48000);
 
-            cmd.Execute(
+            cmd.Execute(args);
+        }
+
+
+        public NoteDetectionAlgorithm Algorithm
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Windows.Input;
 using BlueWave.Interop.Asio;
 using Regis.AudioCapture.Services;
 
-namespace Regis.AudioCapture.Commands
+namespace Regis.Commands
 {
 
     public class LoadDriverCommandArgs
@@ -42,7 +42,7 @@ namespace Regis.AudioCapture.Commands
             return true;
         }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged = delegate { };
 
         public void Execute(object parameter)
         {

@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bluewave.Interop.Asio", "Bl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regis.Base", "Regis.Base\Regis.Base.csproj", "{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fftwlib", "fft\source\fftwlib.csproj", "{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}.Release|Win32.ActiveCfg = Release|Any CPU
 		{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}.Release|x86.ActiveCfg = Release|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Release|Win32.ActiveCfg = Release|Any CPU
+		{BEA875B8-E28A-49C5-8E7E-6512DA65F7E1}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

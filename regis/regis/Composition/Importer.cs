@@ -11,31 +11,31 @@ namespace Regis.Composition
 {
     public class Importer
     {
-        NoteStream _noteStream;
-
         public Importer()
         {
-            _noteStream = new NoteStream();
         }
 
-        public void Compose(object root)
+        public static AggregateCatalog _mainCatalog;
+        public static CompositionContainer _container;
+
+        public static void Compose(object root)
         {
+            if (_mainCatalog == null)
+            {
+                _mainCatalog = new AggregateCatalog();
 
-            var catalog = new AggregateCatalog();
+                //Adds all the parts found in the assemblies that are located in the plugin directory
+                _mainCatalog.Catalogs.Add(new DirectoryCatalog(System.IO.Path.GetDirectoryName(Regis.Strings.PluginPath)));
+                _mainCatalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+            }
 
-            //Adds all the parts found in all assemblies in 
-            //the same directory as the executing program
-            catalog.Catalogs.Add(new DirectoryCatalog(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
-            catalog.Catalogs.Add(new DirectoryCatalog(System.IO.Path.GetDirectoryName(Regis.Strings.PluginPath)));
-            catalog.Catalogs.Add(new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+            if (_container == null)
+            {
+                _container = new CompositionContainer(_mainCatalog);
+                _container.ComposeExportedValue("DefaultNoteStream", 0);
+            }
 
-
-            var container = new CompositionContainer(catalog);
-            container.ComposeExportedValue("DefaultNoteStream", _noteStream);
-            container.ComposeParts(root);
+            _container.ComposeParts(root);
         }
-
-    
-
     }
 }

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Regis.AudioCapture.Views.AsioSettingsControl"
+﻿<UserControl x:Class="Regis.Controls.AsioSettingsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -39,7 +39,8 @@
         <ComboBox ItemsSource="{Binding LoadedDriver.InputChannels}"
                   DisplayMemberPath="Name"
                   Grid.Column="1" 
-                  Grid.Row="1" />
+                  Grid.Row="1" 
+                  SelectionChanged="channelComboBox_SelectionChanged"/>
 
     </Grid>
 </UserControl>

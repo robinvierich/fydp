@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="IPlugin.cs" />
     <Compile Include="Models\Note.cs" />
-    <Compile Include="Models\NoteStream.cs" />
     <Compile Include="NoteDetectionAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

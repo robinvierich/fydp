@@ -41,12 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition.CodePlex">
-      <HintPath>..\..\mef\System.ComponentModel.Composition.CodePlex.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Composition.Registration.CodePlex">
-      <HintPath>..\..\mef\System.ComponentModel.Composition.Registration.CodePlex.dll</HintPath>
-    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Reflection.Context.CodePlex">
@@ -73,15 +68,39 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AudioCapture.cs" />
+    <Compile Include="Commands\LoadDriverCommand.cs" />
     <Compile Include="Commands\LoadPluginCommand.cs" />
+    <Compile Include="Commands\RestartSamplingServiceCommand.cs" />
     <Compile Include="Composition\Importer.cs" />
+    <Compile Include="Models\SampleCollection.cs" />
+    <Compile Include="Models\FFTCalculation.cs" />
+    <Compile Include="Services\AsioDeviceService.cs" />
+    <Compile Include="Services\Realtime\AsioSamplingService.cs" />
+    <Compile Include="Services\Realtime\FFTAlgorithm.cs" />
+    <Compile Include="Services\Realtime\Interfaces\IAsioSamplingService.cs" />
+    <Compile Include="Services\Realtime\Interfaces\IFFTService.cs" />
+    <Compile Include="Services\Realtime\Interfaces\IFFTSource.cs" />
+    <Compile Include="Services\Realtime\Interfaces\INoteDetectionService.cs" />
+    <Compile Include="Services\Realtime\Interfaces\INoteDetectionSource.cs" />
     <Compile Include="Services\IPluginService.cs" />
+    <Compile Include="Services\Realtime\Interfaces\IRealtimeService.cs" />
+    <Compile Include="Services\Realtime\Interfaces\ISampleSource.cs" />
+    <Compile Include="Services\Realtime\SimpleNoteDetectionAlgorithm.cs" />
     <Compile Include="Strings.cs" />
+    <Compile Include="ViewModels\AsioSettingsViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Controls\AsioSettingsControl.xaml.cs">
+      <DependentUpon>AsioSettingsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\AsioSettingsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -117,6 +136,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcxproj">
+      <Project>{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}</Project>
+      <Name>Bluewave.Interop.Asio</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Regis.Base\Regis.Base.csproj">
       <Project>{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}</Project>
       <Name>Regis.Base</Name>
