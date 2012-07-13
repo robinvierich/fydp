@@ -7,9 +7,12 @@
 *.opensdf
 *.sdf
 *.vcxproj.user
+*.obj
+*.tlog
+*.baml
 
 
-/regis/regis/bin/
-/regis/regis/obj/
+bin
+obj
+dsp
 
-/dsp/workspace/.metadata
