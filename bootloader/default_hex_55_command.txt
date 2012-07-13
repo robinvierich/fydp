@@ -1,0 +1,1 @@
+hex55 -i CSL_USB_IsoFullSpeedExample_ezdsp_Out.out -o boot5505.bin -boot -v5505 -b -serial8
