@@ -20,24 +20,17 @@ namespace Regis
         [Import]
         INoteDetectionService _noteDetectionService = null;
 
-        // Run after the main window is loaded - (there are other cases too - dealt with by (loaded == true) check)
-        protected override void OnActivated(EventArgs e)
+
+        protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnActivated(e);
-
-            if (loaded) 
-                return;
-
-            loaded = true;
+            base.OnStartup(e);
 
             Importer.Compose(this);
-            Importer.Compose(Application.Current.MainWindow);
 
             // TODO: Fill this in with correct args;
             _fftService.Start(new FFTArgs());
             _noteDetectionService.Start(new SimpleNoteDetectionArgs());
         }
-
 
         [Import]
         IAsioSamplingService _asioSamplingService = null;
