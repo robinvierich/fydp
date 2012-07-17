@@ -58,6 +58,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Tuning.cs" />
+    <Compile Include="Models\GuitarString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -95,6 +97,15 @@
       <Project>{730CC1CC-9028-4EF6-83BD-A5D5E5BAF9C8}</Project>
       <Name>Regis.Plugins</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\flat.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\sharp.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arrow.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

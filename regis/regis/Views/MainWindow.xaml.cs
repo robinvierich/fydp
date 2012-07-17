@@ -27,7 +27,7 @@ namespace Regis.Views
         public MainWindow()
         {
             InitializeComponent();
-            //Importer.Compose(this);
+            Importer.Compose(this);
         }
 
         [Import]

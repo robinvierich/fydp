@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using BlueWave.Interop.Asio;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace Regis.AudioCapture.Services
 {
@@ -13,9 +14,16 @@ namespace Regis.AudioCapture.Services
         public static ObservableCollection<InstalledDriver> GetAsioDrivers()
         {
             ObservableCollection<InstalledDriver> toReturn = new ObservableCollection<InstalledDriver>();
-            foreach (InstalledDriver driver in AsioDriver.InstalledDrivers)
+            try
             {
-                toReturn.Add(driver);
+                foreach (InstalledDriver driver in AsioDriver.InstalledDrivers)
+                {
+                    toReturn.Add(driver);
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                Debug.WriteLine("No ASIO drivers found.");
             }
 
             return toReturn;

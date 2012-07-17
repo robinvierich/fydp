@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Regis.Plugins.Models
+namespace RegisTunerPlugin.Models
 {
-    public struct Note
+    public struct GuitarString
     {
-        public DateTime _timeStamp;
+        public string _stringName;
         public double _frequency;
     }
 }
