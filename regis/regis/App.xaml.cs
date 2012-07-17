@@ -23,7 +23,7 @@ namespace Regis
         // Run after the main window is loaded - (there are other cases too - dealt with by (loaded == true) check)
         protected override void OnActivated(EventArgs e)
         {
-            base.OnActivated(e);
+            
 
             if (loaded) 
                 return;
@@ -36,6 +36,8 @@ namespace Regis
             // TODO: Fill this in with correct args;
             _fftService.Start(new FFTArgs());
             _noteDetectionService.Start(new SimpleNoteDetectionArgs());
+
+            base.OnActivated(e);
         }
 
 

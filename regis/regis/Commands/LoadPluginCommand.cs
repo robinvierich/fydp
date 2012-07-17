@@ -5,16 +5,18 @@ using System.Text;
 using System.Windows.Input;
 using Regis.Services;
 using Regis.Plugins;
+using System.ComponentModel.Composition;
 
 namespace Regis.Commands
 {
+    [Export]
     public class LoadPluginCommand : ICommand
     {
+        [Import]
         IPluginService _pluginService;
 
-        public LoadPluginCommand(IPluginService pluginService)
+        public LoadPluginCommand()
         {
-            _pluginService = pluginService;
         }
 
 

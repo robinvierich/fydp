@@ -6,6 +6,7 @@ using Regis.Plugins;
 using System.ComponentModel.Composition;
 using Regis.Plugins.Models;
 using System.Collections.ObjectModel;
+using Regis.Composition;
 
 namespace Regis.Services
 {
@@ -60,7 +61,9 @@ namespace Regis.Services
             if (pluginToLoad == null)
                 throw new PluginLoadException("Cannot find plugin with name: " + pluginName);
 
+            Importer.Compose(pluginToLoad);
             pluginToLoad.Load();
+            
             RaisePluginLoaded(pluginToLoad);
         }
 

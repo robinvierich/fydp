@@ -87,6 +87,8 @@
     <Compile Include="Services\Realtime\Interfaces\IRealtimeService.cs" />
     <Compile Include="Services\Realtime\Interfaces\ISampleSource.cs" />
     <Compile Include="Services\Realtime\SimpleNoteDetectionAlgorithm.cs" />
+    <Compile Include="Services\TwitterService.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="ViewModels\AsioSettingsViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

@@ -9,13 +9,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
             
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
+        
         <ListView Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Plugins}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -25,6 +26,5 @@
         </ListView>
         
         <ctrls:PluginContainer Grid.Column="1" Plugin="{Binding CurrentPlugin}" Grid.RowSpan="2" />
-        
     </Grid>
 </Window>

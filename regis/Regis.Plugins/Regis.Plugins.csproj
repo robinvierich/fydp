@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IPlugin.cs" />
+    <Compile Include="ISocialNetworkingService.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="NoteDetectionAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,6 +10,7 @@ using Regis.Plugins.Models;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using Regis.Base.ViewModels;
+using Regis.Commands;
 
 namespace Regis.ViewModels
 {
@@ -22,12 +23,22 @@ namespace Regis.ViewModels
 
         public void OnImportsSatisfied()
         {
-            LoadPluginCommand = new Regis.Commands.LoadPluginCommand(_pluginService);
+            this.PropertyChanged += new PropertyChangedEventHandler(MainWindowViewModel_PropertyChanged);
             _pluginService.PluginLoaded += new EventHandler<PluginLoadedEventArgs>(_pluginService_PluginLoaded);
             NotifyPropertyChanged(_PluginsChangedArgs);
         }
 
-        public ICommand LoadPluginCommand
+        void MainWindowViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "CurrentPlugin")
+            {
+                LoadPluginCommand.Execute(CurrentPlugin);
+            }
+        }
+
+
+        [Import]
+        public LoadPluginCommand LoadPluginCommand
         {
             get;
             private set;
