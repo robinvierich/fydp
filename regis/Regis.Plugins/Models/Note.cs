@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Regis.Plugins.Models
 {
-    public class Note
+    public struct Note
     {
-        DateTime _timeStamp;
-        double _frequency;
+        public DateTime _timeStamp;
+        public double _frequency;
     }
 }
