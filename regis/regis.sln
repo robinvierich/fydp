@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisTunerPlugin", "RegisTu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldPlugin", "HelloWorldPlugin\HelloWorldPlugin.csproj", "{BF9A682B-5074-44DB-8F6D-8039FFCE0694}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regis.AudioCapture", "Regis.AudioCapture\Regis.AudioCapture.csproj", "{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bluewave.Interop.Asio", "BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcxproj", "{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regis.Base", "Regis.Base\Regis.Base.csproj", "{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}"
@@ -77,18 +75,6 @@ Global
 		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Release|Win32.ActiveCfg = Release|x86
 		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Release|x86.ActiveCfg = Release|x86
 		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Release|x86.Build.0 = Release|x86
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Debug|Win32.ActiveCfg = Debug|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Release|Win32.ActiveCfg = Release|Any CPU
-		{6515F20C-45B5-49DC-8EBE-69E2C8CDB07F}.Release|x86.ActiveCfg = Release|Any CPU
 		{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}.Debug|Mixed Platforms.Build.0 = Debug|Win32
