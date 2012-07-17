@@ -1,5 +1,0 @@
-C:\git\fydp\regis\Regis.Base\bin\Debug\Regis.Base.dll
-C:\git\fydp\regis\Regis.Base\bin\Debug\Regis.Base.pdb
-C:\git\fydp\regis\Regis.Base\obj\Debug\ResolveAssemblyReference.cache
-C:\git\fydp\regis\Regis.Base\obj\Debug\Regis.Base.dll
-C:\git\fydp\regis\Regis.Base\obj\Debug\Regis.Base.pdb
