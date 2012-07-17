@@ -36,35 +36,40 @@ namespace RegisTunerPlugin
 
         private void LoadTunings()
         {
-            StreamReader readFile = new StreamReader(@"C:\regis\fydp\regis\RegisTunerPlugin\TunerPluginFiles\tunings.cfg");
-            while (true)
+            try
             {
-                string line = readFile.ReadLine();
-
-                if (line == "#end")
-                    break;
-
-                Tuning tuning = new Tuning();
-                GuitarString[] guitarString = new GuitarString[6]; 
-                tuning._tuningName = line;
-
-                for (int i = 0; i < 6; i++)
+                //MessageBox.Show(Environment.CurrentDirectory);
+                StreamReader readFile = new StreamReader(Environment.CurrentDirectory + "\\tunings.cfg");
+                while (true)
                 {
+                    string line = readFile.ReadLine();
+
+                    if (line == "#end")
+                        break;
+
+                    Tuning tuning = new Tuning();
+                    GuitarString[] guitarString = new GuitarString[6];
+                    tuning._tuningName = line;
+
+                    for (int i = 0; i < 6; i++)
+                    {
+                        line = readFile.ReadLine();
+                        string[] lineParts = line.Split(',');
+                        guitarString[i]._stringName = lineParts[0];
+                        guitarString[i]._frequency = Convert.ToDouble(lineParts[1]);
+                    }
+
                     line = readFile.ReadLine();
-                    string[] lineParts = line.Split(',');
-                    guitarString[i]._stringName = lineParts[0];
-                    guitarString[i]._frequency = Convert.ToDouble(lineParts[1]);
+                    tuning._guitarStrings = guitarString;
+                    tuningList.Add(tuning);
                 }
 
-                line = readFile.ReadLine();
-                tuning._guitarStrings = guitarString;
-                tuningList.Add(tuning);
+                this.tuningBox.ItemsSource = tuningList;
+                this.tuningBox.DisplayMemberPath = "_tuningName";
+                //this.tuningBox.SelectedValuePath = "_tuningName";
+                StartTuner();
             }
-
-            this.tuningBox.ItemsSource = tuningList;
-            this.tuningBox.DisplayMemberPath = "_tuningName";
-            //this.tuningBox.SelectedValuePath = "_tuningName";
-            StartTuner();
+            catch { }
         }
 
         private void StartTuner()
