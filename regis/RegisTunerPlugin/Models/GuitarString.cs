@@ -5,9 +5,28 @@ using System.Text;
 
 namespace RegisTunerPlugin.Models
 {
-    public struct GuitarString
+    public class GuitarString
     {
-        public string _stringName;
-        public double _frequency;
+        private string _stringName;
+        public string StringName
+        {
+            get { return _stringName; }
+            set { _stringName = value; }
+        }
+        private double _frequency;
+
+        public double Frequency
+        {
+            get { return _frequency; }
+            set { _frequency = value; }
+        }
+
+        private int _stringNum;
+        public int StringNum
+        {
+            get { return _stringNum; }
+            set { _stringNum = value; }
+        }
+
     }
 }

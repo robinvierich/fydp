@@ -7,17 +7,24 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Background="AliceBlue">
         <TextBlock Text="This is the tuner plugin, hello!!" />
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="51,51,0,0" Name="tuningBox" VerticalAlignment="Top" Width="156" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="51,51,0,0" Name="tuningBox" VerticalAlignment="Top" Width="156"
+                  ItemsSource="{Binding Tunings}"
+                  DisplayMemberPath="Name"/>
         <Label Content="Tuning:" Height="31" HorizontalAlignment="Left" Margin="0,46,0,0" Name="tuningLabel" VerticalAlignment="Top" Width="53" VerticalContentAlignment="Center" />
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="51,112,0,0" Name="stringBox" VerticalAlignment="Top" Width="156" />
+        <ComboBox Height="23" 
+                  HorizontalAlignment="Left" Margin="51,112,0,0" Name="stringBox" VerticalAlignment="Top" Width="156"
+                  ItemsSource="{Binding ElementName=tuningBox, Path=SelectedItem.GuitarStrings}"
+                  DisplayMemberPath="StringName"
+                  SelectionChanged="stringBox_SelectionChanged"/>
         <Label Content="String:" Height="28" HorizontalAlignment="Left" Margin="0,107,0,0" Name="stringLabel" VerticalAlignment="Top" Width="45" VerticalContentAlignment="Center" />
         <ProgressBar Height="193" HorizontalAlignment="Left" Margin="245,51,0,0" Name="tunerBar" VerticalAlignment="Top" Width="12" Orientation="Vertical" />
         <Image Height="26" HorizontalAlignment="Left" Margin="265,218,0,0" Name="flat" Stretch="Fill" VerticalAlignment="Top" Width="23" Source="/RegisTunerPlugin;component/Images/flat.JPG" />
         <Image Height="26" HorizontalAlignment="Left" Margin="265,51,0,0" Name="sharp" Source="/RegisTunerPlugin;component/Images/sharp.jpg" Stretch="Fill" VerticalAlignment="Top" Width="23" />
         <Image Height="26" HorizontalAlignment="Left" Margin="265,135,0,0" Name="arrow" Source="/RegisTunerPlugin;component/Images/arrow.jpg" Stretch="Fill" VerticalAlignment="Top" Width="23" FlowDirection="RightToLeft" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="129,218,0,0" Name="currentFreqBox" VerticalAlignment="Top" Width="78" IsReadOnly="True" />
-        <Label Content="Current Frequency:" Height="28" HorizontalAlignment="Left" Margin="0,216,0,0" Name="currentFreqLabel" VerticalAlignment="Top" Width="112" />
-        <TextBox Height="23" HorizontalAlignment="Left" IsReadOnly="True" Margin="129,177,0,0" Name="targetFreqBox" VerticalAlignment="Top" Width="78" />
+        <Label Content="Current Frequency:" Height="28" HorizontalAlignment="Left" Margin="0,216,0,0" Name="currentFreqLabel" VerticalAlignment="Top" Width="112"/>
+        <TextBox Height="23" HorizontalAlignment="Left" IsReadOnly="True" Margin="129,177,0,0" Name="targetFreqBox" VerticalAlignment="Top" Width="78"
+                 Text="{Binding ElementName=stringBox, Path=SelectedItem.Frequency}"/>
         <Label Content="Target Frequency:" Height="28" HorizontalAlignment="Left" Margin="0,175,0,0" Name="targetFreqlabel" VerticalAlignment="Top" Width="112" />
     </Grid>
 </UserControl>
