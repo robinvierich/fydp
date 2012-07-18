@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -40,6 +41,9 @@
     </StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge.Math">
+      <HintPath>..\AForge\Release\AForge.Math.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -87,7 +91,7 @@
     <Compile Include="Services\Realtime\Interfaces\IRealtimeService.cs" />
     <Compile Include="Services\Realtime\Interfaces\ISampleSource.cs" />
     <Compile Include="Services\Realtime\SimpleNoteDetectionAlgorithm.cs" />
-    <Compile Include="Services\TwitterService.cs" />
+    <Compile Include="Services\SocialNetworkingService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="ViewModels\AsioSettingsViewModel.cs" />
@@ -131,6 +135,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="libfftw3-3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -173,7 +180,6 @@
     <Resource Include="Icons\guitar32.ico" />
     <Resource Include="Icons\guitar64.ico" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

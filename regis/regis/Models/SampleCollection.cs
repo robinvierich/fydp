@@ -7,6 +7,6 @@ namespace Regis.Models
 {
     public class SampleCollection
     {
-        public float[] Samples;
+        public long[] Samples;
     }
 }

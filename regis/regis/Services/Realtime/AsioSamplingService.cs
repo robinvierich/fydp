@@ -10,6 +10,10 @@ using System.ComponentModel.Composition;
 
 namespace Regis.Services.Realtime
 {
+
+    /// <summary>
+    /// Samples audio (PCM) using ASIO drivers
+    /// </summary>
     [Export(typeof(ISampleSource))]
     [Export(typeof(IAsioSamplingService))]
     public class AsioSamplingService : ISampleSource, IAsioSamplingService
@@ -62,7 +66,9 @@ namespace Regis.Services.Realtime
 
             _currentDriver.DisposeBuffers();
             _currentDriver.Stop();
-            //_currentDriver.Release(); This needs to happen on Application Exit to prevent hangs.. need to figure this out.
+
+            // TODO: This needs to happen on Application Exit to prevent hangs.. need to figure this out.
+            //_currentDriver.Release(); 
         }
 
         // this handler flushes buffer data
@@ -74,15 +80,13 @@ namespace Regis.Services.Realtime
         private void flushBuffers()
         {
             SampleCollection samples = new SampleCollection();
-            samples.Samples = new float[_currentInputChannel.BufferSize];
+            samples.Samples = new long[_currentInputChannel.BufferSize];
 
             // NOTE: may need to optimize this loop
             for (int i = 0; i < _currentInputChannel.BufferSize; i++)
-                samples.Samples[i] = _currentInputChannel[i];
+                samples.Samples[i] = (long)_currentInputChannel[i];
 
             _sampleCollectionQueue.Enqueue(samples);
         }
-
-        
     }
 }

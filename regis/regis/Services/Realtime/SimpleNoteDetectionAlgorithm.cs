@@ -74,18 +74,26 @@ namespace Regis.Services.Realtime
 
         private double NoteCalc(double[] inputArray)
         {
-            Tuple<int, int> index = MinMaxCalc(inputArray);
+            //Tuple<int, int> index = MinMaxCalc(inputArray);
+
+            int width = 10;
+
+            double max = inputArray.Max();
+            int highIdx = Array.IndexOf(inputArray, max) + width/2;
+            int lowIdx = highIdx - (width / 2);
+
+            lowIdx = Math.Max(0, lowIdx);
+            highIdx = Math.Min(256, highIdx);
+
             double sum = 0;
             double freq = 0;
-            int minIndex = index.Item2 - index.Item1;
-            int maxIndex = index.Item2;
 
-            for (int i = minIndex; i < maxIndex; i++)
+            for (int i = lowIdx; i < highIdx; i++)
             {
                 sum += inputArray[i];
             }
 
-            for (int i = minIndex; i < maxIndex; i++)
+            for (int i = lowIdx; i < highIdx; i++)
             {
                 freq += (inputArray[i] / sum) * (i * step);
             }
@@ -94,34 +102,34 @@ namespace Regis.Services.Realtime
             return freq;
         }
 
-        private Tuple<int, int> MinMaxCalc(double[] inputArray)
-        {
-            double max = 0;
-            double min = 0;
-            int maxIndex = 0;
-            int minIndex = 0;
+        //private Tuple<int, int> MinMaxCalc(double[] inputArray)
+        //{
+        //    double max = 0;
+        //    double min = 0;
+        //    int maxIndex = 0;
+        //    int minIndex = 0;
 
-            for (int i = 0; i < 256; i++)
-            {
-                if (inputArray[i] >= max)
-                {
-                    max = inputArray[i];
-                    min = inputArray[i];
-                    maxIndex = i;
-                }
-                else if (inputArray[i] <= min)
-                {
-                    min = inputArray[i];
-                    minIndex = i;
-                }
-                else
-                {
-                    break;
-                }
-            }
+        //    for (int i = 0; i < 256; i++)
+        //    {
+        //        if (inputArray[i] >= max)
+        //        {
+        //            max = inputArray[i];
+        //            //min = inputArray[i];
+        //            maxIndex = i;
+        //        }
+        //        else if (inputArray[i] <= min)
+        //        {
+        //            min = inputArray[i];
+        //            minIndex = i;
+        //        }
+        //        else
+        //        {
+        //            break;
+        //        }
+        //    }
 
-            return new Tuple<int, int>(maxIndex, minIndex);
-        }
+        //    return new Tuple<int, int>(maxIndex, minIndex);
+        //}
 
         
     }

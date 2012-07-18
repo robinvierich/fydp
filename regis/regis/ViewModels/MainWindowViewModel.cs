@@ -23,19 +23,9 @@ namespace Regis.ViewModels
 
         public void OnImportsSatisfied()
         {
-            this.PropertyChanged += new PropertyChangedEventHandler(MainWindowViewModel_PropertyChanged);
             _pluginService.PluginLoaded += new EventHandler<PluginLoadedEventArgs>(_pluginService_PluginLoaded);
             NotifyPropertyChanged(_PluginsChangedArgs);
         }
-
-        void MainWindowViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "CurrentPlugin")
-            {
-                LoadPluginCommand.Execute(CurrentPlugin);
-            }
-        }
-
 
         [Import]
         public LoadPluginCommand LoadPluginCommand

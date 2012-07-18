@@ -66,7 +66,7 @@ namespace BlueWave
 				property double SampleType { double get(); }
 
 				// indexer for setting the value of sample in the buffer
-				property float default[int] { void set(int sample, float value); float get(int sample); }
+				property int default[int] { void set(int sample, int value); int get(int sample); }
 
 			};
 		};

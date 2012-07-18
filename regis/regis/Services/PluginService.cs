@@ -61,7 +61,7 @@ namespace Regis.Services
             if (pluginToLoad == null)
                 throw new PluginLoadException("Cannot find plugin with name: " + pluginName);
 
-            Importer.Compose(pluginToLoad);
+            //Importer.Compose(pluginToLoad);
             pluginToLoad.Load();
             
             RaisePluginLoaded(pluginToLoad);

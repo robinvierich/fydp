@@ -66,7 +66,7 @@ namespace BlueWave
 				}
 			}
 
-			void Channel::default::set(int sample, float value)
+			void Channel::default::set(int sample, int value)
 			{
 				// clip value to avoid problems with conversion.
 				if (value > __maxSampleValue)
@@ -79,13 +79,16 @@ namespace BlueWave
 				}
 			    
 				// convert float between -1.0 and 1.0 to signed integer
-				_pTheirCurrentBuffer[sample] = (DWORD)(value * 2147483648.0f);
+				//_pTheirCurrentBuffer[sample] = (DWORD)(value * 2147483648.0f);
+				_pTheirCurrentBuffer[sample] = (DWORD)value;
 			}
 
-			float Channel::default::get(int sample)
+			int Channel::default::get(int sample)
 			{
+				return (int)_pTheirCurrentBuffer[sample];
+
 				// convert signed integer to float between -1.0 and 1.0
-				return (float)((int)_pTheirCurrentBuffer[sample] / 2147483648.0f);
+				//return (float)((int)_pTheirCurrentBuffer[sample] / 2147483648.0f);
 			}
 		}
 	}

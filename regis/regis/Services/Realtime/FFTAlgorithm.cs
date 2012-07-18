@@ -6,6 +6,9 @@ using System.Collections.Concurrent;
 using Regis.Models;
 using System.ComponentModel.Composition;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using AForge.Math;
 
 namespace Regis.Services.Realtime
 {
@@ -44,6 +47,7 @@ namespace Regis.Services.Realtime
 
         private void CalculateFFT()
         {
+            
             while (!_stopCalculating)
             {
                 SampleCollection sampleCollection;
@@ -52,13 +56,54 @@ namespace Regis.Services.Realtime
                 if (sampleCollection == null)
                     continue;
 
-                float[] samples = sampleCollection.Samples;
+                Complex[] fftArray = Array.ConvertAll(sampleCollection.Samples, new Converter<long, Complex>(x => (Complex)x));
 
-                // TODO: Perform calculation
+                FourierTransform.FFT(fftArray, FourierTransform.Direction.Forward);
 
                 FFTCalculation fftCalc = new FFTCalculation();
+
+                fftCalc.PowerBins = new double[sampleCollection.Samples.Length];
+                fftCalc.PowerBins = fftArray.Select(x => x.SquaredMagnitude).ToArray();
+
                 _fftQueue.Enqueue(fftCalc);
+
+                #region FFTW (not currently in use)
+                // Faster fftw stuff
+                //
+                // TODO: We really should make a c++ project so that we don't have to use P/Invoke (i.e. call fftw directly)
+                // This should significantly speed up the FFT
+                //
+                //
+                //long[] sampleArray = sampleCollection.Samples;
+                //long[] outputArray = new long[sampleCollection.Samples.Length];
+                //
+                //// Unsafe allows us to use pointers
+                //unsafe
+                //{
+                //    // fixed makes the GC not move the pointer data
+                //    fixed (long* input = sampleArray)
+                //    {
+                //        fixed (long* output = outputArray)
+                //        {
+                //            IntPtr inputPtr = (IntPtr)input;
+                //            IntPtr outputPtr = (IntPtr)output;
+
+                //            IntPtr plan = fftw.dft_1d(1024, inputPtr, outputPtr, fftw_direction.Forward, fftw_flags.Estimate);
+
+                //            fftw.execute(plan);
+
+                //            fftw.free(inputPtr);
+                //            fftw.free(outputPtr);
+                //            fftw.destroy_plan(plan);
+                //        }
+                //    }
+                //}
+                #endregion
+
             }
         }
+
+
+        
     }
 }
