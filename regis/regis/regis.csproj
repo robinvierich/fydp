@@ -52,6 +52,7 @@
     <Reference Include="System.Reflection.Context.CodePlex">
       <HintPath>..\..\mef\System.Reflection.Context.CodePlex.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -80,7 +81,11 @@
     <Compile Include="Composition\Importer.cs" />
     <Compile Include="Models\SampleCollection.cs" />
     <Compile Include="Models\FFTCalculation.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Services\AsioDeviceService.cs" />
+    <Compile Include="Services\IPersistanceService.cs" />
+    <Compile Include="Services\DataContractPersistanceService.cs" />
+    <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\Realtime\AsioSamplingService.cs" />
     <Compile Include="Services\Realtime\FFTAlgorithm.cs" />
     <Compile Include="Services\Realtime\Interfaces\IAsioSamplingService.cs" />
@@ -93,6 +98,7 @@
     <Compile Include="Services\Realtime\Interfaces\ISampleSource.cs" />
     <Compile Include="Services\Realtime\SimpleNoteDetectionAlgorithm.cs" />
     <Compile Include="Services\SocialNetworkingService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Strings.cs" />
     <Compile Include="ViewModels\AsioSettingsViewModel.cs" />
