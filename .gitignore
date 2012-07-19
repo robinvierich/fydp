@@ -1,4 +1,5 @@
 
+*.stackdump
 *.exe
 *.o
 *.suo
