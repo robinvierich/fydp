@@ -80,13 +80,31 @@ namespace RegisTunerPlugin
         {
             double delta = 0;
             double display = 50;
-            double currentFreq = 79;
+            double currentFreq;
             double scaleFactor;
 
             switch (stringNum)
             {
                 case 0:
+                    scaleFactor = 4;
+                    break;
+                case 1:
                     scaleFactor = 5;
+                    break;
+                case 2:
+                    scaleFactor = 6;
+                    break;
+                case 3:
+                    scaleFactor = 9;
+                    break;
+                case 4:
+                    scaleFactor = 11;
+                    break;
+                case 5:
+                    scaleFactor = 14;
+                    break;
+                case 6:
+                    scaleFactor = 20;
                     break;
                 default:
                     scaleFactor = 5;
@@ -141,5 +159,10 @@ namespace RegisTunerPlugin
         }
 
         #endregion
+
+        private void stopTunerButton_Click(object sender, RoutedEventArgs e)
+        {
+            StopTuner();
+        }
     }
 }
