@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ctrls="clr-namespace:Regis.Controls"
         Title="REGIS" Height="768" Width="1024"
-        Icon="/Icons/guitar24.ico" xmlns:my="clr-namespace:RegisTunerPlugin;assembly=RegisTunerPlugin">
+        Icon="/Icons/guitar24.ico" >
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
