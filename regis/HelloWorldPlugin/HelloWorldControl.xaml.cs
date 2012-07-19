@@ -20,9 +20,15 @@ namespace HelloWorldPlugin
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
+    
+    
+
     [Export(typeof(IPlugin))]
     public partial class HelloWorldControl : UserControl, IPlugin
     {
+        [Import]
+        private ISocialNetworkingService _socialNetworkingService = null;
+
         public HelloWorldControl()
         {
             InitializeComponent();
@@ -34,7 +40,23 @@ namespace HelloWorldPlugin
             b.Content = "HELLO WORLD";
         }
 
-        #region IPlugin
+        private void btnTweet_Click(object sender, RoutedEventArgs e)
+        {
+            _socialNetworkingService.AuthTwitter1();
+            this.txtPin.IsEnabled = true;
+            this.btnPinOk.IsEnabled = true;
+        }
+
+        private void btnPinOk_Click(object sender, RoutedEventArgs e)
+        {
+            _socialNetworkingService.AuthTwitter2(this.txtPin.Text);
+        }
+
+        private void btnSendTweet_Click(object sender, RoutedEventArgs e)
+        {
+            _socialNetworkingService.PostToTwitter(this.txtTweet.Text);
+        }
+
         public void Load()
         {
             
@@ -47,19 +69,25 @@ namespace HelloWorldPlugin
 
         public string PluginName
         {
-            get { return "HelloWorldPlugin"; }
+            get 
+            {
+                return "HelloWorldPlugin";
+            }
         }
 
         public string FriendlyPluginName
         {
-            get { return "Hello World"; }
+            get
+            {
+                return "Tweet This Shit";
+            }
         }
-
 
         public NoteDetectionAlgorithm Algorithm
         {
             get { throw new NotImplementedException(); }
         }
-        #endregion
+
+
     }
 }
