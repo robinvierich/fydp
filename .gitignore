@@ -14,9 +14,9 @@
 *.xml
 *.sdf
 
-
 bin
 obj
 dsp
 Debug
 Release
+regisPlugins
