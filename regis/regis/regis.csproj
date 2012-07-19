@@ -158,6 +158,10 @@
       <Project>{730CC1CC-9028-4EF6-83BD-A5D5E5BAF9C8}</Project>
       <Name>Regis.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RegisTunerPlugin\RegisTunerPlugin.csproj">
+      <Project>{C2071062-3C43-479E-91AE-686DC856AD55}</Project>
+      <Name>RegisTunerPlugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\guitar16.ico" />
