@@ -14,17 +14,16 @@ using System.Windows.Shapes;
 using System.ComponentModel.Composition;
 using Regis.Plugins;
 
-
-namespace RegisFreeFormPlugin
+namespace RegisUserStatsPlugin
 {
     /// <summary>
-    /// Interaction logic for FreeFormControl.xaml
+    /// Interaction logic for UserStatsControl.xaml
     /// </summary>
 
     [Export(typeof(IPlugin))]
-    public partial class FreeFormControl : UserControl, IPlugin
+    public partial class UserStatsControl : UserControl, IPlugin
     {
-        public FreeFormControl()
+        public UserStatsControl()
         {
             InitializeComponent();
         }
@@ -33,7 +32,7 @@ namespace RegisFreeFormPlugin
 
         public void Load()
         {
-            
+
         }
 
         public FrameworkElement GetVisualContent()
@@ -43,12 +42,12 @@ namespace RegisFreeFormPlugin
 
         public string PluginName
         {
-            get { return "FreeFormPlugin"; }
+            get { return "UserStatsPlugin"; }
         }
 
         public string FriendlyPluginName
         {
-            get { return "FreeFormMode"; }
+            get { return "UserStatistics"; }
         }
 
         public NoteDetectionAlgorithm Algorithm
