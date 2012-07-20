@@ -28,8 +28,7 @@ namespace RegisTrainingModule.ViewModels
 
         private void LoadTraining()
         {
-            try
-            {
+
                 StreamReader readFile = new StreamReader(Environment.CurrentDirectory + "\\training_modules.cfg");
                 while (true)
                 {
@@ -50,10 +49,10 @@ namespace RegisTrainingModule.ViewModels
                     }
 
                     TrainingModules.Add(module);
+                    line = readFile.ReadLine();
                 }
                 Console.WriteLine("DEBUG::REGIS:: training_modules.cfg => Loaded");
-            }
-            catch { }
+
         }
     }
 }
