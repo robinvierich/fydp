@@ -33,8 +33,7 @@ namespace RegisTunerPlugin
 
         public TunerControl()
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
         }
 
         [Import]
