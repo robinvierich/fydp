@@ -13,6 +13,7 @@ namespace RegisTunerPlugin.ViewModels
     [Export]
     public class TunerViewModel : BaseViewModel
     {
+        
         public TunerViewModel()
         {
             Tunings = new ObservableCollection<Tuning>();
@@ -26,6 +27,12 @@ namespace RegisTunerPlugin.ViewModels
             private set { _tunings = value; }
         }
 
+        //private double _display;
+        //public double Display
+        //{
+        //    get { return _display; }
+        //    private set { _display = value; }
+        //}
 
         private void LoadTunings()
         {

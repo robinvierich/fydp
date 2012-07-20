@@ -48,10 +48,11 @@ namespace Regis.Services
             // Step 3 - Exchange the Request Token for an Access Token
             string verifier = strPin; // <-- This is input into your application by your user
             _accessToken = service.GetAccessToken(requestToken, verifier);
+            while (_accessToken == null)
+            {
+                
+            }
 
-            // Step 4 - User authenticates using the Access Token
-            service.AuthenticateWith(_accessToken.Token, _accessToken.TokenSecret);
-            IEnumerable<TwitterStatus> mentions = service.ListTweetsMentioningMe();
         }
 
         public void PostToTwitter(string value)
