@@ -57,6 +57,7 @@ namespace HelloWorldPlugin
             _socialNetworkingService.PostToTwitter(this.txtTweet.Text);
         }
 
+        #region IPlugin
         public void Load()
         {
             
