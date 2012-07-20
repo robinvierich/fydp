@@ -16,7 +16,7 @@ namespace Regis.Services.Realtime
     public class SimpleNoteDetectionAlgorithm : INoteDetectionSource, INoteDetectionService
     {
         private ConcurrentQueue<Note[]> _noteQueue = new ConcurrentQueue<Note[]>();
-        public ConcurrentQueue<Note[]> NoteQueue { get { throw new NotImplementedException(); }}
+        public ConcurrentQueue<Note[]> NoteQueue { get { return _noteQueue; } }
 
         [Import]
         private IFFTSource _fftSource = null;
@@ -50,6 +50,8 @@ namespace Regis.Services.Realtime
             _noteDetectionThread.Join();
         }
 
+        private int _maxNoteQueueSize = 5;
+
         private void DetectNotes()
         {
             while (!_stopDetecting)
@@ -72,6 +74,12 @@ namespace Regis.Services.Realtime
                 //Console.WriteLine(notes[0].closestRealNoteFrequency);
 
                 _noteQueue.Enqueue(notes);
+
+                if (_noteQueue.Count > _maxNoteQueueSize)
+                {
+                    Note[] dqnotes;
+                    _noteQueue.TryDequeue(out dqnotes);
+                }
             }
         }
 
@@ -117,7 +125,7 @@ namespace Regis.Services.Realtime
                 freq += (inputArray[i] / sum) * (i * _step);
             }
 
-            Console.WriteLine(freq);
+            //Console.WriteLine(freq);
             return freq;
         }
 
