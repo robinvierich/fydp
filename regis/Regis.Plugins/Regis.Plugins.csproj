@@ -35,6 +35,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,10 +47,14 @@
   <ItemGroup>
     <Compile Include="Interfaces\IFFTSource.cs" />
     <Compile Include="Interfaces\INoteDetectionSource.cs" />
+    <Compile Include="Interfaces\IPersistanceService.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\ISocialNetworkingService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\FFTCalculation.cs" />
     <Compile Include="Models\Note.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserTrainingStats.cs" />
     <Compile Include="NoteDetectionAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statics\NoteDictionary.cs" />

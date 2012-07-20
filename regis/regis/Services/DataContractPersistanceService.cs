@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Xml;
 using System.ComponentModel.Composition;
+using Regis.Plugins.Interfaces;
 
 namespace Regis.Services
 {

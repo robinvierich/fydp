@@ -17,6 +17,7 @@ using Regis.Plugins.Interfaces;
 using System.Threading;
 using Regis.Plugins.Models;
 using Regis.Plugins.Statics;
+using System.Windows.Threading;
 
 
 namespace RegisFreeFormPlugin
@@ -86,7 +87,7 @@ namespace RegisFreeFormPlugin
         {
             _runningFreeform = true;
             string[] noteStaff = new string[19];
-            noteStaff[0] = "&amp;=";
+            noteStaff[0] = "&=";
             for (int count = 1; count < 18; count++)
             {
                 if (count % 2 == 1) 
@@ -109,32 +110,43 @@ namespace RegisFreeFormPlugin
 
         private void RunFreeform(string[] noteStaff)
         {
-            int index; 
-            index = 2; 
+            int index;
+            Note[] prevNote = new Note[3];
+            Note[] curNote;
+            index = 1; 
             while (_runningFreeform)
             {
-                Note[] prevNote = null;
-                Note[] curNote;
+                
+                
                 // "&amp;= == = == = == = == = == = == = == = == = == ||" 
                 
 
                 if (!noteSource.NoteQueue.TryPeek(out curNote))
                     continue;
 
-                if (curNote == prevNote)
+                if (curNote[0].closestRealNoteFrequency == prevNote[0].closestRealNoteFrequency)
                     continue;
 
                 prevNote = curNote;
-
+       
                 noteStaff[index] = NoteDictionary.NoteDict[curNote[0].closestRealNoteFrequency].ToString();
+                String mystaff = string.Join("", noteStaff);
+                Application.Current.Dispatcher.Invoke(
+                    DispatcherPriority.Render,
+                    new Action<string>(updateStaff),
+                    mystaff);
 
-                noteBlock.Text = noteStaff.ToString();
+                //noteBlock.Text = noteStaff.ToString();
 
                 index += 2;
 
                 if (index >= 18)
-                    index = 2; 
+                    index = 1; 
             }
+        }
+        private void updateStaff(string staff)
+        {
+            noteBlock.Text = staff;
         }
     }
 }

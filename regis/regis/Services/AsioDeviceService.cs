@@ -31,26 +31,26 @@ namespace Regis.AudioCapture.Services
 
         public static void LoadDriver(InstalledDriver driver)
         {
-            if (AudioCapture.LoadedDriver != null)
+            if (AudioCaptureSettings.LoadedDriver != null)
             {
-                AudioCapture.LoadedDriver.Release();
+                AudioCaptureSettings.LoadedDriver.Release();
             }
 
             // Load the driver, set the sample rate, and temporarily create buffers so we can enumerate the input channels
             try
             {
-                AudioCapture.LoadedDriver = AsioDriver.SelectDriver(driver);
-                AudioCapture.LoadedDriver.SetSampleRate(AudioCapture.SampleRate);
-                AudioCapture.LoadedDriver.CreateBuffers(false, -1);
+                AudioCaptureSettings.LoadedDriver = AsioDriver.SelectDriver(driver);
+                AudioCaptureSettings.LoadedDriver.SetSampleRate(AudioCaptureSettings.SampleRate);
+                AudioCaptureSettings.LoadedDriver.CreateBuffers(false, -1);
             }
             catch (ApplicationException)
             {
                 throw new Exception("Could not initialize driver");
             }
 
-            AudioCapture.LoadedDriver.DisposeBuffers();
+            AudioCaptureSettings.LoadedDriver.DisposeBuffers();
 
-            Raise_DriverLoaded(AudioCapture.LoadedDriver);
+            Raise_DriverLoaded(AudioCaptureSettings.LoadedDriver);
         }
 
         #region DriverLoaded Event
