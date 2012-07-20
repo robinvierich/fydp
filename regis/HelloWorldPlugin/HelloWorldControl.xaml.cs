@@ -40,21 +40,15 @@ namespace HelloWorldPlugin
             b.Content = "HELLO WORLD";
         }
 
-        private void btnTweet_Click(object sender, RoutedEventArgs e)
-        {
-            _socialNetworkingService.AuthTwitter1();
-            this.txtPin.Visibility = Visibility.Visible;
-            this.btnPinOk.Visibility = Visibility.Visible;
-        }
-
-        private void btnPinOk_Click(object sender, RoutedEventArgs e)
-        {
-            _socialNetworkingService.AuthTwitter2(this.txtPin.Text);
-        }
 
         private void btnSendTweet_Click(object sender, RoutedEventArgs e)
         {
             _socialNetworkingService.PostToTwitter(this.txtTweet.Text);
+        }
+
+        private void btnFacebook_Click(object sender, RoutedEventArgs e)
+        {
+            _socialNetworkingService.PostToFacebook(this.txtFacebook.Text);
         }
 
         #region IPlugin
@@ -80,15 +74,10 @@ namespace HelloWorldPlugin
         {
             get
             {
-                return "Tweet This Shit";
+                return "Social Media";
             }
         }
         #endregion
-        private void btnFacebook_Click(object sender, RoutedEventArgs e)
-        {
-            _socialNetworkingService.PostToFacebook(this.txtFacebook.Text);
-        }
-
 
     }
 }
