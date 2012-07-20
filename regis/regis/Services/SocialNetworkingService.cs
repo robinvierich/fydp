@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Regis.Plugins;
 using System.ComponentModel.Composition;
 using Regis.Commands;
+using Regis.Plugins.Interfaces;
 using TweetSharp;
 using System.Diagnostics;
 using Facebook;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.Composition;
-using Regis.Plugins;
 using Regis.Services;
 using System.Windows.Input;
 using Regis.Plugins.Models;
@@ -11,6 +10,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using Regis.Base.ViewModels;
 using Regis.Commands;
+using Regis.Plugins.Interfaces;
 
 namespace Regis.ViewModels
 {

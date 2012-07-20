@@ -12,15 +12,15 @@ namespace Regis.Base.ViewModels
         {
         }
 
+        
         protected void NotifyPropertyChanged(PropertyChangedEventArgs args)
         {
             PropertyChangedEventHandler h = PropertyChanged;
-            if (h == null) return;
+            if (h == null)
+                return;
 
             h(this, args);
         }
-
-        
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

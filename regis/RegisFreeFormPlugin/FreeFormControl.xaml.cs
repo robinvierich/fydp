@@ -12,8 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
-using Regis.Plugins;
 using RegisFreeFormPlugin.ViewModels;
+using Regis.Plugins.Interfaces;
 
 
 namespace RegisFreeFormPlugin
@@ -62,11 +62,6 @@ namespace RegisFreeFormPlugin
         public string FriendlyPluginName
         {
             get { return "FreeFormMode"; }
-        }
-
-        public NoteDetectionAlgorithm Algorithm
-        {
-            get { throw new NotImplementedException(); }
         }
 
         #endregion
