@@ -9,7 +9,7 @@
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RegisUserStatsPlugin</RootNamespace>
-    <AssemblyName>WpfControlLibrary2</AssemblyName>
+    <AssemblyName>RegisUserStatsPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -50,6 +50,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UserStatsViewModel.cs" />
     <Page Include="UserStatsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,6 +85,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Regis.Base\Regis.Base.csproj">
+      <Project>{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}</Project>
+      <Name>Regis.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\regis.plugins\Regis.Plugins.csproj">
       <Project>{730CC1CC-9028-4EF6-83BD-A5D5E5BAF9C8}</Project>
       <Name>Regis.Plugins</Name>

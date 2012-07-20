@@ -102,11 +102,8 @@
     <Compile Include="Commands\RestartSamplingServiceCommand.cs" />
     <Compile Include="Composition\Importer.cs" />
     <Compile Include="Models\SampleCollection.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Services\AsioDeviceService.cs" />
-    <Compile Include="Services\IPersistanceService.cs" />
     <Compile Include="Services\DataContractPersistanceService.cs" />
-    <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\Realtime\AsioSamplingService.cs" />
     <Compile Include="Services\Realtime\FFTAlgorithm.cs" />
     <Compile Include="Services\Realtime\Interfaces\IAsioSamplingService.cs" />

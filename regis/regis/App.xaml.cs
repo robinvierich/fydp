@@ -7,12 +7,12 @@ using System.Windows;
 using Regis.Services.Realtime;
 using Regis.Composition;
 using System.ComponentModel.Composition;
+using Regis.Plugins.Interfaces;
 
 namespace Regis
 {
     public partial class App : Application
     {
-        bool loaded = false;
 
         [Import]
         IFFTService _fftService = null;
@@ -22,6 +22,9 @@ namespace Regis
 
         [Import]
         IAsioSamplingService _asioSamplingService = null;
+
+        [Import]
+        IUserService _userService = null;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -37,7 +40,9 @@ namespace Regis
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
-            
+
+            _userService.SaveCurrentUser();
+
             _asioSamplingService.Stop();
             _asioSamplingService.ReleaseDriver();
 
