@@ -50,10 +50,17 @@
     <Compile Include="TrainingControl.xaml.cs">
       <DependentUpon>TrainingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SummaryBox.xaml.cs">
+      <DependentUpon>SummaryBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\TrainingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="TrainingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SummaryBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -67,6 +74,10 @@
       <Project>{730CC1CC-9028-4EF6-83BD-A5D5E5BAF9C8}</Project>
       <Name>Regis.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\regis\Regis.csproj">
+      <Project>{9DB5F1C9-6F66-480F-BB64-78853D63F35A}</Project>
+      <Name>Regis</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\green_check.PNG" />
@@ -77,7 +88,9 @@
     <Resource Include="Images\black_arrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="training_modules.cfg" />
+    <None Include="training_modules.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -84,6 +84,11 @@ namespace Regis.Controls
             this.txtPin.Text = "Authenticated!";
         }
 
+        private void btnFacebook_Click(object sender, RoutedEventArgs e)
+        {
+            _socialNetworkingService.FacebookAuth();
+        }
+
         #region IPlugin
         public void Load() { }
 
@@ -103,6 +108,8 @@ namespace Regis.Controls
         }
 
         #endregion
+
+
 
 
     }

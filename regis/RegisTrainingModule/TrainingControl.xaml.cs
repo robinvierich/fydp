@@ -30,13 +30,20 @@ namespace RegisTrainingModule
     {
         Thread _trainingThread;
         bool _runningTraining;
+        int notesTotal = 0;
+        int notesCorrect = 0;
+        DateTime time;
 
         [Import]
         private INoteDetectionSource noteSource;
 
+        [Import]
+        private IUserService _userService;
+
         public TrainingControl()
         {
             InitializeComponent();
+            
         }
 
         [Import]
@@ -77,7 +84,20 @@ namespace RegisTrainingModule
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            User currentUser = _userService.GetCurrentUser();
+
+            currentUser.TrainingStats.Add(new UserTrainingStats()
+            {
+                TimeStamp = DateTime.Now,
+                PercentCorrectNotes = ((double)notesCorrect / (double)notesTotal) * 100,
+                TotalNotesPlayed = notesTotal
+            });
+
+ 
             StopTraining();
+            
+               //do your operation here!
+            time = DateTime.Now;
             _trainingThread = new Thread(new ThreadStart(StartTraining));
             _trainingThread.Start();
         }
@@ -94,6 +114,7 @@ namespace RegisTrainingModule
                 return;
 
             _runningTraining = false;
+            ShowSummary();
             _trainingThread.Join();
         }
 
@@ -125,6 +146,8 @@ namespace RegisTrainingModule
                                 DispatcherPriority.Render,
                                 new Action<string>(GreenShow),
                                 _green);
+                            notesCorrect += 1;
+                            notesTotal += 1;
 
                             break;
                         }
@@ -136,8 +159,34 @@ namespace RegisTrainingModule
                         _arrow);
                 }
 
+                User currentUser = _userService.GetCurrentUser();
+
+                currentUser.TrainingStats.Add(new UserTrainingStats()
+                {
+                    TimeStamp = DateTime.Now,
+                    PercentCorrectNotes = ((double)notesCorrect/(double)notesTotal) * 100,
+                    TotalNotesPlayed = notesTotal
+                });
+               
+
+                Application.Current.Dispatcher.Invoke(
+                        DispatcherPriority.Render,
+                        new Action(ShowSummary));
+
                 StopTraining();
             }
+        }
+
+        private static int GetTimeSpan(DateTime value)
+        {
+            return DateTime.Now.Subtract(value).Milliseconds;
+        }
+
+        private void ShowSummary()
+        {
+            Window w = new Window();
+            w.Content = new SummaryBox();
+            w.ShowDialog();
         }
 
         private void GreenShow(string greenIndex)
@@ -157,6 +206,8 @@ namespace RegisTrainingModule
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
+            
+            //GetTimeSpan(
             StopTraining();
         }
     }

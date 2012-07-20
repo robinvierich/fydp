@@ -21,11 +21,23 @@ namespace RegisUserStatsPlugin
     /// </summary>
 
     [Export(typeof(IPlugin))]
-    public partial class UserStatsControl : UserControl, IPlugin
+    public partial class UserStatsControl : UserControl, IPlugin, IPartImportsSatisfiedNotification
     {
         public UserStatsControl()
         {
             InitializeComponent();
+        }
+
+        public void OnImportsSatisfied()
+        {
+            DataContext = ViewModel;
+        }
+
+        [Import]
+        public UserStatsViewModel ViewModel
+        {
+            get;
+            set;
         }
 
         #region IPlugin
@@ -47,7 +59,7 @@ namespace RegisUserStatsPlugin
 
         public string FriendlyPluginName
         {
-            get { return "UserStatistics"; }
+            get { return "User Statistics"; }
         }
 
         #endregion

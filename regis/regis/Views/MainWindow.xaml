@@ -17,7 +17,9 @@
         </Grid.RowDefinitions>
 
         <Menu Height="23" Name="mainMenu" Grid.ColumnSpan="2">
-            <MenuItem Header="Test" />
+            <MenuItem Header="File">
+                <MenuItem Header="Exit" Click="Exit_Click" />
+            </MenuItem>
         </Menu>
         <ListView ItemsSource="{Binding Plugins}" Grid.Row="1">
             <ListView.ItemContainerStyle>
@@ -28,7 +30,11 @@
             
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding FriendlyPluginName}" Command="{Binding ElementName=MainGrid, Path=DataContext.LoadPluginCommand}" CommandParameter="{Binding PluginName}" />    
+                    <Button Content="{Binding FriendlyPluginName}"
+                            Command="{Binding ElementName=MainGrid, Path=DataContext.LoadPluginCommand}" 
+                            CommandParameter="{Binding PluginName}"
+                            MinHeight="20"
+                            Margin="1,3"/>    
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
