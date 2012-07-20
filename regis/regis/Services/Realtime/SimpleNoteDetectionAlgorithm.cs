@@ -78,6 +78,7 @@ namespace Regis.Services.Realtime
             int width = 10;
 
             double max = inputArray.Max();
+
             int highIdx = Array.IndexOf(inputArray, max) + width/2;
             int lowIdx = highIdx - (width / 2);
 
@@ -113,7 +114,7 @@ namespace Regis.Services.Realtime
         //        if (inputArray[i] >= max)
         //        {
         //            max = inputArray[i];
-        //            //min = inputArray[i];
+        //            min = inputArray[i];
         //            maxIndex = i;
         //        }
         //        else if (inputArray[i] <= min)

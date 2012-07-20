@@ -1,4 +1,5 @@
 
+*.stackdump
 *.exe
 *.o
 *.suo
@@ -13,9 +14,9 @@
 *.xml
 *.sdf
 
-
 bin
 obj
 dsp
 Debug
 Release
+regisPlugins

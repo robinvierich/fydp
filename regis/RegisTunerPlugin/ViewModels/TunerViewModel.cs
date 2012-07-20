@@ -43,22 +43,25 @@ namespace RegisTunerPlugin.ViewModels
                     ObservableCollection<GuitarString> guitarStrings = new ObservableCollection<GuitarString>();
                     tuning.Name = line;
 
-                    for (int i = 0; i < 6; i++)
+                    while (true)
                     {
-                        GuitarString guitarString = new GuitarString();
                         line = readFile.ReadLine();
+
+                        if (line == String.Empty)
+                            break;
+
+                        GuitarString guitarString = new GuitarString();
                         string[] lineParts = line.Split(',');
                         guitarString.StringName = lineParts[0];
                         guitarString.Frequency = Convert.ToDouble(lineParts[1]);
-                        guitarString.StringNum = i;
+                        guitarString.StringNum = Convert.ToInt32(lineParts[2]);
                         guitarStrings.Add(guitarString);
                     }
 
-                    line = readFile.ReadLine(); // blank line
-
                     tuning.GuitarStrings = guitarStrings;
-                    Tunings.Add(tuning);
+                    Tunings.Add(tuning);  
                 }
+                Console.WriteLine("DEBUG::REGIS:: tunings.cfg => Loaded");
             }
             catch { }
         }
