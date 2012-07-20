@@ -44,11 +44,13 @@ namespace HelloWorldPlugin
         private void btnSendTweet_Click(object sender, RoutedEventArgs e)
         {
             _socialNetworkingService.PostToTwitter(this.txtTweet.Text);
+            txtTweet.Text = "";
         }
 
         private void btnFacebook_Click(object sender, RoutedEventArgs e)
         {
             _socialNetworkingService.PostToFacebook(this.txtFacebook.Text);
+            txtFacebook.Text = "";
         }
 
         #region IPlugin

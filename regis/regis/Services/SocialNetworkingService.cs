@@ -53,7 +53,13 @@ namespace Regis.Services
             // Step 3 - Exchange the Request Token for an Access Token
             string verifier = strPin; // <-- This is input into your application by your user
             _accessToken = service.GetAccessToken(requestToken, verifier);
-            browserProc.Kill();
+            try
+            {
+                browserProc.Kill();
+            }
+            catch
+            {
+            }
         }
 
         public void PostToTwitter(string value)
