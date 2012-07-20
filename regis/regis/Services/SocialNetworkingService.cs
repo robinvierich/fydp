@@ -7,6 +7,8 @@ using System.ComponentModel.Composition;
 using Regis.Commands;
 using TweetSharp;
 using System.Diagnostics;
+using Facebook;
+using System.Dynamic;
 
 namespace Regis.Services
 {
@@ -14,16 +16,21 @@ namespace Regis.Services
     public class SocialNetworkingService : ISocialNetworkingService
     {
         TwitterService service;
+        FacebookClient FService;
         OAuthRequestToken requestToken;
 
         private OAuthAccessToken _accessToken = null;
         private string consumerKey = "zNYoMCNvLihkyufESnZg";
         private string consumerSecret = "p8AQdU6Gw1gcctl2rt7ka7qffMflttbm0hquLN40";
+        private string faceConsumerKey = "331770083574694";
+        private string faceConsumerSecret = "c9b23ec43741ff8d4ce3245f24ec6390";
+        private string faceAccess = "AAAEtvj36g6YBAPlISm1GOyDtEErEfXSlQ7zunuq6jX1tqjOwCL0Wdww1JDaiqhJ9ZBF5363JnrdyVbV3zZBCV6nNQPLoUGTvYolGPTIgZDZD";
 
         public SocialNetworkingService()
         {
             // Pass your credentials to the service
             service = new TwitterService(consumerKey, consumerSecret);
+            FService = new FacebookClient(faceAccess);
         }
 
         public void AuthTwitter1()
@@ -50,12 +57,24 @@ namespace Regis.Services
         public void PostToTwitter(string value)
         {
             service.AuthenticateWith(consumerKey, consumerSecret, _accessToken.Token, _accessToken.TokenSecret);
-                TwitterStatus status = service.SendTweet(value);
+            TwitterStatus status = service.SendTweet(value);
         }
 
-        public void PostToFacebook(string value)
+        public void authFacebook1()
         {
-            
+
+        }
+
+        public void authFacebook2()
+        {
+
+        }
+
+        public void PostToFacebook(string message)
+        {
+            dynamic parameters = new ExpandoObject();
+            parameters.message = message;
+            FService.Post("me/feed",parameters);
         }
     }
 }
