@@ -34,5 +34,6 @@
         <Image Height="39" HorizontalAlignment="Left" Margin="490,274,0,0" Name="arrow7" Source="/RegisTrainingModule;component/Images/black_arrow.png" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
         <TextBlock Height="36" HorizontalAlignment="Left" Margin="82,27,0,0" Name="moduleName" Text="Gmaj Scale" VerticalAlignment="Top" Width="109" FontWeight="Bold" FontSize="20" />
         <Button Content="Start Module" Height="23" HorizontalAlignment="Left" Margin="12,342,0,0" Name="startButton" VerticalAlignment="Top" Width="75" Click="startButton_Click" />
+        <Button Content="Stop Module" Height="23" HorizontalAlignment="Left" Margin="93,342,0,0" Name="stopButton" VerticalAlignment="Top" Width="75" />
     </Grid>
 </UserControl>
