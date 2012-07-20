@@ -16,6 +16,8 @@ using Regis.Plugins.Interfaces;
 using System.Threading;
 using RegisTrainingModule.Models;
 using RegisTrainingModule.ViewModels;
+using System.Windows.Threading;
+using Regis.Plugins.Models;
 
 namespace RegisTrainingModule
 {
@@ -28,6 +30,9 @@ namespace RegisTrainingModule
     {
         Thread _trainingThread;
         bool _runningTraining;
+
+        [Import]
+        private INoteDetectionSource noteSource;
 
         public TrainingControl()
         {
@@ -98,21 +103,56 @@ namespace RegisTrainingModule
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    ((FrameworkElement)this.FindName("arrow" + i.ToString())).Visibility = Visibility.Visible;
+                    string _arrow = "arrow" + i.ToString();
+                    string _green = "green" + i.ToString();
+                    Application.Current.Dispatcher.Invoke(
+                        DispatcherPriority.Render,
+                        new Action<string>(ArrowShow),
+                        _arrow);
 
-                    //while (true)
-                    //{
-                        //TODO
-                        //poll for current note in note detection queue
+                    while (true)
+                    {
+                        Note[] notes;
+                        if (!noteSource.NoteQueue.TryPeek(out notes))
+                            continue;
 
-                        //if note matched targetFreq
-                            //((FrameworkElement)this.FindName("green" + i.ToString())).Visibility = Visibility.Visible;
-                            //break
-                   //}
+                        if (notes[0].closestRealNoteFrequency == 0)
+                            continue;
 
-                    ((FrameworkElement)this.FindName("arrow" + i.ToString())).Visibility = Visibility.Hidden;
+                        if (notes[0].closestRealNoteFrequency == ViewModel.TrainingModules[0].TargetFreq[i])
+                        {
+                            Application.Current.Dispatcher.Invoke(
+                                DispatcherPriority.Render,
+                                new Action<string>(GreenShow),
+                                _green);
+
+                            break;
+                        }
+                   }
+
+                    Application.Current.Dispatcher.Invoke(
+                        DispatcherPriority.Render,
+                        new Action<string>(ArrowHide),
+                        _arrow);
                 }
+
+                StopTraining();
             }
+        }
+
+        private void GreenShow(string greenIndex)
+        {
+            ((FrameworkElement)this.FindName(greenIndex)).Visibility = Visibility.Visible;
+        }
+
+        private void ArrowShow(string arrowIndex)
+        {
+            ((FrameworkElement)this.FindName(arrowIndex)).Visibility = Visibility.Visible;
+        }
+
+        private void ArrowHide(string arrowIndex)
+        {
+            ((FrameworkElement)this.FindName(arrowIndex)).Visibility = Visibility.Hidden;
         }
     }
 }
