@@ -14,20 +14,14 @@ namespace Regis.Commands
         private InstalledDriver _driver;
         private uint _sampleRate;
 
-        public LoadDriverCommandArgs(InstalledDriver driver, uint sampleRate)
+        public LoadDriverCommandArgs(InstalledDriver driver)
         {
             _driver = driver;
-            _sampleRate = sampleRate;
         }
 
         public InstalledDriver Driver
         {
             get { return _driver; }
-        }
-
-        public uint SampleRate
-        {
-            get { return _sampleRate; }
         }
     }
 
@@ -50,7 +44,7 @@ namespace Regis.Commands
             if (args == null)
                 throw new Exception("LoadDriverCommand needs a LoadDriverCommandArgs object as the command parameter");
 
-            AsioDeviceService.LoadDriver(args.Driver, args.SampleRate);
+            AsioDeviceService.LoadDriver(args.Driver);
         }
 
     }

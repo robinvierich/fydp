@@ -117,7 +117,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>robocopy $(TargetDir) $(SolutionDir)regisPlugins $(TargetName).dll $(TargetName).pdb
+    <PostBuildEvent>robocopy $(TargetDir) $(SolutionDir)regisPlugins\ $(TargetName).dll $(TargetName).pdb
 robocopy $(TargetDir) $(SolutionDir)regis\bin\Debug tunings.cfg
 
 REM For some reason, robocopy returns 1 when successful..

@@ -126,7 +126,6 @@ namespace Regis.Services.Realtime
                 //    }
                 //}
                 #endregion
-
             }
         }
 

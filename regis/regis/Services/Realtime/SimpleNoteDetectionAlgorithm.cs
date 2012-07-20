@@ -24,9 +24,10 @@ namespace Regis.Services.Realtime
         private Thread _noteDetectionThread;
         private bool _stopDetecting;
 
-        private double sps = 6857;
-        private double samples = 1024;
-        private double step;
+        private double _sampleRate = AudioCapture.AudioCapture.SampleRate;
+        private double _samples = AudioCapture.AudioCapture.BufferSize;
+        private double _step;
+        private double _noiseFloor = 0;
 
         public void Start(SimpleNoteDetectionArgs args)
         {
@@ -34,7 +35,7 @@ namespace Regis.Services.Realtime
                 return;
 
             _stopDetecting = false;
-            step = 2 * sps / samples;
+            _step = _sampleRate / _samples;
 
             _noteDetectionThread = new Thread(new ThreadStart(DetectNotes));
             _noteDetectionThread.Start();
@@ -55,7 +56,7 @@ namespace Regis.Services.Realtime
             {
                 FFTCalculation fftCalc;
                 if (!_fftSource.FFTQueue.TryPeek(out fftCalc))
-                    return;
+                    continue;
 
                 double[] powerBins = fftCalc.PowerBins;
 
@@ -64,72 +65,95 @@ namespace Regis.Services.Realtime
                 //End Note Detection
 
                 Note[] notes = new Note[1];
-                notes[0]._timeStamp = DateTime.Now;
-                notes[0]._frequency = freq;
+                notes[0].timeStamp = DateTime.Now;
+                notes[0].frequency = freq;
+                notes[0].closestRealNoteFrequency = Regis.Plugins.Statics.NoteDictionary.GetClosestRealNoteFrequency(freq);
+
+                //Console.WriteLine(notes[0].closestRealNoteFrequency);
 
                 _noteQueue.Enqueue(notes);
             }
         }
 
-        private double NoteCalc(double[] inputArray)
-        {
-            //Tuple<int, int> index = MinMaxCalc(inputArray);
 
-            int width = 10;
-
-            double max = inputArray.Max();
-
-            int highIdx = Array.IndexOf(inputArray, max) + width/2;
-            int lowIdx = highIdx - (width / 2);
-
-            lowIdx = Math.Max(0, lowIdx);
-            highIdx = Math.Min(256, highIdx);
-
-            double sum = 0;
-            double freq = 0;
-
-            for (int i = lowIdx; i < highIdx; i++)
-            {
-                sum += inputArray[i];
-            }
-
-            for (int i = lowIdx; i < highIdx; i++)
-            {
-                freq += (inputArray[i] / sum) * (i * step);
-            }
-
-            //Console.WriteLine(freq);
-            return freq;
-        }
-
-        //private Tuple<int, int> MinMaxCalc(double[] inputArray)
-        //{
-        //    double max = 0;
-        //    double min = 0;
-        //    int maxIndex = 0;
-        //    int minIndex = 0;
-
-        //    for (int i = 0; i < 256; i++)
+        //bool foundMax = false;
+        //    for (int i = 1; i < inputArray.Length; i++)
         //    {
-        //        if (inputArray[i] >= max)
+        //        double item = inputArray[i];
+        //        double prevItem = inputArray[i - 1];
+
+        //        if (item - _noiseFloor < 0)
+        //            continue;
+
+        //        sum += item;
+        //        if (foundMax == false && item <= prevItem)
         //        {
-        //            max = inputArray[i];
-        //            min = inputArray[i];
-        //            maxIndex = i;
+        //            foundMax = true;
         //        }
-        //        else if (inputArray[i] <= min)
-        //        {
-        //            min = inputArray[i];
-        //            minIndex = i;
-        //        }
-        //        else
+
+        //        if (foundMax == true && item >= prevItem)
         //        {
         //            break;
         //        }
         //    }
 
-        //    return new Tuple<int, int>(maxIndex, minIndex);
-        //}
+
+        private double NoteCalc(double[] inputArray)
+        {
+            Tuple<int, int> index = MinMaxCalc(inputArray);
+
+            double sum = 0;
+            double freq = 0;
+            int minIndex = index.Item2 - index.Item1;
+            int maxIndex = index.Item2;
+
+            for (int i = minIndex; i < maxIndex; i++)
+            {
+                sum += inputArray[i];
+            }
+
+            for (int i = minIndex; i < maxIndex; i++)
+            {
+                freq += (inputArray[i] / sum) * (i * _step);
+            }
+
+            Console.WriteLine(freq);
+            return freq;
+        }
+
+        private Tuple<int, int> MinMaxCalc(double[] inputArray)
+        {
+            double max = 0;
+            double min = 0;
+            int maxIndex = 0;
+            int minIndex = 0;
+
+            _noiseFloor = 100 * inputArray[0];
+
+            for (int i = 0; i < _samples; i++)
+            {
+                if (inputArray[i] < _noiseFloor)
+                    continue;
+
+                if (inputArray[i] >= max)
+                {
+                    max = inputArray[i];
+                    min = inputArray[i];
+                    maxIndex = i;
+                }
+                else if (inputArray[i] <= min)
+                {
+                    min = inputArray[i];
+                    minIndex = i;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return new Tuple<int, int>(maxIndex, minIndex);
+        }
 
         
     }

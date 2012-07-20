@@ -7,7 +7,8 @@ namespace Regis.Plugins.Models
 {
     public struct Note
     {
-        public DateTime _timeStamp;
-        public double _frequency;
+        public DateTime timeStamp;
+        public double frequency;
+        public double closestRealNoteFrequency;
     }
 }

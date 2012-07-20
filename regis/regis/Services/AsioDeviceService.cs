@@ -29,7 +29,7 @@ namespace Regis.AudioCapture.Services
             return toReturn;
         }
 
-        public static void LoadDriver(InstalledDriver driver, uint sampleRate)
+        public static void LoadDriver(InstalledDriver driver)
         {
             if (AudioCapture.LoadedDriver != null)
             {
@@ -40,8 +40,8 @@ namespace Regis.AudioCapture.Services
             try
             {
                 AudioCapture.LoadedDriver = AsioDriver.SelectDriver(driver);
-                AudioCapture.LoadedDriver.SetSampleRate(sampleRate);
-                AudioCapture.LoadedDriver.CreateBuffers(false);
+                AudioCapture.LoadedDriver.SetSampleRate(AudioCapture.SampleRate);
+                AudioCapture.LoadedDriver.CreateBuffers(false, -1);
             }
             catch (ApplicationException)
             {

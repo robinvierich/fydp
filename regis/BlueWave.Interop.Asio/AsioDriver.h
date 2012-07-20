@@ -92,7 +92,7 @@ namespace BlueWave
 					void Start();
 					void Stop();
 					void ShowControlPanel();
-					void CreateBuffers(bool useMaxBufferSize);
+					void CreateBuffers(bool useMaxBufferSize, long customBufferSize);
 					void DisposeBuffers();
 					void Release();
 					void SetSampleRate(double rate);
