@@ -105,6 +105,8 @@
     <Compile Include="Services\AsioDeviceService.cs" />
     <Compile Include="Services\DataContractPersistanceService.cs" />
     <Compile Include="Services\Realtime\AsioSamplingService.cs" />
+    <Compile Include="Services\Realtime\Interfaces\IChordDetectionService.cs" />
+    <Compile Include="Services\Realtime\SimpleChordDetectionAlgorithm.cs" />
     <Compile Include="Services\Realtime\FFTAlgorithm.cs" />
     <Compile Include="Services\Realtime\Interfaces\IAsioSamplingService.cs" />
     <Compile Include="Services\Realtime\Interfaces\IFFTService.cs" />

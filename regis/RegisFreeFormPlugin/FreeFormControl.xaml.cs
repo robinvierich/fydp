@@ -126,6 +126,8 @@ namespace RegisFreeFormPlugin
 
                 if (curNote[0].closestRealNoteFrequency == prevNote[0].closestRealNoteFrequency)
                     continue;
+                else if (curNote[0].closestRealNoteFrequency == 0)
+                    continue;
 
                 prevNote = curNote;
        

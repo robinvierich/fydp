@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="RegisTrainingModule.SummaryBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="289" d:DesignWidth="516">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Summary Stats" FontSize="24" />
+        
+        <Grid Grid.ColumnSpan="3" Grid.Row="1" Margin="10,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="150" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Date" Grid.Row="0" FontSize="14" />
+            <TextBlock x:Name="txtDate" Grid.Row="0" Grid.Column="1" FontSize="14"  />
+
+            <TextBlock Text="Total Notes Played" Grid.Row="1" FontSize="14" />
+            <TextBlock x:Name="txtNotesPlayed" Text="{Binding TotalNotesPlayed}" Grid.Row="1" Grid.Column="1" FontSize="14"  />
+
+            <TextBlock Text="Percent Correct" Grid.Row="2" FontSize="14" />
+            <TextBlock x:Name="txtPercentCorrect" Text="{Binding PercentCorrectNotes}" Grid.Row="2" Grid.Column="1" FontSize="14"  />
+        </Grid>
+        <Button Content="Post to Facebook" Margin="0,0" Height="45" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="0" Name="btnPostFacebook" VerticalAlignment="Top" Width="104" Click="btnPostFacebook_Click" />
+        <Button Content="Post to Twitter" Height="45" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="btnPostTwitter" VerticalAlignment="Top" Width="104" Click="btnPostTwitter_Click" />
+        <Button Content="OK"  Height="45" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="2" Name="btnOK" VerticalAlignment="Top" Width="104" Click="btnOK_Click" />
+    </Grid>
+</UserControl>

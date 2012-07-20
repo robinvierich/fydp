@@ -21,6 +21,9 @@ namespace Regis
         INoteDetectionService _noteDetectionService = null;
 
         [Import]
+        IChordDetectionService _chordDetectionService = null;
+
+        [Import]
         IAsioSamplingService _asioSamplingService = null;
 
         [Import]
@@ -35,6 +38,7 @@ namespace Regis
             // TODO: Fill this in with correct args;
             _fftService.Start(new FFTArgs() { MaxQueueSize = 3 });
             _noteDetectionService.Start(new SimpleNoteDetectionArgs());
+            _chordDetectionService.Start(new SimpleChordDetectionArgs());
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -48,6 +52,7 @@ namespace Regis
 
             _fftService.Stop();
             _noteDetectionService.Stop();
+            _chordDetectionService.Stop();
         }
     }
 }

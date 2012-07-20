@@ -11,5 +11,6 @@ namespace Regis.Plugins.Interfaces
         void AuthTwitter2(string strPin);
         void PostToTwitter(string value);
         void PostToFacebook(string value);
+        void FacebookAuth();
     }
 }
