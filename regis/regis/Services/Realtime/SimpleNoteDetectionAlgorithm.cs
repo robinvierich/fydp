@@ -27,7 +27,7 @@ namespace Regis.Services.Realtime
         private double _sampleRate = AudioCapture.AudioCapture.SampleRate;
         private double _samples = AudioCapture.AudioCapture.BufferSize;
         private double _step;
-        private double _noiseFloor = 500000000000000;
+        private double _noiseFloor = 6E+16;//500000000000000;
 
         public void Start(SimpleNoteDetectionArgs args)
         {
@@ -61,29 +61,38 @@ namespace Regis.Services.Realtime
                 double[] powerBins = fftCalc.PowerBins;
 
                 //Start Note Detection
-                double freq = NoteCalc(powerBins);
-                //End Note Detection
+                double freq = DetectFrequency_Mirrored(powerBins);
 
                 Note[] notes = new Note[1];
                 notes[0].timeStamp = DateTime.Now;
                 notes[0].frequency = freq;
                 notes[0].closestRealNoteFrequency = Regis.Plugins.Statics.NoteDictionary.GetClosestRealNoteFrequency(freq);
 
-                Console.WriteLine(notes[0].closestRealNoteFrequency);
-
+                //Console.WriteLine(notes[0].closestRealNoteFrequency);
                 _noteQueue.Enqueue(notes);
             }
         }
 
 
-        //bool foundMax = false;
+        //private double CalcFreq(double[] inputArray)
+        //{
+        //    bool foundMax = false;
+        //    double sum = 0;
+        //    double freq = 0;
+
+        //    int lowIdx = -1;
+        //    int highIdx = -1;
+
         //    for (int i = 1; i < inputArray.Length; i++)
         //    {
         //        double item = inputArray[i];
         //        double prevItem = inputArray[i - 1];
 
-        //        if (item - _noiseFloor < 0)
+        //        if (item < _noiseFloor)
         //            continue;
+
+        //        if (lowIdx == -1)
+        //            lowIdx = i;
 
         //        sum += item;
         //        if (foundMax == false && item <= prevItem)
@@ -93,12 +102,23 @@ namespace Regis.Services.Realtime
 
         //        if (foundMax == true && item >= prevItem)
         //        {
+        //            highIdx = i;
         //            break;
         //        }
         //    }
 
+        //    if (lowIdx == -1 || highIdx == -1)
+        //        return 0;
 
-        private double NoteCalc(double[] inputArray)
+        //    for (int i = lowIdx; i <= highIdx; i++)
+        //    {
+        //        freq += (inputArray[i] / sum) * (i * _step);
+        //    }
+
+        //    return freq;
+        //}
+
+        private double DetectFrequency_Mirrored(double[] inputArray)
         {
             Tuple<int, int> index = MinMaxCalc(inputArray);
 
@@ -118,7 +138,7 @@ namespace Regis.Services.Realtime
             }
 
 
-            //Console.WriteLine(freq);
+            Console.WriteLine(freq);
             return freq;
         }
 
@@ -135,7 +155,7 @@ namespace Regis.Services.Realtime
             {
                 double element = inputArray[i];
 
-                if (element - _noiseFloor < 0)
+                if (element < _noiseFloor)
                     element = 0;
 
                 if (element >= max)
@@ -157,7 +177,5 @@ namespace Regis.Services.Realtime
 
             return new Tuple<int, int>(maxIndex, minIndex);
         }
-
-        
     }
 }
