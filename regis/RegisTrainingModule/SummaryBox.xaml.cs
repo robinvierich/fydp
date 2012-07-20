@@ -32,11 +32,7 @@ namespace RegisTrainingModule
         {
             InitializeComponent();
             Regis.Composition.Importer.Compose(this);
-            txtDate.Text = UserTrainingStats.startTimestamp.ToString();
-
-            
-            
-            
+    
         }
 
         private void btnPostFacebook_Click(object sender, RoutedEventArgs e)
