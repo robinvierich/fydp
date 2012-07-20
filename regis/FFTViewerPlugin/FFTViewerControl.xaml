@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:FFTViewerPlugin"
              mc:Ignorable="d"
-             xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              Name="thisFFFViewerControl"
              SizeChanged="thisFFFViewerControl_SizeChanged"
              Width="800"
