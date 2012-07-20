@@ -34,7 +34,9 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,7 +58,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\regis.plugins\Regis.Plugins.csproj">
+      <Project>{730CC1CC-9028-4EF6-83BD-A5D5E5BAF9C8}</Project>
+      <Name>Regis.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>robocopy $(TargetDir) $(SolutionDir)regisPlugins\ $(TargetName).dll $(TargetName).pdb
+
+REM For some reason, robocopy returns 1 when successful..
+REM so we have to do this:
+
+set rce=%25errorlevel%25
+if not %25rce%25 == 1 exit %25rce%25 else exit 0</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

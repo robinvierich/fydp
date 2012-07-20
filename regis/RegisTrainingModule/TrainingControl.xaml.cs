@@ -11,17 +11,50 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel.Composition;
+using Regis.Plugins;
 
 namespace RegisTrainingModule
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for TrainingControl.xaml
     /// </summary>
-    public partial class UserControl1 : UserControl
+    
+    [Export(typeof(IPlugin))]
+    public partial class TrainingControl : UserControl, IPlugin
     {
-        public UserControl1()
+        public TrainingControl()
         {
             InitializeComponent();
         }
+
+        #region IPlugin
+
+        public void Load()
+        {
+            
+        }
+
+        public FrameworkElement GetVisualContent()
+        {
+            return this;
+        }
+
+        public string PluginName
+        {
+            get { return "TrainingControlPlugin"; }
+        }
+
+        public string FriendlyPluginName
+        {
+            get { return "TrainingModule"; }
+        }
+
+        public NoteDetectionAlgorithm Algorithm
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion
     }
 }
