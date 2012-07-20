@@ -24,7 +24,7 @@ namespace Regis.Services
         private string consumerSecret = "p8AQdU6Gw1gcctl2rt7ka7qffMflttbm0hquLN40";
         private string faceConsumerKey = "331770083574694";
         private string faceConsumerSecret = "c9b23ec43741ff8d4ce3245f24ec6390";
-        private string faceAccess = "AAAEtvj36g6YBAGG2R0Ee2OW8c4QdBZA7DyOTZC6vKdhO5t6VygznleB9CF5Lpjk3e8VWIM8wojeXFPKZCjtftf18JQEJz5QFZBDd2W42ygZDZD";
+        private string faceAccess = "AAAEtvj36g6YBAEu3x8aSegzTPIVuGQ4os6RF9U9XrMwgMXgZCzgPiIs4ZBvCcFRavu3CZArAYmJ5eIhjrUoF3cLpSEuygxdgZCApTZBCmcgZDZD";
         private string redirectUrl = "http://localhost/Facebook/oauth/oauth-redirect.aspx";
 
         public SocialNetworkingService()

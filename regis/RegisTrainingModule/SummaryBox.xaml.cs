@@ -32,6 +32,8 @@ namespace RegisTrainingModule
         {
             InitializeComponent();
             Regis.Composition.Importer.Compose(this);
+            txtDate.Text = UserTrainingStats.startTimestamp.ToString();
+
             
             
             
@@ -39,12 +41,24 @@ namespace RegisTrainingModule
 
         private void btnPostFacebook_Click(object sender, RoutedEventArgs e)
         {
-            _socialNetworkingService.PostToFacebook("I just successfully played the G major scale on my guitar, using R.E.G.I.S");
+            string poststr = "";
+            poststr += "I have played ";
+            poststr += txtPercentCorrect.Text;
+            poststr += " successfull notes of ";
+            poststr += txtNotesPlayed.Text;
+            poststr += " total notes on R.E.G.I.S ";
+            _socialNetworkingService.PostToFacebook(poststr);
         }
 
         private void btnPostTwitter_Click(object sender, RoutedEventArgs e)
         {
-            _socialNetworkingService.PostToTwitter("I just successfully played the G major scale on my guitar, using R.E.G.I.S #REGISRocks");
+            string tweetstr = "";
+            tweetstr += "I have played ";
+            tweetstr += txtPercentCorrect.Text;
+            tweetstr += " successfull notes of ";
+            tweetstr += txtNotesPlayed.Text;
+            tweetstr += " total notes on R.E.G.I.S ";
+            _socialNetworkingService.PostToTwitter(tweetstr);
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

@@ -93,9 +93,7 @@ namespace RegisTrainingModule
                 TotalNotesPlayed = notesTotal
             });
 
-            ShowSummary();
-            return;
-
+ 
             StopTraining();
             
                //do your operation here!
@@ -116,6 +114,7 @@ namespace RegisTrainingModule
                 return;
 
             _runningTraining = false;
+            ShowSummary();
             _trainingThread.Join();
         }
 

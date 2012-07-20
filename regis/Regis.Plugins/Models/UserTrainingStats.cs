@@ -33,6 +33,13 @@ namespace Regis.Plugins.Models
             set { _timeStamp = value; }
         }
 
+        private DateTime _startTimeStamp;
+        [DataMember]
+        public DateTime startTimeStamp
+        {
+            get { return _startTimeStamp; }
+            set { _startTimeStamp = value; }
+        }
 
     }
 }
