@@ -21,7 +21,7 @@
         <ListView ItemsSource="{Binding CurrentUser.TrainingStats}" Grid.Row="2" >
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid Margin="0,0,0,10">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -29,18 +29,18 @@
                         </Grid.RowDefinitions>
                         
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
+                            <ColumnDefinition MinWidth="150" />
+                            <ColumnDefinition  />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="Date" Grid.Row="0" />
                         <TextBlock Text="{Binding TimeStamp}" Grid.Row="0" Grid.Column="1" />
                         
                         <TextBlock Text="Total Notes Played" Grid.Row="1"/>
-                        <TextBlock Text="{Binding TotalNotesPlayed}" Grid.Row="0" Grid.Column="1" />
+                        <TextBlock Text="{Binding TotalNotesPlayed}" Grid.Row="1" Grid.Column="1" />
                         
                         <TextBlock Text="Percent Correct" Grid.Row="2" />
-                        <TextBlock Text="{Binding PercentCorrectNotes}" Grid.Row="0" Grid.Column="1" />
+                        <TextBlock Text="{Binding PercentCorrectNotes}" Grid.Row="2" Grid.Column="1" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

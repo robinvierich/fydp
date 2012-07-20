@@ -37,7 +37,8 @@ namespace RegisTrainingModule
         [Import]
         private INoteDetectionSource noteSource;
 
-        
+        [Import]
+        private IUserService _userService;
 
         public TrainingControl()
         {
@@ -83,6 +84,15 @@ namespace RegisTrainingModule
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            User currentUser = _userService.GetCurrentUser();
+
+            currentUser.TrainingStats.Add(new UserTrainingStats()
+            {
+                TimeStamp = DateTime.Now,
+                PercentCorrectNotes = ((double)notesCorrect / (double)notesTotal) * 100,
+                TotalNotesPlayed = notesTotal
+            });
+
             ShowSummary();
             return;
 
@@ -150,7 +160,15 @@ namespace RegisTrainingModule
                         _arrow);
                 }
 
+                User currentUser = _userService.GetCurrentUser();
 
+                currentUser.TrainingStats.Add(new UserTrainingStats()
+                {
+                    TimeStamp = DateTime.Now,
+                    PercentCorrectNotes = ((double)notesCorrect/(double)notesTotal) * 100,
+                    TotalNotesPlayed = notesTotal
+                });
+               
 
                 Application.Current.Dispatcher.Invoke(
                         DispatcherPriority.Render,

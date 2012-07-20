@@ -13,21 +13,28 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Regis.Plugins.Interfaces;
 using System.ComponentModel.Composition;
+using Regis.Plugins.Models;
 
 namespace RegisTrainingModule
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class SummaryBox : UserControl
+    public partial class SummaryBox : UserControl, IPartImportsSatisfiedNotification
     {
         [Import]
         private ISocialNetworkingService _socialNetworkingService;
-        
+
+        [Import]
+        private IUserService _userService;
+
         public SummaryBox()
         {
             InitializeComponent();
             Regis.Composition.Importer.Compose(this);
+            
+            
+            
         }
 
         private void btnPostFacebook_Click(object sender, RoutedEventArgs e)
@@ -59,5 +66,19 @@ namespace RegisTrainingModule
         }
 
 
+
+        public void OnImportsSatisfied()
+        {
+            User currentUser = _userService.GetCurrentUser();
+
+            if (currentUser.TrainingStats.Count == 0)
+                return;
+
+            UserTrainingStats trainingStats = currentUser.TrainingStats[currentUser.TrainingStats.Count -1];
+
+            txtDate.Text = trainingStats.TimeStamp.ToString();
+            txtNotesPlayed.Text = trainingStats.TotalNotesPlayed.ToString();
+            txtPercentCorrect.Text = trainingStats.PercentCorrectNotes.ToString();
+        }
     }
 }
