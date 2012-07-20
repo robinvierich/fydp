@@ -43,8 +43,8 @@ namespace HelloWorldPlugin
         private void btnTweet_Click(object sender, RoutedEventArgs e)
         {
             _socialNetworkingService.AuthTwitter1();
-            this.txtPin.IsEnabled = true;
-            this.btnPinOk.IsEnabled = true;
+            this.txtPin.Visibility = Visibility.Visible;
+            this.btnPinOk.Visibility = Visibility.Visible;
         }
 
         private void btnPinOk_Click(object sender, RoutedEventArgs e)

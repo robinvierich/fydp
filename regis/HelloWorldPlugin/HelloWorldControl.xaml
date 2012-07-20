@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="357" d:DesignWidth="538">
     <Grid Height="342" Width="471">
         <Button Content="Authorize Twitter" Height="42" HorizontalAlignment="Left" Margin="175,15,0,0" Name="btnTweet" VerticalAlignment="Top" Width="113" Click="btnTweet_Click" />
-        <TextBox Height="31" HorizontalAlignment="Left" Margin="119,70,0,0" Name="txtPin" VerticalAlignment="Top" Width="169" IsEnabled="False" />
-        <Button Content="Ok" Height="31" HorizontalAlignment="Left" Margin="305,70,0,0" Name="btnPinOk" VerticalAlignment="Top" Width="71" IsEnabled="False" Click="btnPinOk_Click" />
-        <TextBox Height="81" HorizontalAlignment="Left" Margin="33,127,0,0" Name="txtTweet" VerticalAlignment="Top" Width="288" />
+        <TextBox Height="31" HorizontalAlignment="Left" Margin="119,70,0,0" Name="txtPin" VerticalAlignment="Top" Width="169" IsEnabled="False" Visibility="Hidden" />
+        <Button Content="Ok" Height="31" HorizontalAlignment="Left" Margin="305,70,0,0" Name="btnPinOk" VerticalAlignment="Top" Width="71" IsEnabled="False" Click="btnPinOk_Click" Visibility="Hidden" />
+        <TextBox Height="81" HorizontalAlignment="Left" Margin="33,127,0,0" Name="txtTweet" VerticalAlignment="Top" Width="288" MaxLength="140" />
         <Button Content="Tweet" Height="23" HorizontalAlignment="Left" Margin="347,153,0,0" Name="btnSendTweet" VerticalAlignment="Top" Width="75" Click="btnSendTweet_Click" />
         <Button Content="FaceBook" Height="23" HorizontalAlignment="Left" Margin="347,269,0,0" Name="btnFacebook" VerticalAlignment="Top" Width="75" Click="btnFacebook_Click" />
         <TextBox Height="68" HorizontalAlignment="Left" Margin="35,238,0,0" Name="txtFacebook" VerticalAlignment="Top" Width="287" />
