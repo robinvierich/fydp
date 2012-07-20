@@ -12,12 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Regis.Plugins;
 using System.ComponentModel.Composition;
 using Regis.Plugins.Models;
 using RegisTunerPlugin.Models;
 using RegisTunerPlugin.ViewModels;
 using System.Threading;
+using Regis.Plugins.Interfaces;
 
 namespace RegisTunerPlugin
 {
@@ -151,11 +151,6 @@ namespace RegisTunerPlugin
         public string FriendlyPluginName
         {
             get { return "Tuner"; }
-        }
-
-        public NoteDetectionAlgorithm Algorithm
-        {
-            get { throw new NotImplementedException(); }
         }
 
         #endregion

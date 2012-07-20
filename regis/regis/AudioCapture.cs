@@ -9,5 +9,6 @@ namespace Regis.AudioCapture
     public static class AudioCapture
     {
         public static AsioDriver LoadedDriver = null;
+        public static int SampleCollectionSize = 1024;
     }
 }

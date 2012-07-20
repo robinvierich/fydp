@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Regis.Plugins;
 using System.Collections.ObjectModel;
+using Regis.Plugins.Interfaces;
 
 namespace Regis.Services
 {

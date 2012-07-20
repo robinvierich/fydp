@@ -95,7 +95,6 @@
     <Compile Include="Commands\RestartSamplingServiceCommand.cs" />
     <Compile Include="Composition\Importer.cs" />
     <Compile Include="Models\SampleCollection.cs" />
-    <Compile Include="Models\FFTCalculation.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AsioDeviceService.cs" />
     <Compile Include="Services\IPersistanceService.cs" />
@@ -105,9 +104,7 @@
     <Compile Include="Services\Realtime\FFTAlgorithm.cs" />
     <Compile Include="Services\Realtime\Interfaces\IAsioSamplingService.cs" />
     <Compile Include="Services\Realtime\Interfaces\IFFTService.cs" />
-    <Compile Include="Services\Realtime\Interfaces\IFFTSource.cs" />
     <Compile Include="Services\Realtime\Interfaces\INoteDetectionService.cs" />
-    <Compile Include="Services\Realtime\Interfaces\INoteDetectionSource.cs" />
     <Compile Include="Services\IPluginService.cs" />
     <Compile Include="Services\Realtime\Interfaces\IRealtimeService.cs" />
     <Compile Include="Services\Realtime\Interfaces\ISampleSource.cs" />

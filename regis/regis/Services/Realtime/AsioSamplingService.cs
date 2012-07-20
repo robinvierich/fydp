@@ -21,6 +21,7 @@ namespace Regis.Services.Realtime
         private AsioDriver _currentDriver;
         private Channel _currentInputChannel;
         private ConcurrentQueue<SampleCollection> _sampleCollectionQueue;
+        private int _sampleCollectionSize;
 
         public AsioSamplingService()
         {
@@ -41,6 +42,7 @@ namespace Regis.Services.Realtime
                 throw new Exception("Thread must run in STA for ASIO sampling to work");
 
             _currentDriver = args.Driver;
+            _sampleCollectionSize = AudioCapture.AudioCapture.SampleCollectionSize;
 
             if (!args.Driver.InputChannels.Contains(args.Channel))
                 throw new Exception("Input channel must be in driver.InputChannels");
@@ -61,32 +63,51 @@ namespace Regis.Services.Realtime
 
             _currentDriver.BufferUpdate -= new EventHandler(driver_BufferUpdate);
 
-            // Flush buffers
-            flushBuffers();
+            // read buffers
+            //readBuffers();
 
             _currentDriver.DisposeBuffers();
             _currentDriver.Stop();
-
-            // TODO: This needs to happen on Application Exit to prevent hangs.. need to figure this out.
-            //_currentDriver.Release(); 
         }
 
-        // this handler flushes buffer data
+        public void ReleaseDriver()
+        {
+            if (_currentDriver == null)
+                return;
+
+            _currentDriver.Release();
+        }
+
+        int destoffset = 0;
+        SampleCollection currentSampleCollection;
+
+        // this handler reads buffer data
         void driver_BufferUpdate(object sender, EventArgs e)
         {
-            flushBuffers();
+            if (destoffset == 0)
+            {
+                currentSampleCollection = new SampleCollection();
+                currentSampleCollection.Samples = new long[_sampleCollectionSize];
+            }
+
+            int readLength = Math.Min(_currentInputChannel.BufferSize, _sampleCollectionSize - destoffset);
+            readBuffers(ref currentSampleCollection.Samples, 
+                        destoffset,
+                        readLength);
+
+            destoffset += readLength;
+            if (destoffset < _sampleCollectionSize)
+                return;
+
+            destoffset = 0;
+            _sampleCollectionQueue.Enqueue(currentSampleCollection);
         }
 
-        private void flushBuffers()
+        private void readBuffers(ref long[] toArray, int destoffset, int length)
         {
-            SampleCollection samples = new SampleCollection();
-            samples.Samples = new long[_currentInputChannel.BufferSize];
-
             // NOTE: may need to optimize this loop
-            for (int i = 0; i < _currentInputChannel.BufferSize; i++)
-                samples.Samples[i] = (long)_currentInputChannel[i];
-
-            _sampleCollectionQueue.Enqueue(samples);
+            for (int i = 0; i < length; i++)
+                toArray[i + destoffset] = (long)_currentInputChannel[i];
         }
     }
 }

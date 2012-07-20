@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using Regis.Plugins.Models;
 
-namespace Regis.Plugins
+namespace Regis.Plugins.Interfaces
 {
     public interface IPlugin
     {
@@ -13,6 +13,5 @@ namespace Regis.Plugins
         FrameworkElement GetVisualContent();
         string PluginName { get; }
         string FriendlyPluginName { get; }
-        NoteDetectionAlgorithm Algorithm { get; }
     }
 }

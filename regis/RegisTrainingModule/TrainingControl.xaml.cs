@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
-using Regis.Plugins;
+using Regis.Plugins.Interfaces;
 
 namespace RegisTrainingModule
 {
@@ -48,11 +48,6 @@ namespace RegisTrainingModule
         public string FriendlyPluginName
         {
             get { return "TrainingModule"; }
-        }
-
-        public NoteDetectionAlgorithm Algorithm
-        {
-            get { throw new NotImplementedException(); }
         }
 
         #endregion

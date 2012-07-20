@@ -9,6 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using AForge.Math;
+using Regis.Plugins.Models;
+using Regis.Plugins.Interfaces;
 
 namespace Regis.Services.Realtime
 {
@@ -22,13 +24,18 @@ namespace Regis.Services.Realtime
         [Import]
         private ISampleSource _sampleSource = null;
 
-        Thread _calculationThread;
-        bool _stopCalculating;
+        private Thread _calculationThread;
+        private bool _stopCalculating;
+        private uint _maxQueueSize;
+        private uint _fftSize;
 
         public void Start(FFTArgs args)
         {
             if (_calculationThread != null)
                 return;
+
+            _maxQueueSize = args.MaxQueueSize;
+            _fftSize = args.FFTSize;
 
             _stopCalculating = false;
 
@@ -47,7 +54,7 @@ namespace Regis.Services.Realtime
 
         private void CalculateFFT()
         {
-            
+            Complex[] fftArray;
             while (!_stopCalculating)
             {
                 SampleCollection sampleCollection;
@@ -56,7 +63,21 @@ namespace Regis.Services.Realtime
                 if (sampleCollection == null)
                     continue;
 
-                Complex[] fftArray = Array.ConvertAll(sampleCollection.Samples, new Converter<long, Complex>(x => (Complex)x));
+                fftArray = Array.ConvertAll(sampleCollection.Samples, new Converter<long, Complex>(x => (Complex)x));
+
+                //Complex[] convertedSampleArray = Array.ConvertAll(sampleCollection.Samples, new Converter<long, Complex>(x => (Complex)x));
+                //Array.Copy(convertedSampleArray,// source array
+                //            0,                  // source start index
+                //            fftArray,           // destination array
+                //            fftArrayOffset,     // destination start index
+                //            Math.Min(convertedSampleArray.Length, _fftSize - fftArrayOffset) // length to copy
+                //            );
+
+                //fftArrayOffset += sampleCollection.Samples.Length;
+                //if (fftArrayOffset < _fftSize)
+                //    continue;
+
+                //fftArrayOffset = 0;
 
                 FourierTransform.FFT(fftArray, FourierTransform.Direction.Forward);
 
@@ -64,6 +85,12 @@ namespace Regis.Services.Realtime
 
                 fftCalc.PowerBins = new double[sampleCollection.Samples.Length];
                 fftCalc.PowerBins = fftArray.Select(x => x.SquaredMagnitude).ToArray();
+
+                if (_fftQueue.Count > _maxQueueSize)
+                {
+                    FFTCalculation calc;
+                    _fftQueue.TryDequeue(out calc);
+                }
 
                 _fftQueue.Enqueue(fftCalc);
 
