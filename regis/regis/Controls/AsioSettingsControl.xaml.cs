@@ -67,6 +67,23 @@ namespace Regis.Controls
             set;
         }
 
+        [Import]
+        private ISocialNetworkingService _socialNetworkingService = null;
+
+        private void btnTweet_Click(object sender, RoutedEventArgs e)
+        {
+            _socialNetworkingService.AuthTwitter1();
+            this.txtPin.Visibility = Visibility.Visible;
+            this.btnPinOk.Visibility = Visibility.Visible;
+        }
+
+        private void btnPinOk_Click(object sender, RoutedEventArgs e)
+        {
+            _socialNetworkingService.AuthTwitter2(this.txtPin.Text);
+            this.btnPinOk.IsEnabled = false;
+            this.txtPin.Text = "Authenticated!";
+        }
+
         #region IPlugin
         public void Load() { }
 
@@ -82,9 +99,11 @@ namespace Regis.Controls
 
         public string FriendlyPluginName
         {
-            get { return "Asio Settings"; }
+            get { return "Settings"; }
         }
 
         #endregion
+
+
     }
 }

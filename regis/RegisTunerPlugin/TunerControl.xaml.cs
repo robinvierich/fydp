@@ -18,6 +18,7 @@ using RegisTunerPlugin.Models;
 using RegisTunerPlugin.ViewModels;
 using System.Threading;
 using Regis.Plugins.Interfaces;
+using System.Windows.Threading;
 
 namespace RegisTunerPlugin
 {
@@ -31,10 +32,12 @@ namespace RegisTunerPlugin
         Thread _tunerThread;
         bool _runningTuner = false;
 
+        [Import]
+        private INoteDetectionSource noteSource;
+
         public TunerControl()
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
         }
 
         [Import]
@@ -79,8 +82,8 @@ namespace RegisTunerPlugin
         private void RunTuner(double targetFreq, int stringNum)
         {
             double delta = 0;
-            double display = 50;
-            double currentFreq;
+            //double display = 50;
+            //double currentFreq;
             double scaleFactor;
 
             switch (stringNum)
@@ -113,18 +116,44 @@ namespace RegisTunerPlugin
 
             while (_runningTuner)
             {
+                Note[] notes;
+                if (!noteSource.NoteQueue.TryDequeue(out notes))
+                    continue;
 
-                // Todo: make this work
+                if (notes[0].closestRealNoteFrequency == 0)
+                    continue;
+                else if ((targetFreq - scaleFactor) > notes[0].frequency || notes[0].frequency > (targetFreq + scaleFactor))
+                    continue;
 
+                double currentFreq = notes[0].frequency;
 
-
-                //this.currentFreqBox.Text = String.Format("{0}", currentFreq);
+                Application.Current.Dispatcher.Invoke(
+                    DispatcherPriority.Render,
+                    new Action<double>(setFreqText),
+                    currentFreq);
                 
-                //delta = currentFreq - targetFreq;
+                delta = currentFreq - targetFreq;
 
-                //display = delta*(50/scaleFactor) + 50;
-                //this.tunerBar.Value = display;
+                double display = delta*(50/scaleFactor) + 50;
+
+                Application.Current.Dispatcher.Invoke(
+                    DispatcherPriority.Render,
+                    new Action<double>(setTunerBarValue), 
+                    display);
+
+                Thread.Sleep(100);
+                
             }
+        }
+
+        private void setFreqText(double freq)
+        {
+            currentFreqBox.Text = String.Format("{0}", freq);
+        }
+
+        private void setTunerBarValue(double val)
+        {
+            tunerBar.Value = val;
         }
 
         #region IPlugin
