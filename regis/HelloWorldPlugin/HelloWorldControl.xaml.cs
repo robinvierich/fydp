@@ -84,5 +84,11 @@ namespace HelloWorldPlugin
             }
         }
         #endregion
+        private void btnFacebook_Click(object sender, RoutedEventArgs e)
+        {
+            _socialNetworkingService.PostToFacebook(this.txtFacebook.Text);
+        }
+
+
     }
 }
