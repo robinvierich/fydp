@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Regis.Plugins
+namespace Regis.Plugins.Interfaces
 {
     public interface ISocialNetworkingService
     {

@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="FFTViewerPlugin.FFTViewerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:FFTViewerPlugin"
+             mc:Ignorable="d"
+             xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             Name="thisFFFViewerControl"
+             SizeChanged="thisFFFViewerControl_SizeChanged"
+             Width="800"
+             Height="600"
+             BorderBrush="Black"
+             BorderThickness="1"
+             >
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
+    
+    <ListView ItemsSource="{Binding BarViewModels}"
+              
+             
+              ScrollViewer.VerticalScrollBarVisibility="Hidden"
+              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+              >
+        <ListView.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </ListView.ItemsPanel>
+        
+        <ListView.ItemContainerStyle>
+            <Style TargetType="{x:Type ListViewItem}">
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+            </Style>
+        </ListView.ItemContainerStyle>
+        
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <Rectangle
+                    VerticalAlignment="Bottom"
+                    Fill="Black"
+                    Width="{Binding Width}"
+                    Height="{Binding Height}" />
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</UserControl>

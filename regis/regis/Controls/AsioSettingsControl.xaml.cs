@@ -11,12 +11,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Regis.Plugins;
 using System.ComponentModel.Composition;
 using Regis.ViewModels;
 using Regis.Commands;
 using BlueWave.Interop.Asio;
 using Regis.Services.Realtime;
+using Regis.Plugins.Interfaces;
 
 namespace Regis.Controls
 {
@@ -39,7 +39,7 @@ namespace Regis.Controls
             InstalledDriver driver = e.AddedItems[0] as InstalledDriver;
 
             LoadDriverCommand cmd = new LoadDriverCommand();
-            LoadDriverCommandArgs args = new LoadDriverCommandArgs(driver, 48000);
+            LoadDriverCommandArgs args = new LoadDriverCommandArgs(driver, 44100);
 
             cmd.Execute(args);
         }
@@ -55,7 +55,6 @@ namespace Regis.Controls
             {
                 Channel = channel,
                 Driver = ViewModel.LoadedDriver,
-                SamplingRate = 44100
             };
 
             ViewModel.RestartSamplingServiceCommand.Execute(args);
@@ -84,11 +83,6 @@ namespace Regis.Controls
         public string FriendlyPluginName
         {
             get { return "Asio Settings"; }
-        }
-
-        public NoteDetectionAlgorithm Algorithm
-        {
-            get { throw new NotImplementedException(); }
         }
 
         #endregion

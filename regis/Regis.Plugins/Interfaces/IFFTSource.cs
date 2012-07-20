@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Regis.Models;
 using System.Collections.Concurrent;
+using Regis.Plugins.Models;
 
-namespace Regis.Services.Realtime
+namespace Regis.Plugins.Interfaces
 {
     public interface IFFTSource
     {

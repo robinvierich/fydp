@@ -11,8 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Regis.Plugins;
 using System.ComponentModel.Composition;
+using Regis.Plugins.Interfaces;
 
 namespace HelloWorldPlugin
 {
@@ -53,12 +53,6 @@ namespace HelloWorldPlugin
         public string FriendlyPluginName
         {
             get { return "Hello World"; }
-        }
-
-
-        public NoteDetectionAlgorithm Algorithm
-        {
-            get { throw new NotImplementedException(); }
         }
         #endregion
     }

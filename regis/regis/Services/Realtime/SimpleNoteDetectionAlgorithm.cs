@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Regis.Plugins.Interfaces;
 using Regis.Plugins.Models;
 using System.Collections.Concurrent;
 using System.ComponentModel.Composition;
@@ -53,10 +54,8 @@ namespace Regis.Services.Realtime
             while (!_stopDetecting)
             {
                 FFTCalculation fftCalc;
-                _fftSource.FFTQueue.TryDequeue(out fftCalc);
-
-                if (fftCalc == null)
-                    continue;
+                if (!_fftSource.FFTQueue.TryPeek(out fftCalc))
+                    return;
 
                 double[] powerBins = fftCalc.PowerBins;
 
@@ -98,7 +97,7 @@ namespace Regis.Services.Realtime
                 freq += (inputArray[i] / sum) * (i * step);
             }
 
-            Console.WriteLine(freq);
+            //Console.WriteLine(freq);
             return freq;
         }
 

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Regis.Plugins;
 using System.ComponentModel.Composition;
 using Regis.Plugins.Models;
 using System.Collections.ObjectModel;
 using Regis.Composition;
+using Regis.Plugins.Interfaces;
 
 namespace Regis.Services
 {

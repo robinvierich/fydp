@@ -10,10 +10,10 @@ namespace Regis.Services.Realtime
     {
         public AsioDriver Driver { get; set; }
         public Channel Channel { get; set; }
-        public uint SamplingRate { get; set; }
     }
 
     interface IAsioSamplingService : IRealtimeService<AsioSamplingServiceArgs>
     {
+        void ReleaseDriver();
     }
 }
