@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Background="AliceBlue">
+    <Grid>
         <TextBlock Text="REGIS Guitar Tuner" />
         <ComboBox Height="23" HorizontalAlignment="Left" Margin="51,51,0,0" Name="tuningBox" VerticalAlignment="Top" Width="156"
                   ItemsSource="{Binding Tunings}"

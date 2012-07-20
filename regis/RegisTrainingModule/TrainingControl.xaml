@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="377" d:DesignWidth="592">
-    <Grid Background="AliceBlue">
+    <Grid>
         <TextBlock Text="REGIS Training Module" />
         <Image Height="272" HorizontalAlignment="Left" Margin="12,27,0,0" Name="g_maj" Stretch="Fill" VerticalAlignment="Top" Width="566" Source="/RegisTrainingModule;component/Images/g_maj.png" />
         <Image Height="22" HorizontalAlignment="Left" Margin="119,165,0,0" Name="green0" Source="/RegisTrainingModule;component/Images/green_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
