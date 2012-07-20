@@ -25,6 +25,7 @@ namespace Regis.Services
         private string faceConsumerKey = "331770083574694";
         private string faceConsumerSecret = "c9b23ec43741ff8d4ce3245f24ec6390";
         private string faceAccess = "AAAEtvj36g6YBAGG2R0Ee2OW8c4QdBZA7DyOTZC6vKdhO5t6VygznleB9CF5Lpjk3e8VWIM8wojeXFPKZCjtftf18JQEJz5QFZBDd2W42ygZDZD";
+        private string redirectUrl = "http://localhost/Facebook/oauth/oauth-redirect.aspx";
 
         public SocialNetworkingService()
         {
@@ -68,6 +69,11 @@ namespace Regis.Services
             TwitterStatus status = service.SendTweet(value);
         }
 
+        public void FacebookAuth()
+        {
+            
+        }
+        
         public void PostToFacebook(string message)
         {
             dynamic parameters = new ExpandoObject();

@@ -30,13 +30,19 @@ namespace RegisTrainingModule
     {
         Thread _trainingThread;
         bool _runningTraining;
+        int notesTotal = 0;
+        int notesCorrect = 0;
+        DateTime time;
 
         [Import]
         private INoteDetectionSource noteSource;
 
+        
+
         public TrainingControl()
         {
             InitializeComponent();
+            
         }
 
         [Import]
@@ -77,7 +83,13 @@ namespace RegisTrainingModule
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            ShowSummary();
+            return;
+
             StopTraining();
+            
+               //do your operation here!
+            time = DateTime.Now;
             _trainingThread = new Thread(new ThreadStart(StartTraining));
             _trainingThread.Start();
         }
@@ -125,6 +137,8 @@ namespace RegisTrainingModule
                                 DispatcherPriority.Render,
                                 new Action<string>(GreenShow),
                                 _green);
+                            notesCorrect += 1;
+                            notesTotal += 1;
 
                             break;
                         }
@@ -136,8 +150,26 @@ namespace RegisTrainingModule
                         _arrow);
                 }
 
+
+
+                Application.Current.Dispatcher.Invoke(
+                        DispatcherPriority.Render,
+                        new Action(ShowSummary));
+
                 StopTraining();
             }
+        }
+
+        private static int GetTimeSpan(DateTime value)
+        {
+            return DateTime.Now.Subtract(value).Milliseconds;
+        }
+
+        private void ShowSummary()
+        {
+            Window w = new Window();
+            w.Content = new SummaryBox();
+            w.ShowDialog();
         }
 
         private void GreenShow(string greenIndex)
@@ -157,6 +189,8 @@ namespace RegisTrainingModule
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
+            
+            //GetTimeSpan(
             StopTraining();
         }
     }

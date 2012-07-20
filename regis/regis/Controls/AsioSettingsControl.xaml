@@ -4,33 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="315" d:DesignWidth="536">
-    <Grid Width="422" Height="304">
+             d:DesignHeight="406" d:DesignWidth="536">
+    <Grid Width="422" Height="374">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="70*" />
-            <RowDefinition Height="36*" />
-            <RowDefinition Height="198*" />
+            <RowDefinition Height="77*" />
+            <RowDefinition Height="40*" />
+            <RowDefinition Height="219*" />
         </Grid.RowDefinitions>
         <TextBlock Text="Driver"
-                   VerticalAlignment="Center" Margin="0,52,214,2" Grid.Row="2" />
+                   VerticalAlignment="Center" Margin="0,56,214,5" Grid.Row="1" />
         
         <ComboBox ItemsSource="{Binding AsioDrivers}" 
                   DisplayMemberPath="Name"
                   SelectionChanged="asioDriverComboBox_SelectionChanged"
-                  Name="asioDriverComboBox" Margin="214,48,12,4" Grid.Row="2" />
+                  Name="asioDriverComboBox" Margin="214,48,12,4" Grid.Row="1" />
 
         <TextBlock Text="Channel"
-                   VerticalAlignment="Center" Grid.Row="3" Margin="0,4,214,16" />
+                   VerticalAlignment="Center" Grid.Row="2" Margin="0,4,214,16" />
 
         <ComboBox ItemsSource="{Binding LoadedDriver.InputChannels}"
-                  DisplayMemberPath="Name" Grid.Row="3" 
+                  DisplayMemberPath="Name" Grid.Row="2" 
                   SelectionChanged="channelComboBox_SelectionChanged" Margin="214,3,12,15" />
-        <Button Content="Authorize Twitter" Height="42" HorizontalAlignment="Center" Margin="155,44,155,0" Name="btnTweet" VerticalAlignment="Top" Width="113" Grid.Row="4" Click="btnTweet_Click" />
-        <TextBox Grid.Row="4" Height="31" HorizontalAlignment="Center" IsEnabled="True" Margin="121,103,133,0" Name="txtPin" VerticalAlignment="Top" Visibility="Hidden" Width="169" />
-        <Button Content="Ok" Grid.Row="4" Height="31" HorizontalAlignment="Center" IsEnabled="True" Margin="320,103,31,0" Name="btnPinOk" VerticalAlignment="Top" Visibility="Hidden" Width="71" Click="btnPinOk_Click" />
-        <Label Content="Asio Settings" Grid.Row="2" Height="35" HorizontalAlignment="Center" Margin="174,12,48,0" Name="lblAsio" VerticalAlignment="Top" Width="200" FontSize="14" />
-        <Label Content="Twitter Setup" Grid.Row="4" Height="34" HorizontalAlignment="Center" Margin="174,4,76,0" Name="lblsetTwitter" VerticalAlignment="Top" Width="173" FontSize="14" />
+        <Button Content="Authorize Twitter" Height="42" HorizontalAlignment="Center" Margin="155,44,155,0" Name="btnTweet" VerticalAlignment="Top" Width="113" Grid.Row="3" Click="btnTweet_Click" />
+        <TextBox Grid.Row="3" Height="31" HorizontalAlignment="Center" IsEnabled="True" Margin="121,103,133,0" Name="txtPin" VerticalAlignment="Top" Visibility="Hidden" Width="169" />
+        <Button Content="Ok" Grid.Row="3" Height="31" HorizontalAlignment="Center" IsEnabled="True" Margin="320,103,31,0" Name="btnPinOk" VerticalAlignment="Top" Visibility="Hidden" Width="71" Click="btnPinOk_Click" />
+        <Label Content="Asio Settings" Grid.Row="1" Height="35" HorizontalAlignment="Center" Margin="174,12,48,0" Name="lblAsio" VerticalAlignment="Top" Width="200" FontSize="14" />
+        <Label Content="Twitter Setup" Grid.Row="3" Height="34" HorizontalAlignment="Center" Margin="174,4,76,0" Name="lblsetTwitter" VerticalAlignment="Top" Width="173" FontSize="14" />
+        <Button Content="Authorize Facebook" Grid.Row="3" Height="42" HorizontalAlignment="Left" Margin="154,179,0,0" Name="btnFacebook" VerticalAlignment="Top" Width="114" Click="btnFacebook_Click" />
+        <Label Content="Facebook Setup" Grid.Row="3" Height="33" HorizontalAlignment="Left" Margin="154,140,0,0" Name="label1" VerticalAlignment="Top" Width="117" FontSize="14" />
     </Grid>
 </UserControl>
