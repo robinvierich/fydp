@@ -49,7 +49,7 @@ namespace Regis.Services.Realtime
 
             // The order here is key
             // Create buffers before selecting the channel
-            _currentDriver.CreateBuffers(true, AudioCapture.AudioCapture.BufferSize);
+            _currentDriver.CreateBuffers(true, AudioCapture.AudioCaptureSettings.BufferSize);
             _currentInputChannel = args.Driver.InputChannels.Where(x => x.Name == args.Channel.Name).Single();
 
             args.Driver.BufferUpdate += new EventHandler(driver_BufferUpdate);

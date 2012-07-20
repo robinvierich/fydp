@@ -20,14 +20,14 @@ namespace FFTViewerPlugin
         private IFFTSource _fftSource = null;
         private DispatcherTimer _fftUpdateTimer = new DispatcherTimer();
 
-        
+        private double _absoluteMaxPower = 0;
 
         public void StartReadingFFT()
         {
             if (_fftUpdateTimer.IsEnabled)
                 return;
 
-            _fftUpdateTimer.Interval = TimeSpan.FromMilliseconds(50);
+            _fftUpdateTimer.Interval = TimeSpan.FromMilliseconds(20);
             _fftUpdateTimer.Tick += new EventHandler(timer_Tick);
             _fftUpdateTimer.Start();
         }
@@ -51,34 +51,41 @@ namespace FFTViewerPlugin
             Array.Copy(fftCalc.PowerBins, powerBins, fftCalc.PowerBins.Length);
 
             ObservableCollection<FFTBinViewModel> newBins = new ObservableCollection<FFTBinViewModel>();
+
+            if (FFTBins == null)
+                FFTBins = new ObservableCollection<FFTBinViewModel>();
+
             for (int i = 0; i < fftCalc.PowerBins.Length; i++)
             {
-                FFTBinViewModel newBin = new FFTBinViewModel(){
-                    BinNumber = i,
-                    Power = powerBins[i]
-                };
-                newBins.Add(newBin);
+                if (FFTBins.ElementAtOrDefault(i) == null)
+                    FFTBins.Insert(i, new FFTBinViewModel());
+
+                FFTBins[i].BinNumber = i;
+                FFTBins[i].Power = powerBins[i];
             }
-            
-            FFTBins = newBins;
 
-            double maxPower = FFTBins.Max(bin => 
-                {
-                    return bin.Power;
-                });
+            _absoluteMaxPower = Math.Max(FFTBins.Max(bin => bin.Power), _absoluteMaxPower);
 
-            ObservableCollection<BarViewModel> bvms = new ObservableCollection<BarViewModel>();
+            if (BarViewModels == null)
+            {
+                BarViewModels = new ObservableCollection<BarViewModel>();
+            }
+
+            int j = 0;
             foreach (FFTBinViewModel bin in FFTBins)
             {
-                BarViewModel bvm = new BarViewModel()
+                if (BarViewModels.ElementAtOrDefault(j) == null)
                 {
-                    Height = (bin.Power / maxPower) * ControlActualHeight,
-                    Width = ControlActualWidth / FFTBins.Count
-                };
-                bvms.Add(bvm);
+                    BarViewModels.Insert(j, new BarViewModel());
+                }
+
+                double height = (bin.Power / _absoluteMaxPower) * ControlActualHeight;
+
+                BarViewModels[j].Height = height;
+                BarViewModels[j].Width = ControlActualWidth / FFTBins.Count;
+                j++;
             }
 
-            BarViewModels = bvms;
         }
 
 
