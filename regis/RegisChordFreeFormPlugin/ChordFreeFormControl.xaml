@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="RegisChordFreeFormPlugin.ChordFreeFormControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignHeight="392" d:DesignWidth="936">
+    <Grid Background="AliceBlue">
+        <TextBlock Text="REGIS Chord Free Form Mode" />
+        <TextBlock Height="250" HorizontalAlignment="Left" Margin="26,142,0,0" Name="noteBlock" Text="" VerticalAlignment="Top" Width="863" FontFamily="FretsA" FontSize="72" FontWeight="Bold" />
+        <Button Content="Start Free Form" Height="48" HorizontalAlignment="Left" Margin="26,47,0,0" Name="button1" VerticalAlignment="Top" Width="191" Click="button1_Click" />
+    </Grid>
+</UserControl>
