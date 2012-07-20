@@ -154,5 +154,10 @@ namespace RegisTrainingModule
         {
             ((FrameworkElement)this.FindName(arrowIndex)).Visibility = Visibility.Hidden;
         }
+
+        private void stopButton_Click(object sender, RoutedEventArgs e)
+        {
+            StopTraining();
+        }
     }
 }
