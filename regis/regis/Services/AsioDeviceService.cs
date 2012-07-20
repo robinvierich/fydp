@@ -41,7 +41,7 @@ namespace Regis.AudioCapture.Services
             {
                 AudioCapture.LoadedDriver = AsioDriver.SelectDriver(driver);
                 AudioCapture.LoadedDriver.SetSampleRate(sampleRate);
-                AudioCapture.LoadedDriver.CreateBuffers(false);
+                AudioCapture.LoadedDriver.CreateBuffers(false, -1);
             }
             catch (ApplicationException)
             {

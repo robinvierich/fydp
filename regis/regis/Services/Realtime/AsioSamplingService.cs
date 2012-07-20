@@ -7,6 +7,7 @@ using System.Threading;
 using System.Collections.Concurrent;
 using Regis.Models;
 using System.ComponentModel.Composition;
+using Regis.AudioCapture;
 
 namespace Regis.Services.Realtime
 {
@@ -42,16 +43,16 @@ namespace Regis.Services.Realtime
                 throw new Exception("Thread must run in STA for ASIO sampling to work");
 
             _currentDriver = args.Driver;
-            _sampleCollectionSize = AudioCapture.AudioCapture.SampleCollectionSize;
 
             if (!args.Driver.InputChannels.Contains(args.Channel))
                 throw new Exception("Input channel must be in driver.InputChannels");
 
             // The order here is key
             // Create buffers before selecting the channel
-            _currentDriver.CreateBuffers(false);
+            _currentDriver.CreateBuffers(true, AudioCapture.AudioCapture.BufferSize);
             _currentInputChannel = args.Driver.InputChannels.Where(x => x.Name == args.Channel.Name).Single();
             
+
             args.Driver.BufferUpdate += new EventHandler(driver_BufferUpdate);
             _currentDriver.Start();
         }
@@ -62,9 +63,6 @@ namespace Regis.Services.Realtime
                 return;
 
             _currentDriver.BufferUpdate -= new EventHandler(driver_BufferUpdate);
-
-            // read buffers
-            //readBuffers();
 
             _currentDriver.DisposeBuffers();
             _currentDriver.Stop();
@@ -78,36 +76,22 @@ namespace Regis.Services.Realtime
             _currentDriver.Release();
         }
 
-        int destoffset = 0;
-        SampleCollection currentSampleCollection;
-
         // this handler reads buffer data
         void driver_BufferUpdate(object sender, EventArgs e)
         {
-            if (destoffset == 0)
-            {
-                currentSampleCollection = new SampleCollection();
-                currentSampleCollection.Samples = new long[_sampleCollectionSize];
-            }
+            SampleCollection sampleColl = new SampleCollection();
+            sampleColl.Samples = new long[_currentInputChannel.BufferSize];
 
-            int readLength = Math.Min(_currentInputChannel.BufferSize, _sampleCollectionSize - destoffset);
-            readBuffers(ref currentSampleCollection.Samples, 
-                        destoffset,
-                        readLength);
+            readBuffers(ref sampleColl.Samples);
 
-            destoffset += readLength;
-            if (destoffset < _sampleCollectionSize)
-                return;
-
-            destoffset = 0;
-            _sampleCollectionQueue.Enqueue(currentSampleCollection);
+            _sampleCollectionQueue.Enqueue(sampleColl);
         }
 
-        private void readBuffers(ref long[] toArray, int destoffset, int length)
+        private void readBuffers(ref long[] toArray)
         {
             // NOTE: may need to optimize this loop
-            for (int i = 0; i < length; i++)
-                toArray[i + destoffset] = (long)_currentInputChannel[i];
+            for (int i = 0; i < _currentInputChannel.BufferSize; i++)
+                toArray[i] = (long)_currentInputChannel[i];
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Regis
             Importer.Compose(this);
 
             // TODO: Fill this in with correct args;
-            _fftService.Start(new FFTArgs() { MaxQueueSize = 200 });
+            _fftService.Start(new FFTArgs() { MaxQueueSize = 1 });
             _noteDetectionService.Start(new SimpleNoteDetectionArgs());
         }
 
