@@ -27,7 +27,7 @@ namespace Regis.Services.Realtime
         private double _sampleRate = AudioCapture.AudioCapture.SampleRate;
         private double _samples = AudioCapture.AudioCapture.BufferSize;
         private double _step;
-        private double _noiseFloor = 0;
+        private double _noiseFloor = 500000000000000;
 
         public void Start(SimpleNoteDetectionArgs args)
         {
@@ -69,7 +69,7 @@ namespace Regis.Services.Realtime
                 notes[0].frequency = freq;
                 notes[0].closestRealNoteFrequency = Regis.Plugins.Statics.NoteDictionary.GetClosestRealNoteFrequency(freq);
 
-                //Console.WriteLine(notes[0].closestRealNoteFrequency);
+                Console.WriteLine(notes[0].closestRealNoteFrequency);
 
                 _noteQueue.Enqueue(notes);
             }
@@ -107,17 +107,18 @@ namespace Regis.Services.Realtime
             int minIndex = index.Item2 - index.Item1;
             int maxIndex = index.Item2;
 
-            for (int i = minIndex; i < maxIndex; i++)
+            for (int i = Math.Max(minIndex, 0); i < maxIndex; i++)
             {
                 sum += inputArray[i];
             }
 
-            for (int i = minIndex; i < maxIndex; i++)
+            for (int i = Math.Max(minIndex, 0); i < maxIndex; i++)
             {
                 freq += (inputArray[i] / sum) * (i * _step);
             }
 
-            Console.WriteLine(freq);
+
+            //Console.WriteLine(freq);
             return freq;
         }
 
@@ -128,22 +129,24 @@ namespace Regis.Services.Realtime
             int maxIndex = 0;
             int minIndex = 0;
 
-            _noiseFloor = 100 * inputArray[0];
+           // _noiseFloor = 1000 * inputArray[0];
 
             for (int i = 0; i < _samples; i++)
             {
-                if (inputArray[i] < _noiseFloor)
-                    continue;
+                double element = inputArray[i];
 
-                if (inputArray[i] >= max)
+                if (element - _noiseFloor < 0)
+                    element = 0;
+
+                if (element >= max)
                 {
-                    max = inputArray[i];
-                    min = inputArray[i];
+                    max = element;
+                    min = element;
                     maxIndex = i;
                 }
-                else if (inputArray[i] <= min)
+                else if (element < min)
                 {
-                    min = inputArray[i];
+                    min = element;
                     minIndex = i;
                 }
                 else
