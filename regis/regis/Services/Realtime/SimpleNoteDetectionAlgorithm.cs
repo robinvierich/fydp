@@ -24,10 +24,10 @@ namespace Regis.Services.Realtime
         private Thread _noteDetectionThread;
         private bool _stopDetecting;
 
-        private double _sampleRate = AudioCapture.AudioCapture.SampleRate;
-        private double _samples = AudioCapture.AudioCapture.BufferSize;
+        private double _sampleRate = AudioCapture.AudioCaptureSettings.SampleRate;
+        private double _samples = AudioCapture.AudioCaptureSettings.BufferSize;
         private double _step;
-        private double _noiseFloor = 6E+16;//500000000000000;
+        private double _noiseFloor = AudioCapture.AudioCaptureSettings.NoiseFloor;//500000000000000;
 
         public void Start(SimpleNoteDetectionArgs args)
         {
@@ -52,6 +52,9 @@ namespace Regis.Services.Realtime
 
         private int _maxNoteQueueSize = 5;
 
+        private double _previousTotalPower;
+        private const double MAX_POWER_DECAY = 100000;
+
         private void DetectNotes()
         {
             while (!_stopDetecting)
@@ -61,23 +64,37 @@ namespace Regis.Services.Realtime
                     continue;
 
                 double[] powerBins = fftCalc.PowerBins;
+                double freq = 0;
 
                 //Start Note Detection
-                double freq = DetectFrequency_Mirrored(powerBins);
+                double currentTotalPower = powerBins.Sum();
+                if (currentTotalPower < _previousTotalPower) // if our power is less than thy previous power by at least MAX_POWER_DECAY, ignore the rest
+                {
+                    freq = 0;
+                }
+                else
+                {
+                    freq = DetectFrequency_Mirrored(powerBins);
+                }
+                Console.WriteLine(freq);
+                _previousTotalPower = currentTotalPower;
 
                 Note[] notes = new Note[1];
                 notes[0].timeStamp = DateTime.Now;
                 notes[0].frequency = freq;
                 notes[0].closestRealNoteFrequency = Regis.Plugins.Statics.NoteDictionary.GetClosestRealNoteFrequency(freq);
 
+               
                 //Console.WriteLine(notes[0].closestRealNoteFrequency);
                 _noteQueue.Enqueue(notes);
-
                 if (_noteQueue.Count > _maxNoteQueueSize)
                 {
                     Note[] dqnotes;
                     _noteQueue.TryDequeue(out dqnotes);
                 }
+
+                
+
             }
         }
 
@@ -146,7 +163,6 @@ namespace Regis.Services.Realtime
             }
 
 
-            Console.WriteLine(freq);
             return freq;
         }
 
