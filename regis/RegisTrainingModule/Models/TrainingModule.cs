@@ -14,6 +14,11 @@ namespace RegisTrainingModule.Models
             set { _name = value; }
         }
 
-
+        private double[] _targetFreq;
+        public double[] TargetFreq
+        {
+            get { return _targetFreq; }
+            set { _targetFreq = value; }
+        }
     }
 }
