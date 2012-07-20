@@ -59,6 +59,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Regis.Base\Regis.Base.csproj">
+      <Project>{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}</Project>
+      <Name>Regis.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\regis.plugins\Regis.Plugins.csproj">
       <Project>{730CC1CC-9028-4EF6-83BD-A5D5E5BAF9C8}</Project>
       <Name>Regis.Plugins</Name>
@@ -72,9 +76,13 @@
   <ItemGroup>
     <Resource Include="Images\black_arrow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="training_modules.cfg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy $(TargetDir) $(SolutionDir)regisPlugins\ $(TargetName).dll $(TargetName).pdb
+robocopy $(TargetDir) $(SolutionDir)regis\bin\Debug training_modules.cfg
 
 REM For some reason, robocopy returns 1 when successful..
 REM so we have to do this:
