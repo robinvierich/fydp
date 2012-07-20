@@ -64,6 +64,14 @@
       <Name>Regis.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\green_check.PNG" />
+    <Resource Include="Images\g_maj.png" />
+    <Resource Include="Images\red_check.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\black_arrow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy $(TargetDir) $(SolutionDir)regisPlugins\ $(TargetName).dll $(TargetName).pdb

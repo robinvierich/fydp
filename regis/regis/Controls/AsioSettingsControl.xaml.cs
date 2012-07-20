@@ -39,7 +39,7 @@ namespace Regis.Controls
             InstalledDriver driver = e.AddedItems[0] as InstalledDriver;
 
             LoadDriverCommand cmd = new LoadDriverCommand();
-            LoadDriverCommandArgs args = new LoadDriverCommandArgs(driver, 44100);
+            LoadDriverCommandArgs args = new LoadDriverCommandArgs(driver);
 
             cmd.Execute(args);
         }

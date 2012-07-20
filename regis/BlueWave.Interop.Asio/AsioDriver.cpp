@@ -202,7 +202,8 @@ namespace BlueWave
 				_pDriver->setSampleRate(rate);
 			}
 
-			void AsioDriver::CreateBuffers(bool useMaxBufferSize)
+			//  set customBufferSize to -1 to ignore the custom size
+			void AsioDriver::CreateBuffers(bool useMaxBufferSize, long customBufferSize)
 			{
 				// we need the total number of channels here
 				int totalChannels = _nInputs + _nOutputs;
@@ -233,7 +234,14 @@ namespace BlueWave
 				}
 
 				int bufferSize;
-				if (useMaxBufferSize)
+
+
+				if (customBufferSize != -1)
+				{
+					// use custom buffer size
+					bufferSize = customBufferSize;
+				}
+				else if (useMaxBufferSize)
 				{
 					// use the drivers maximum buffer size
 					bufferSize = BufferSizex->m_nMaxSize;
