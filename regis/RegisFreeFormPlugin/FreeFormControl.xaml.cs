@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
 using Regis.Plugins;
+using RegisFreeFormPlugin.ViewModels;
 
 
 namespace RegisFreeFormPlugin
@@ -22,11 +23,23 @@ namespace RegisFreeFormPlugin
     /// </summary>
 
     [Export(typeof(IPlugin))]
-    public partial class FreeFormControl : UserControl, IPlugin
+    public partial class FreeFormControl : UserControl, IPlugin, IPartImportsSatisfiedNotification
     {
         public FreeFormControl()
         {
             InitializeComponent();
+        }
+
+        [Import]
+        private FreeFormViewModel ViewModel
+        {
+            get;
+            set;
+        }
+
+        public void OnImportsSatisfied()
+        {
+            DataContext = ViewModel;
         }
 
         #region IPlugin

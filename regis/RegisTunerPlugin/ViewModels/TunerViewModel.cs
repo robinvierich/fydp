@@ -59,8 +59,9 @@ namespace RegisTunerPlugin.ViewModels
                     }
 
                     tuning.GuitarStrings = guitarStrings;
-                    Tunings.Add(tuning);
+                    Tunings.Add(tuning);  
                 }
+                Console.WriteLine("DEBUG::REGIS:: tunings.cfg => Loaded");
             }
             catch { }
         }

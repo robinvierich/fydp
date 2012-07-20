@@ -47,6 +47,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\TrainingViewModel.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Regis.Base\Regis.Base.csproj">
+      <Project>{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}</Project>
+      <Name>Regis.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\regis.plugins\Regis.Plugins.csproj">
+      <Project>{730CC1CC-9028-4EF6-83BD-A5D5E5BAF9C8}</Project>
+      <Name>Regis.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
