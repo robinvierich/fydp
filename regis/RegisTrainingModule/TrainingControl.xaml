@@ -4,8 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="339" d:DesignWidth="590">
     <Grid Background="AliceBlue">
         <TextBlock Text="REGIS Training Module" />
+        <Image Height="272" HorizontalAlignment="Left" Margin="12,27,0,0" Name="g_maj" Stretch="Fill" VerticalAlignment="Top" Width="566" Source="/RegisTrainingModule;component/Images/g_maj.png" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="119,165,0,0" Name="green0" Source="/RegisTrainingModule;component/Images/green_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="169,165,0,0" Name="green1" Source="/RegisTrainingModule;component/Images/green_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="220,165,0,0" Name="green2" Source="/RegisTrainingModule;component/Images/green_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="272,165,0,0" Name="green3" Source="/RegisTrainingModule;component/Images/green_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="324,165,0,0" Name="green4" Source="/RegisTrainingModule;component/Images/green_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="374,165,0,0" Name="green5" Source="/RegisTrainingModule;component/Images/green_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="432,165,0,0" Name="green6" Source="/RegisTrainingModule;component/Images/green_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="490,165,0,0" Name="green7" Source="/RegisTrainingModule;component/Images/green_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="119,165,0,0" Name="red0" Source="/RegisTrainingModule;component/Images/red_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="169,165,0,0" Name="red1" Source="/RegisTrainingModule;component/Images/red_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="220,165,0,0" Name="red2" Source="/RegisTrainingModule;component/Images/red_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="272,165,0,0" Name="red3" Source="/RegisTrainingModule;component/Images/red_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="324,165,0,0" Name="red4" Source="/RegisTrainingModule;component/Images/red_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="374,165,0,0" Name="red5" Source="/RegisTrainingModule;component/Images/red_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="432,165,0,0" Name="red6" Source="/RegisTrainingModule;component/Images/red_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="22" HorizontalAlignment="Left" Margin="490,165,0,0" Name="red7" Source="/RegisTrainingModule;component/Images/red_check.PNG" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="39" HorizontalAlignment="Left" Margin="119,274,0,0" Name="arrow0" Stretch="Fill" VerticalAlignment="Top" Width="22" Source="/RegisTrainingModule;component/Images/black_arrow.png" Visibility="Hidden" />
+        <Image Height="39" HorizontalAlignment="Left" Margin="169,274,0,0" Name="arrow1" Source="/RegisTrainingModule;component/Images/black_arrow.png" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="39" HorizontalAlignment="Left" Margin="220,274,0,0" Name="arrow2" Source="/RegisTrainingModule;component/Images/black_arrow.png" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="39" HorizontalAlignment="Left" Margin="272,274,0,0" Name="arrow3" Source="/RegisTrainingModule;component/Images/black_arrow.png" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="39" HorizontalAlignment="Left" Margin="324,274,0,0" Name="arrow4" Source="/RegisTrainingModule;component/Images/black_arrow.png" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="39" HorizontalAlignment="Left" Margin="374,274,0,0" Name="arrow5" Source="/RegisTrainingModule;component/Images/black_arrow.png" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="39" HorizontalAlignment="Left" Margin="432,274,0,0" Name="arrow6" Source="/RegisTrainingModule;component/Images/black_arrow.png" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <Image Height="39" HorizontalAlignment="Left" Margin="490,274,0,0" Name="arrow7" Source="/RegisTrainingModule;component/Images/black_arrow.png" Stretch="Fill" VerticalAlignment="Top" Width="22" Visibility="Hidden" />
+        <TextBlock Height="36" HorizontalAlignment="Left" Margin="82,27,0,0" Name="moduleName" Text="Gmaj Scale" VerticalAlignment="Top" Width="109" FontWeight="Bold" FontSize="20" />
     </Grid>
 </UserControl>
