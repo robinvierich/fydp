@@ -63,7 +63,9 @@
     <Compile Include="Statics\NoteDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Statics\Dictionaries\ChordDict.dict" />
+    <None Include="Statics\Dictionaries\ChordDict.dict">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Statics\Dictionaries\TrebleDict.dict">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

@@ -1,6 +1,9 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regis", "regis\Regis.csproj", "{9DB5F1C9-6F66-480F-BB64-78853D63F35A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A} = {6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regis.Plugins", "regis.plugins\Regis.Plugins.csproj", "{730CC1CC-9028-4EF6-83BD-A5D5E5BAF9C8}"
 EndProject
