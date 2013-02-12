@@ -40,7 +40,7 @@ namespace RegisTrainingModule
             string poststr = "";
             poststr += "I have played ";
             poststr += txtPercentCorrect.Text;
-            poststr += " successfull notes of ";
+            poststr += "% successfull notes of ";
             poststr += txtNotesPlayed.Text;
             poststr += " total notes on R.E.G.I.S ";
             _socialNetworkingService.PostToFacebook(poststr);
@@ -51,7 +51,7 @@ namespace RegisTrainingModule
             string tweetstr = "";
             tweetstr += "I have played ";
             tweetstr += txtPercentCorrect.Text;
-            tweetstr += " successfull notes of ";
+            tweetstr += "% successfull notes of ";
             tweetstr += txtNotesPlayed.Text;
             tweetstr += " total notes on R.E.G.I.S ";
             _socialNetworkingService.PostToTwitter(tweetstr);

@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Regis.Controls.FrequencyVsTimeChart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Regis"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="300">
+    <Grid x:Name="rootGrid">
+    	<Grid.RowDefinitions>
+    		<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		
+		<TextBlock x:Name="Title" Text="{Binding Title}" FontSize="18" FontWeight="Bold" />
+		
+        <TextBlock x:Name="YTitle" 
+				   Text="{Binding YTitle}" 
+				   FontWeight="Bold" 
+				   Grid.Row="1"
+				   HorizontalAlignment="Left"
+				   VerticalAlignment="Center"
+				   >
+        	<TextBlock.RenderTransform>
+        		<RotateTransform Angle="90" />
+			</TextBlock.RenderTransform>
+       	</TextBlock>
+		
+        <TextBlock x:Name="XTitle" Text="{Binding XTitle}" Grid.Row="2" />
+        <Grid x:Name="canvasGrid" Grid.Row="1" Grid.Column="1">
+        	<Canvas x:Name="canvas" Width="{Binding ActualWidth, ElementName=canvasGrid, Mode=OneWay}" Margin="0,0,-100,-50" HorizontalAlignment="Left" VerticalAlignment="Top" Height="{Binding ActualHeight, ElementName=canvasGrid, Mode=OneWay}"/>
+        </Grid>
+        
+    </Grid>
+</UserControl>

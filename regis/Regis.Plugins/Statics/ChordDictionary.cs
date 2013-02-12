@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Regis.Plugins.Statics;
+using Regis.Plugins.Models;
 
 namespace Regis.Plugins.Statics
 {
@@ -39,8 +40,9 @@ namespace Regis.Plugins.Statics
 
                     frequencies.Add(Convert.ToDouble(line));                    
                 }
-
-                chord.Frequencies = frequencies;
+                
+                // TODO: Add start/end time here
+                chord.Notes = new List<Note>(frequencies.Select(x => new Note() { frequency = x }));
 
                 line = readFile.ReadLine();
                 chord.CharValue = Convert.ToChar(line);

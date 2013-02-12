@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Input;
 using BlueWave.Interop.Asio;
 using Regis.AudioCapture.Services;
+using Regis.AudioCapture.Services.Impl;
 
 namespace Regis.Commands
 {

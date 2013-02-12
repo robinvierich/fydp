@@ -20,29 +20,26 @@ namespace FFTViewerPlugin
         private IFFTSource _fftSource = null;
         private DispatcherTimer _fftUpdateTimer = new DispatcherTimer();
 
-        private double _absoluteMaxPower = 0;
+        private double _maxPower = 0;
 
-        public void StartReadingFFT()
-        {
+        public void StartReadingFFT() {
             if (_fftUpdateTimer.IsEnabled)
                 return;
 
-            _fftUpdateTimer.Interval = TimeSpan.FromMilliseconds(20);
+            _fftUpdateTimer.Interval = TimeSpan.FromMilliseconds(16);
             _fftUpdateTimer.Tick += new EventHandler(timer_Tick);
             _fftUpdateTimer.Start();
         }
 
-        public void StopReadingFFT()
-        {
+        public void StopReadingFFT() {
             if (!_fftUpdateTimer.IsEnabled)
                 return;
 
             _fftUpdateTimer.Stop();
         }
 
-        void timer_Tick(object sender, EventArgs e)
-        {
-            FFTCalculation fftCalc;
+        void timer_Tick(object sender, EventArgs e) {
+            FFTPower fftCalc;
             if (!_fftSource.FFTQueue.TryPeek(out fftCalc))
                 return;
 
@@ -55,8 +52,7 @@ namespace FFTViewerPlugin
             if (FFTBins == null)
                 FFTBins = new ObservableCollection<FFTBinViewModel>();
 
-            for (int i = 0; i < fftCalc.PowerBins.Length; i++)
-            {
+            for (int i = 0; i < fftCalc.PowerBins.Length; i++) {
                 if (FFTBins.ElementAtOrDefault(i) == null)
                     FFTBins.Insert(i, new FFTBinViewModel());
 
@@ -64,22 +60,19 @@ namespace FFTViewerPlugin
                 FFTBins[i].Power = powerBins[i];
             }
 
-            _absoluteMaxPower = Math.Max(FFTBins.Max(bin => bin.Power), _absoluteMaxPower);
+            _maxPower = Math.Max(FFTBins.Max(bin => bin.Power), _maxPower);
 
-            if (BarViewModels == null)
-            {
+            if (BarViewModels == null) {
                 BarViewModels = new ObservableCollection<BarViewModel>();
             }
 
             int j = 0;
-            foreach (FFTBinViewModel bin in FFTBins)
-            {
-                if (BarViewModels.ElementAtOrDefault(j) == null)
-                {
+            foreach (FFTBinViewModel bin in FFTBins) {
+                if (BarViewModels.ElementAtOrDefault(j) == null) {
                     BarViewModels.Insert(j, new BarViewModel());
                 }
 
-                double height = (bin.Power / _absoluteMaxPower) * ControlActualHeight;
+                double height = (bin.Power / _maxPower) * ControlActualHeight;
 
                 BarViewModels[j].Height = height;
                 BarViewModels[j].Width = ControlActualWidth / FFTBins.Count;
@@ -88,15 +81,23 @@ namespace FFTViewerPlugin
 
         }
 
+        #region MaxValue
+        private static PropertyChangedEventArgs _MaxValue_ChangedEventArgs = new PropertyChangedEventArgs("MaxValue");
+        public double MaxValue {
+            get { return _maxPower; }
+            private set {
+                _maxPower = value;
+                NotifyPropertyChanged(_MaxValue_ChangedEventArgs);
+            }
+        }
+        #endregion
 
         #region FFTBins
         private ObservableCollection<FFTBinViewModel> _FFTBins = new ObservableCollection<FFTBinViewModel>();
         private static PropertyChangedEventArgs _FFTBins_ChangedEventArgs = new PropertyChangedEventArgs("FFTBins");
-        public ObservableCollection<FFTBinViewModel> FFTBins
-        {
+        public ObservableCollection<FFTBinViewModel> FFTBins {
             get { return _FFTBins; }
-            set
-            {
+            set {
                 _FFTBins = value;
                 NotifyPropertyChanged(_FFTBins_ChangedEventArgs);
             }
@@ -107,11 +108,9 @@ namespace FFTViewerPlugin
         private double _ControlActualWidth;
         private static PropertyChangedEventArgs _ControlActualWidth_ChangedEventArgs = new PropertyChangedEventArgs("ControlActualWidth");
 
-        public double ControlActualWidth
-        {
+        public double ControlActualWidth {
             get { return _ControlActualWidth; }
-            set
-            {
+            set {
                 _ControlActualWidth = value;
                 NotifyPropertyChanged(_ControlActualWidth_ChangedEventArgs);
             }
@@ -122,11 +121,9 @@ namespace FFTViewerPlugin
         private double _ControlActualHeight;
         private static PropertyChangedEventArgs _ControlActualHeight_ChangedEventArgs = new PropertyChangedEventArgs("ControlActualHeight");
 
-        public double ControlActualHeight
-        {
+        public double ControlActualHeight {
             get { return _ControlActualHeight; }
-            set
-            {
+            set {
                 _ControlActualHeight = value;
                 NotifyPropertyChanged(_ControlActualHeight_ChangedEventArgs);
             }
@@ -137,11 +134,9 @@ namespace FFTViewerPlugin
         private ObservableCollection<BarViewModel> _BarViewModels;
         private static PropertyChangedEventArgs _Bars_ChangedEventArgs = new PropertyChangedEventArgs("BarViewModels");
 
-        public ObservableCollection<BarViewModel> BarViewModels
-        {
+        public ObservableCollection<BarViewModel> BarViewModels {
             get { return _BarViewModels; }
-            set
-            {
+            set {
                 _BarViewModels = value;
                 NotifyPropertyChanged(_Bars_ChangedEventArgs);
             }

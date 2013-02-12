@@ -33,7 +33,7 @@ namespace RegisTunerPlugin
         bool _runningTuner = false;
 
         [Import]
-        private INoteDetectionSource noteSource;
+        private INoteDetectionSource _noteSource;
 
         public TunerControl()
         {
@@ -114,18 +114,29 @@ namespace RegisTunerPlugin
                     break;
             }
 
+            Queue<Note> avgNoteQueue = new Queue<Note>();
+            int maxAvgNoteQueueLength = 5;
+
             while (_runningTuner)
             {
-                Note[] notes;
-                if (!noteSource.NoteQueue.TryDequeue(out notes))
+                Note[] notes = _noteSource.GetNotes();
+                if (notes == null)
                     continue;
 
-                if (notes[0].closestRealNoteFrequency == 0)
+                if (notes[0].ClosestRealNoteFrequency == 0)
                     continue;
                 else if ((targetFreq - scaleFactor) > notes[0].frequency || notes[0].frequency > (targetFreq + scaleFactor))
                     continue;
 
-                double currentFreq = notes[0].frequency;
+                
+                avgNoteQueue.Enqueue(notes[0]);
+                if (avgNoteQueue.Count > maxAvgNoteQueueLength)
+                {
+                    avgNoteQueue.Dequeue();
+                }
+
+
+                double currentFreq = avgNoteQueue.Average(x => x.frequency);
 
                 Application.Current.Dispatcher.Invoke(
                     DispatcherPriority.Render,

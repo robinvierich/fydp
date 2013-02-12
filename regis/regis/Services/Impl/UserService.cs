@@ -6,7 +6,7 @@ using System.ComponentModel.Composition;
 using Regis.Plugins.Interfaces;
 using Regis.Plugins.Models;
 
-namespace Regis.Services
+namespace Regis.Services.Impl
 {
     [Export (typeof(IUserService))]
     public class UserService: IUserService

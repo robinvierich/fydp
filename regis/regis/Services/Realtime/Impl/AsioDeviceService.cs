@@ -6,7 +6,7 @@ using BlueWave.Interop.Asio;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace Regis.AudioCapture.Services
+namespace Regis.AudioCapture.Services.Impl
 {
     public static class AsioDeviceService
     {

@@ -6,22 +6,7 @@ using System.ComponentModel;
 
 namespace Regis.Base.ViewModels
 {
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : BaseNotifyPropertyChanged
     {
-        protected BaseViewModel()
-        {
-        }
-
-        
-        protected void NotifyPropertyChanged(PropertyChangedEventArgs args)
-        {
-            PropertyChangedEventHandler h = PropertyChanged;
-            if (h == null)
-                return;
-
-            h(this, args);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

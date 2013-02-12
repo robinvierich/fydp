@@ -60,6 +60,10 @@
   <ItemGroup>
     <Compile Include="Models\Tuning.cs" />
     <Compile Include="Models\GuitarString.cs" />
+    <Compile Include="MultiplyConverter.cs" />
+    <Compile Include="NeedleTunerControl.xaml.cs">
+      <DependentUpon>NeedleTunerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -76,6 +80,7 @@
     <Compile Include="TunerControl.xaml.cs">
       <DependentUpon>TunerControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\NeedleTunerViewModel.cs" />
     <Compile Include="ViewModels\TunerViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -91,6 +96,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="NeedleTunerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TunerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

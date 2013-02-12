@@ -79,7 +79,7 @@ namespace FFTViewerPlugin
 
         public string FriendlyPluginName
         {
-            get { return "FFT Viewer"; }
+            get { return "FFT"; }
         }
         #endregion
 

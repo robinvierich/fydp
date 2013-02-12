@@ -1,12 +1,33 @@
-﻿<Application x:Class="Regis.App"
+﻿<Application
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Regis"
+              x:Class="Regis.App"
              StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary>
+        <!--<ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Regis;component/Themes/ExpressionLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        </ResourceDictionary>-->
+
+        <Style TargetType="{x:Type Control}">
+            <Setter Property="Margin" Value="{x:Static local:Constants.Margin}" />
+        </Style>
+
+        <Style TargetType="{x:Type Panel}">
+            <Setter Property="Margin" Value="{x:Static local:Constants.Margin}" />
+        </Style>
+        
+    	<ControlTemplate x:Key="TextBoxBaseControlTemplate1" TargetType="{x:Type TextBoxBase}">
+    		<Border BorderBrush="Black" BorderThickness="1" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" CornerRadius="3" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Padding="6,3,0,3">
+    			<ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Content="test some lines and big" Background="#4CF0F0F0"/>
+    		</Border>
+    		<ControlTemplate.Triggers>
+    			<Trigger Property="IsEnabled" Value="False">
+    				<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+    			</Trigger>
+    		</ControlTemplate.Triggers>
+    	</ControlTemplate>
     </Application.Resources>
 </Application>

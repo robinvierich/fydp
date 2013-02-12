@@ -112,26 +112,25 @@ namespace RegisFreeFormPlugin
         {
             int index;
             Note[] prevNote = new Note[3];
-            Note[] curNote;
+            Note[] curNotes;
             index = 1; 
             while (_runningFreeform)
             {
                 
                 
                 // "&amp;= == = == = == = == = == = == = == = == = == ||" 
-                
-
-                if (!noteSource.NoteQueue.TryPeek(out curNote))
+                curNotes = noteSource.GetNotes();
+                if (curNotes == null)
                     continue;
 
-                if (curNote[0].closestRealNoteFrequency == prevNote[0].closestRealNoteFrequency)
+                if (curNotes[0].ClosestRealNoteFrequency == prevNote[0].ClosestRealNoteFrequency)
                     continue;
-                else if (curNote[0].closestRealNoteFrequency == 0)
+                else if (curNotes[0].ClosestRealNoteFrequency == 0)
                     continue;
 
-                prevNote = curNote;
+                prevNote = curNotes;
        
-                noteStaff[index] = NoteDictionary.NoteDict[curNote[0].closestRealNoteFrequency].ToString();
+                noteStaff[index] = NoteDictionary.NoteDict[curNotes[0].ClosestRealNoteFrequency].ToString();
                 String mystaff = string.Join("", noteStaff);
                 Application.Current.Dispatcher.Invoke(
                     DispatcherPriority.Render,

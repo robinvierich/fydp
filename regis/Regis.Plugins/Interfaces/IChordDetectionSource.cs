@@ -9,6 +9,7 @@ namespace Regis.Plugins.Interfaces
 {
     public interface IChordDetectionSource
     {
+        Note[] GetNotes();
         ConcurrentQueue<Note[]> ChordQueue { get; }
     }
 }

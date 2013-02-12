@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Regis.Plugins.Interfaces;
-using Regis.Plugins.Models;
 using System.Collections.Concurrent;
 using System.ComponentModel.Composition;
 using System.Threading;
-using Regis.Models;
+using Regis.Plugins.Models;
 
-namespace Regis.Services.Realtime
+namespace Regis.Services.Realtime.Impl
 {
     [Export(typeof(INoteDetectionSource))]
     [Export(typeof(INoteDetectionService))]
     public class SimpleNoteDetectionAlgorithm : INoteDetectionSource, INoteDetectionService
     {
-        private ConcurrentQueue<Note[]> _noteQueue = new ConcurrentQueue<Note[]>();
-        public ConcurrentQueue<Note[]> NoteQueue { get { return _noteQueue; } }
+        private ConcurrentQueue<Note[]> NoteQueue { get; set; }
 
         [Import]
         private IFFTSource _fftSource = null;
@@ -59,7 +57,7 @@ namespace Regis.Services.Realtime
         {
             while (!_stopDetecting)
             {
-                FFTCalculation fftCalc;
+                FFTPower fftCalc;
                 if (!_fftSource.FFTQueue.TryPeek(out fftCalc))
                     continue;
 
@@ -80,21 +78,16 @@ namespace Regis.Services.Realtime
                 _previousTotalPower = currentTotalPower;
 
                 Note[] notes = new Note[1];
-                notes[0].timeStamp = DateTime.Now;
+                notes[0].startTime = DateTime.Now;
                 notes[0].frequency = freq;
-                notes[0].closestRealNoteFrequency = Regis.Plugins.Statics.NoteDictionary.GetClosestRealNoteFrequency(freq);
-
                
                 //Console.WriteLine(notes[0].closestRealNoteFrequency);
-                _noteQueue.Enqueue(notes);
-                if (_noteQueue.Count > _maxNoteQueueSize)
+                NoteQueue.Enqueue(notes);
+                if (NoteQueue.Count > _maxNoteQueueSize)
                 {
                     Note[] dqnotes;
-                    _noteQueue.TryDequeue(out dqnotes);
+                    NoteQueue.TryDequeue(out dqnotes);
                 }
-
-                
-
             }
         }
 
@@ -200,6 +193,12 @@ namespace Regis.Services.Realtime
             }
 
             return new Tuple<int, int>(maxIndex, minIndex);
+        }
+
+        public Note[] GetNotes() {
+            Note[] toReturn;
+            NoteQueue.TryPeek(out toReturn);
+            return toReturn;
         }
     }
 }

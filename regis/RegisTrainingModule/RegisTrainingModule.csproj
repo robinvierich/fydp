@@ -88,14 +88,14 @@
     <Resource Include="Images\black_arrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="training_modules.cfg">
+    <None Include="Models\training_modules.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy $(TargetDir) $(SolutionDir)regisPlugins\ $(TargetName).dll $(TargetName).pdb
-robocopy $(TargetDir) $(SolutionDir)regis\bin\Debug training_modules.cfg
+
 
 REM For some reason, robocopy returns 1 when successful..
 REM so we have to do this:

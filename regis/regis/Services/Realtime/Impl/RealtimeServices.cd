@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Regis.Services.Realtime.FFTArgs">
+    <Position X="8" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Realtime\Interfaces\IFFTService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Regis.Services.Realtime.AsioSamplingServiceArgs">
+    <Position X="3" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Realtime\Interfaces\IAsioSamplingService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Regis.Services.Realtime.AsioSamplingService">
+    <Position X="2.75" Y="4.25" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAIAAIAASAAAAAAAAAAAQAAIACAAAAAIAAABAABAAA=</HashCode>
+      <FileName>Services\Realtime\AsioSamplingService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.252" />
+  </Class>
+  <Class Name="Regis.Services.Realtime.FFTService">
+    <Position X="9" Y="4.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAQQIEAAACAAAAAAAAACAAAAAAAAAAAgIAAAAABAAAA=</HashCode>
+      <FileName>Services\Realtime\FFTService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Regis.Services.Realtime.IRealtimeService&lt;T&gt;">
+    <Position X="5.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Services\Realtime\Interfaces\IRealtimeService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Regis.Services.Realtime.IFFTService" Collapsed="true">
+    <Position X="6.75" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Realtime\Interfaces\IFFTService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Regis.Services.Realtime.IAsioSamplingService">
+    <Position X="3.75" Y="2.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Realtime\Interfaces\IAsioSamplingService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Regis.Services.Realtime.ISampleSource">
+    <Position X="0.75" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Realtime\Interfaces\ISampleSource.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Regis.Plugins.Interfaces.IFFTSource">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -9,6 +9,6 @@ namespace Regis.Plugins.Interfaces
 {
     public interface INoteDetectionSource
     {
-        ConcurrentQueue<Note[]> NoteQueue { get; }
+        Note[] GetNotes();
     }
 }

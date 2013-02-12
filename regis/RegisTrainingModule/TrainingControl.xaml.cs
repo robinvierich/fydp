@@ -35,7 +35,7 @@ namespace RegisTrainingModule
         DateTime time;
 
         [Import]
-        private INoteDetectionSource noteSource;
+        private INoteDetectionSource _noteSource;
 
         [Import]
         private IUserService _userService;
@@ -99,6 +99,7 @@ namespace RegisTrainingModule
                //do your operation here!
             time = DateTime.Now;
             _trainingThread = new Thread(new ThreadStart(StartTraining));
+            _trainingThread.SetApartmentState(ApartmentState.STA);
             _trainingThread.Start();
         }
 
@@ -133,14 +134,11 @@ namespace RegisTrainingModule
 
                     while (true)
                     {
-                        Note[] notes;
-                        if (!noteSource.NoteQueue.TryPeek(out notes))
+                        Note[] notes = _noteSource.GetNotes();
+                        if (notes[0].ClosestRealNoteFrequency == 0)
                             continue;
 
-                        if (notes[0].closestRealNoteFrequency == 0)
-                            continue;
-
-                        if (notes[0].closestRealNoteFrequency == ViewModel.TrainingModules[0].TargetFreq[i])
+                        if (notes[0].ClosestRealNoteFrequency == ViewModel.TrainingModules[0].TargetFreq[i])
                         {
                             Application.Current.Dispatcher.Invoke(
                                 DispatcherPriority.Render,
@@ -161,12 +159,15 @@ namespace RegisTrainingModule
 
                 User currentUser = _userService.GetCurrentUser();
 
+
+                Application.Current.Dispatcher.Invoke(
+                        DispatcherPriority.Render, new Action(() =>
                 currentUser.TrainingStats.Add(new UserTrainingStats()
                 {
                     TimeStamp = DateTime.Now,
                     PercentCorrectNotes = ((double)notesCorrect/(double)notesTotal) * 100,
                     TotalNotesPlayed = notesTotal
-                });
+                })));
                
 
                 Application.Current.Dispatcher.Invoke(

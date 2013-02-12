@@ -10,13 +10,20 @@ using Regis.AudioCapture.Services;
 using Regis.Services.Realtime;
 using System.ComponentModel.Composition;
 using Regis.Commands;
+using Regis.AudioCapture.Services.Impl;
 
 namespace Regis.ViewModels
 {
-    [Export]
-    public class AsioSettingsViewModel: BaseViewModel
+    public enum RawInputType
     {
-        public AsioSettingsViewModel()
+        PIC,
+        Audio
+    }
+
+    [Export]
+    public class SettingsViewModel: BaseViewModel
+    {
+        public SettingsViewModel()
         {
             AsioDrivers = AsioDeviceService.GetAsioDrivers();
             
@@ -56,6 +63,27 @@ namespace Regis.ViewModels
                 NotifyPropertyChanged(_LoadedDriverChangedEventArgs);
             }
         }
+
+        #region InputType
+        private RawInputType _InputType;
+        private static PropertyChangedEventArgs _InputType_ChangedEventArgs = new PropertyChangedEventArgs("InputType");
+
+        public RawInputType InputType {
+            get { return _InputType; }
+            set {
+                _InputType = value;
+                NotifyPropertyChanged(_InputType_ChangedEventArgs);
+            }
+        }
+        #endregion
+
+        #region SerialSettings
+        [Import]
+        public SerialSettingsViewModel SerialSettings {
+            get;
+            set;
+        }
+        #endregion
 
         #region SelectedChannel
         private Channel _SelectedChannel;

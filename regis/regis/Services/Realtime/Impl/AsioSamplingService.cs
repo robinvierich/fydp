@@ -8,8 +8,9 @@ using System.Collections.Concurrent;
 using Regis.Models;
 using System.ComponentModel.Composition;
 using Regis.AudioCapture;
+using System.Threading.Tasks;
 
-namespace Regis.Services.Realtime
+namespace Regis.Services.Realtime.Impl
 {
 
     /// <summary>
@@ -44,8 +45,8 @@ namespace Regis.Services.Realtime
 
             _currentDriver = args.Driver;
 
-            if (!args.Driver.InputChannels.Contains(args.Channel))
-                throw new Exception("Input channel must be in driver.InputChannels");
+            //if (!args.Driver.InputChannels.Contains(args.Channel))
+            //    throw new Exception("Input channel must be in driver.InputChannels");
 
             // The order here is key
             // Create buffers before selecting the channel
@@ -81,15 +82,18 @@ namespace Regis.Services.Realtime
             SampleCollection sampleColl = new SampleCollection();
             sampleColl.Samples = new long[_currentInputChannel.BufferSize];
 
-            readBuffers(ref sampleColl.Samples);
+            int chunkSize = _currentInputChannel.BufferSize / 64;
+            Parallel.For(0, _currentInputChannel.BufferSize, (i) => {
+                readBuffers(ref sampleColl.Samples, i * chunkSize, chunkSize);
+            });
 
             _sampleCollectionQueue.Enqueue(sampleColl);
         }
 
-        private void readBuffers(ref long[] toArray)
+        private void readBuffers(ref long[] toArray, int start=0, int length=-1)
         {
             // NOTE: may need to optimize this loop
-            for (int i = 0; i < _currentInputChannel.BufferSize; i++)
+            for (int i = start; i < length; i++)
                 toArray[i] = (long)_currentInputChannel[i];
         }
     }

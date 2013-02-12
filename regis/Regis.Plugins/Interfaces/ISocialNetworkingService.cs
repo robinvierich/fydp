@@ -4,13 +4,30 @@ using System.Linq;
 using System.Text;
 
 namespace Regis.Plugins.Interfaces
-{
+{    public enum AuthorizationStatus
+    {
+        LoggedOut,
+        AuthorizingPin,
+        LoggedIn,
+    }
+
+    public class TwitterAuthEventArgs: EventArgs
+    {
+        public AuthorizationStatus newStatus;
+        public TwitterAuthEventArgs(AuthorizationStatus newStatus)
+        {
+            this.newStatus = newStatus;
+        }
+    }
+
     public interface ISocialNetworkingService
     {
-        void AuthTwitter1();
-        void AuthTwitter2(string strPin);
+        void GetTwitterPin();
+        void AuthTwitter(string pin);
+        event EventHandler<TwitterAuthEventArgs> TwitterAuthUpdated;
+
         void PostToTwitter(string value);
         void PostToFacebook(string value);
-        void FacebookAuth();
+        void AuthFacebook(string pin);
     }
 }

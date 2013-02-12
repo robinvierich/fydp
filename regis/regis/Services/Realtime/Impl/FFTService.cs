@@ -12,14 +12,14 @@ using AForge.Math;
 using Regis.Plugins.Models;
 using Regis.Plugins.Interfaces;
 
-namespace Regis.Services.Realtime
+namespace Regis.Services.Realtime.Impl
 {
     [Export(typeof(IFFTService))]
     [Export(typeof(IFFTSource))]
-    public class FFTAlgorithm : IFFTSource, IFFTService
+    public class FFTService : IFFTSource, IFFTService
     {
-        private ConcurrentQueue<FFTCalculation> _fftQueue = new ConcurrentQueue<FFTCalculation>();
-        public ConcurrentQueue<FFTCalculation> FFTQueue { get { return _fftQueue; }}
+        private ConcurrentQueue<FFTPower> _fftQueue = new ConcurrentQueue<FFTPower>();
+        public ConcurrentQueue<FFTPower> FFTQueue { get { return _fftQueue; }}
 
         [Import]
         private ISampleSource _sampleSource = null;
@@ -81,14 +81,14 @@ namespace Regis.Services.Realtime
 
                 FourierTransform.FFT(fftArray, FourierTransform.Direction.Forward);
 
-                FFTCalculation fftCalc = new FFTCalculation();
+                FFTPower fftCalc = new FFTPower();
 
                 fftCalc.PowerBins = new double[sampleCollection.Samples.Length];
                 fftCalc.PowerBins = fftArray.Select(x => x.SquaredMagnitude).ToArray();
 
                 if (_fftQueue.Count > _maxQueueSize)
                 {
-                    FFTCalculation calc;
+                    FFTPower calc;
                     _fftQueue.TryDequeue(out calc);
                 }
 

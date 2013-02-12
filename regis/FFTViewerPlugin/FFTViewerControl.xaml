@@ -15,33 +15,43 @@
     <UserControl.Resources>
         
     </UserControl.Resources>
-    
-    <ListView ItemsSource="{Binding BarViewModels}"
-              
-             
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="{Binding MaxValue}" />
+        <ListView ItemsSource="{Binding BarViewModels}"
+              Grid.Row="1"
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
               ScrollViewer.HorizontalScrollBarVisibility="Hidden"
               >
-        <ListView.ItemsPanel>
-            <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal" />
-            </ItemsPanelTemplate>
-        </ListView.ItemsPanel>
-        
-        <ListView.ItemContainerStyle>
-            <Style TargetType="{x:Type ListViewItem}">
-                <Setter Property="VerticalAlignment" Value="Bottom" />
-            </Style>
-        </ListView.ItemContainerStyle>
-        
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <Rectangle
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="VerticalAlignment" Value="Bottom" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle
                     VerticalAlignment="Bottom"
                     Fill="Black"
                     Width="{Binding Width}"
                     Height="{Binding Height}" />
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TextBlock Text="{Binding MinValue}"
+                   Grid.Row="2" />
+    </Grid>
 </UserControl>

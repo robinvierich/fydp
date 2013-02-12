@@ -8,33 +8,13 @@ using System.Collections.ObjectModel;
 using Regis.Composition;
 using Regis.Plugins.Interfaces;
 
-namespace Regis.Services
+namespace Regis.Services.Impl
 {
-    public class PluginLoadedEventArgs : EventArgs
-    {
-        IPlugin _plugin;
-
-        public PluginLoadedEventArgs(IPlugin plugin)
-        {
-            _plugin = plugin;
-        }
-
-        public IPlugin Plugin
-        {
-            get
-            {
-                return _plugin;
-            }
-        }
-
-    }
-
     public class PluginLoadException : Exception
     {
         public PluginLoadException(string exceptionString) : base(exceptionString)
         {
         }
-
     }
 
     [Export(typeof(IPluginService))]
@@ -42,14 +22,6 @@ namespace Regis.Services
     {
         [ImportMany]
         ObservableCollection<IPlugin> _plugins = null;
-
-        [ImportingConstructor]
-        public PluginService()
-        {
-         //   _noteStream = noteStream;
-
-
-        }
 
         public void LoadPlugin(string pluginName)
         {

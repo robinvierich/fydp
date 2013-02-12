@@ -21,9 +21,9 @@ using Regis.Plugins.Interfaces;
 namespace Regis.Controls
 {
     [Export(typeof(IPlugin))]
-    public partial class AsioSettingsControl : UserControl, IPlugin, IPartImportsSatisfiedNotification
+    public partial class SettingsControl : UserControl, IPlugin, IPartImportsSatisfiedNotification
     {
-        public AsioSettingsControl()
+        public SettingsControl()
         {
             InitializeComponent();
         }
@@ -61,32 +61,10 @@ namespace Regis.Controls
         }
         
         [Import]
-        private AsioSettingsViewModel ViewModel
+        private SettingsViewModel ViewModel
         {
             get;
             set;
-        }
-
-        [Import]
-        private ISocialNetworkingService _socialNetworkingService = null;
-
-        private void btnTweet_Click(object sender, RoutedEventArgs e)
-        {
-            _socialNetworkingService.AuthTwitter1();
-            this.txtPin.Visibility = Visibility.Visible;
-            this.btnPinOk.Visibility = Visibility.Visible;
-        }
-
-        private void btnPinOk_Click(object sender, RoutedEventArgs e)
-        {
-            _socialNetworkingService.AuthTwitter2(this.txtPin.Text);
-            this.btnPinOk.IsEnabled = false;
-            this.txtPin.Text = "Authenticated!";
-        }
-
-        private void btnFacebook_Click(object sender, RoutedEventArgs e)
-        {
-            _socialNetworkingService.FacebookAuth();
         }
 
         #region IPlugin
@@ -108,9 +86,5 @@ namespace Regis.Controls
         }
 
         #endregion
-
-
-
-
     }
 }

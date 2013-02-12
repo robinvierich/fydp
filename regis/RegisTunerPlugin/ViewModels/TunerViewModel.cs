@@ -7,18 +7,32 @@ using System.IO;
 using RegisTunerPlugin.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.ComponentModel;
 
 namespace RegisTunerPlugin.ViewModels
 {
     [Export]
     public class TunerViewModel : BaseViewModel
     {
-        
-        public TunerViewModel()
-        {
+
+        public TunerViewModel() {
             Tunings = new ObservableCollection<Tuning>();
             LoadTunings();
         }
+
+        #region CurrentFrequency
+        private double _CurrentFrequency;
+        private static PropertyChangedEventArgs _CurrentFrequency_ChangedEventArgs = new PropertyChangedEventArgs("CurrentFrequency");
+
+        public double CurrentFrequency {
+            get { return _CurrentFrequency; }
+            set {
+                _CurrentFrequency = value;
+                NotifyPropertyChanged(_CurrentFrequency_ChangedEventArgs);
+            }
+        }
+        #endregion
+
 
         private ObservableCollection<Tuning> _tunings;
         public ObservableCollection<Tuning> Tunings

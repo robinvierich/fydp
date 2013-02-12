@@ -15,6 +15,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -64,6 +66,7 @@
     <Reference Include="nunit.framework">
       <HintPath>..\TweetSharp\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -97,36 +100,85 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AudioCapture.cs" />
+    <Compile Include="Commands\AuthorizeTwitterCommand.cs" />
+    <Compile Include="Commands\GetTwitterPinCommand.cs" />
     <Compile Include="Commands\LoadDriverCommand.cs" />
     <Compile Include="Commands\LoadPluginCommand.cs" />
     <Compile Include="Commands\RestartSamplingServiceCommand.cs" />
     <Compile Include="Composition\Importer.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Controls\AuthTwitterControl.xaml.cs">
+      <DependentUpon>AuthTwitterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FrequencyVsTimeChart.xaml.cs">
+      <DependentUpon>FrequencyVsTimeChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NoteControls\BarNoteControl.xaml.cs">
+      <DependentUpon>BarNoteControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PostToTwitterControl.xaml.cs">
+      <DependentUpon>PostToTwitterControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SerialSettingsControl.xaml.cs">
+      <DependentUpon>SerialSettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Pulse.cs" />
     <Compile Include="Models\SampleCollection.cs" />
-    <Compile Include="Services\AsioDeviceService.cs" />
-    <Compile Include="Services\DataContractPersistanceService.cs" />
-    <Compile Include="Services\Realtime\AsioSamplingService.cs" />
-    <Compile Include="Services\Realtime\Interfaces\IChordDetectionService.cs" />
-    <Compile Include="Services\Realtime\SimpleChordDetectionAlgorithm.cs" />
-    <Compile Include="Services\Realtime\FFTAlgorithm.cs" />
-    <Compile Include="Services\Realtime\Interfaces\IAsioSamplingService.cs" />
-    <Compile Include="Services\Realtime\Interfaces\IFFTService.cs" />
-    <Compile Include="Services\Realtime\Interfaces\INoteDetectionService.cs" />
+    <Compile Include="Services\Realtime\Impl\AsioDeviceService.cs" />
+    <Compile Include="Services\Realtime\Impl\AsioSamplingService.cs" />
+    <Compile Include="Services\Realtime\Serial\ByteArraySerialService.cs" />
+    <Compile Include="Services\Realtime\Serial\FFTPowerSerialService.cs" />
+    <Compile Include="Services\Realtime\Serial\PulseSerialService.cs" />
+    <Compile Include="Services\Realtime\Serial\SerialServiceBase.cs" />
+    <Compile Include="Services\Realtime\Impl\FFTService.cs" />
+    <Compile Include="Services\Realtime\IAsioSamplingService.cs" />
+    <Compile Include="Services\Realtime\IFFTService.cs" />
+    <Compile Include="Services\Realtime\INoteDetectionService.cs" />
     <Compile Include="Services\IPluginService.cs" />
-    <Compile Include="Services\Realtime\Interfaces\IRealtimeService.cs" />
-    <Compile Include="Services\Realtime\Interfaces\ISampleSource.cs" />
-    <Compile Include="Services\Realtime\SimpleNoteDetectionAlgorithm.cs" />
-    <Compile Include="Services\SocialNetworkingService.cs" />
-    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\Realtime\IRealtimeService.cs" />
+    <Compile Include="Services\Realtime\ISampleSource.cs" />
+    <Compile Include="Services\Realtime\Impl\SimpleNoteDetectionAlgorithm.cs" />
+    <Compile Include="Services\Impl\SocialNetworkingService.cs" />
+    <Compile Include="Services\Impl\UserService.cs" />
+    <Compile Include="Services\Realtime\ISerialService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Strings.cs" />
-    <Compile Include="ViewModels\AsioSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SerialSettingsViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\AuthorizeTwitterViewModel.cs" />
+    <Compile Include="ViewModels\FrequencyVsTimeViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="Controls\AsioSettingsControl.xaml.cs">
-      <DependentUpon>AsioSettingsControl.xaml</DependentUpon>
+    <Compile Include="Controls\SettingsControl.xaml.cs">
+      <DependentUpon>SettingsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\NoteViewModel.cs" />
+    <Compile Include="ViewModels\PostToTwitterViewModel.cs" />
+    <Compile Include="Views\FrequencyVsTimeView.xaml.cs">
+      <DependentUpon>FrequencyVsTimeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\AuthTwitterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\FrequencyVsTimeChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NoteControls\BarNoteControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PostToTwitterControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SerialSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\BureauBlack.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -147,7 +199,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\AsioSettingsControl.xaml">
+    <Page Include="Controls\SettingsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -163,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\FrequencyVsTimeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -170,7 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\PluginContainer.cs" />
-    <Compile Include="Services\PluginService.cs" />
+    <Compile Include="Services\Impl\PluginService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -217,28 +273,39 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\guitar16.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\guitar24.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\guitar32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\guitar64.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\guitar128.ico" />
-  </ItemGroup>
-  <ItemGroup>
+    <BlendEmbeddedFont Include="Fonts\ebrima.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+      <Characters>
+      </Characters>
+      <Uppercase>True</Uppercase>
+      <Lowercase>True</Lowercase>
+      <Numbers>True</Numbers>
+      <Punctuation>True</Punctuation>
+    </BlendEmbeddedFont>
+    <BlendEmbeddedFont Include="Fonts\ebrimabd.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+      <Characters>
+      </Characters>
+      <Uppercase>True</Uppercase>
+      <Lowercase>True</Lowercase>
+      <Numbers>True</Numbers>
+      <Punctuation>True</Punctuation>
+    </BlendEmbeddedFont>
     <Resource Include="Icons\guitar128.ico" />
     <Resource Include="Icons\guitar16.ico" />
     <Resource Include="Icons\guitar24.ico" />
     <Resource Include="Icons\guitar32.ico" />
     <Resource Include="Icons\guitar64.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\twitter.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.0\Microsoft.Expression.Blend.WPF.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

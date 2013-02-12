@@ -37,6 +37,12 @@ namespace RegisChordFreeFormPlugin
         {
             InitializeComponent();
             _chordList = ChordDictionary.ChordList;
+            Unloaded += new RoutedEventHandler(ChordFreeFormControl_Unloaded);
+        }
+
+        void ChordFreeFormControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            StopFreeform();
         }
 
         [Import]
@@ -116,17 +122,26 @@ namespace RegisChordFreeFormPlugin
             {             
                 if (!chordSource.ChordQueue.TryPeek(out curNote))
                     continue;
-                
+                noteCount = 0;
                 for (int j = 0; j < ChordDictionary.ChordList.Count; j++)
                 {
+                    
                     for (int i = 0; i < curNote.Count(); i++)
                     {
-                        bool test = (ChordDictionary.ChordList[j].Frequencies.Contains(curNote[i].closestRealNoteFrequency));
+                        bool test = (ChordDictionary.ChordList[j].Notes.Where(n => n.ClosestRealNoteFrequency == curNote[i].ClosestRealNoteFrequency).Count() > 0);
                         if (test == true)
                             noteCount++;
                     }
-                    if ((noteCount / ChordDictionary.ChordList[j].Frequencies.Count) > 0.75)
+
+                    if ((noteCount / ChordDictionary.ChordList[j].Notes.Count) >= 0.5)
+                    {
                         _chord = ChordDictionary.ChordList[j].CharValue.ToString();
+                        break;
+                    }
+                    else
+                    {
+                        _chord = "";
+                    }
                 }
 
                 if (_chord == "")

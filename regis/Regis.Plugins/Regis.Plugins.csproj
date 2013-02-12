@@ -59,7 +59,7 @@
     <Compile Include="NoteDetectionAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statics\ChordDictionary.cs" />
-    <Compile Include="Statics\Chord.cs" />
+    <Compile Include="Models\Chord.cs" />
     <Compile Include="Statics\NoteDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +70,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Regis.Base\Regis.Base.csproj">
+      <Project>{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}</Project>
+      <Name>Regis.Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

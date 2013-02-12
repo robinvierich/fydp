@@ -13,15 +13,11 @@ namespace Regis
 {
     public partial class App : Application
     {
-
         [Import]
         IFFTService _fftService = null;
 
         [Import]
         INoteDetectionService _noteDetectionService = null;
-
-        [Import]
-        IChordDetectionService _chordDetectionService = null;
 
         [Import]
         IAsioSamplingService _asioSamplingService = null;
@@ -38,7 +34,12 @@ namespace Regis
             // TODO: Fill this in with correct args;
             _fftService.Start(new FFTArgs() { MaxQueueSize = 3 });
             _noteDetectionService.Start(new SimpleNoteDetectionArgs());
-            _chordDetectionService.Start(new SimpleChordDetectionArgs());
+            //_chordDetectionService.Start(new SimpleChordDetectionArgs());
+
+            FrameworkElement.StyleProperty.OverrideMetadata(typeof(Window), new FrameworkPropertyMetadata
+            {
+                DefaultValue = FindResource(typeof(Window))
+            });
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -52,7 +53,7 @@ namespace Regis
 
             _fftService.Stop();
             _noteDetectionService.Stop();
-            _chordDetectionService.Stop();
+            //_chordDetectionService.Stop();
         }
     }
 }

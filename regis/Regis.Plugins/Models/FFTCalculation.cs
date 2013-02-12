@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Regis.Plugins.Models
 {
-    public class FFTCalculation
+    public class FFTPower
     {
         private double[] powerBins;
         public double[] PowerBins
