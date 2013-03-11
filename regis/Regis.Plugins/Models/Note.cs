@@ -26,6 +26,12 @@ namespace Regis.Plugins.Models
             }
         }
 
+        public char Text {
+            get {
+                return NoteDictionary.NoteDict[ClosestRealNoteFrequency];
+            }
+        }
+
         private PropertyChangedEventArgs _Duration_PropertyChangedEventArgs_ = new PropertyChangedEventArgs("Duration");
         public TimeSpan Duration {
             get {
@@ -56,10 +62,5 @@ namespace Regis.Plugins.Models
         public static double FrequencyFromSemitone(uint semitone) {
             return 440 * Math.Pow(2, (semitone - 48) / 12d);
         }
-    }
-
-    public static class NoteExtensions
-    {
-
     }
 }
