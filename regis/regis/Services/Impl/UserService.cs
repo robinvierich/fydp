@@ -14,7 +14,7 @@ namespace Regis.Services.Impl
         private User _currentUser;
 
         [Import]
-        private IPersistanceService _persistanceService = null;
+        private IPersistenceService _persistanceService = null;
 
         public User GetCurrentUser()
         {

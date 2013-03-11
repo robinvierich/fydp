@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Regis.Plugins.Interfaces
 {
-    public interface IPersistanceService
+    public interface IPersistenceService
     {
         void Save<T>(T obj, string filePath, bool overwrite);
         T Load<T>(string filePath);

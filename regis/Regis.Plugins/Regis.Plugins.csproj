@@ -48,7 +48,7 @@
     <Compile Include="Interfaces\IChordDetectionSource.cs" />
     <Compile Include="Interfaces\IFFTSource.cs" />
     <Compile Include="Interfaces\INoteDetectionSource.cs" />
-    <Compile Include="Interfaces\IPersistanceService.cs" />
+    <Compile Include="Interfaces\IPersistenceService.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\ISocialNetworkingService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
