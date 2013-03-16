@@ -58,6 +58,7 @@ namespace FFTViewerPlugin
                     FFTBins.Insert(i, new FFTBinViewModel());
 
                 FFTBins[i].BinNumber = i;
+
                 FFTBins[i].Power = powerBins[i];
             }
 
@@ -77,7 +78,7 @@ namespace FFTViewerPlugin
                 }
 
                 double height = ((bin.Power / _maxPower) * ControlActualHeight);
-
+       
                 BarViewModels[j].Height = height;
                 BarViewModels[j].Width = ControlActualWidth / FFTBins.Count;
                 j++;

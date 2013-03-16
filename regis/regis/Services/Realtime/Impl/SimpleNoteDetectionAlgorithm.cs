@@ -29,9 +29,10 @@ namespace Regis.Services.Realtime.Impl
         private double _step;
         private double _noiseFloor = AudioCapture.AudioCaptureSettings.NoiseFloor;//500000000000000;
 
-        private bool _impulseAlg = true;
+        private bool _impulseAlg = false;
         private double[] _powerBinsOld, _powerBinsDelta;
-        private double _powerBinsDeltaCutoff = 2E+0;
+        private double _powerBinsDeltaCutoff = 0;
+        private double _lastMax = 1;
         private double[] _xorPowerBins = new double[AudioCapture.AudioCaptureSettings.BufferSize * AudioCapture.AudioCaptureSettings.BufferModifier];
 
         public SimpleNoteDetectionAlgorithm()
@@ -61,7 +62,7 @@ namespace Regis.Services.Realtime.Impl
             if (_impulseAlg)
                 _noteDetectionThread = new Thread(new ThreadStart(ImpulseDetectNotes));
             else
-                _noteDetectionThread = new Thread(new ThreadStart(SimpleDetectNotes));
+                _noteDetectionThread = new Thread(new ThreadStart(SimpleDetectNotesImproved));
 
             _noteDetectionThread.Start();
         }
@@ -137,6 +138,73 @@ namespace Regis.Services.Realtime.Impl
             }
         }
 
+        private void SimpleDetectNotesImproved()
+        {
+            while (!_stopDetecting)
+            {
+                FFTPower fftCalc;
+                if (!_fftSource.FFTQueue.TryPeek(out fftCalc))
+                    continue;
+
+                double[] powerBins = new double[AudioCapture.AudioCaptureSettings.BufferSize * AudioCapture.AudioCaptureSettings.BufferModifier];
+
+                double freq = 0;
+                double currentTotalPower = powerBins.Sum();
+
+                double max = 0;
+                int index = 0;
+
+                for (int i = 0; i < (fftCalc.PowerBins.Length / 2); i++)
+                {
+                    if (i < (70 / _step))
+                    {
+                        powerBins[i] = 0;
+                    }
+                    else
+                    {
+
+                        powerBins[i] = (fftCalc.PowerBins[i]);// * _xorPowerBins[i]);
+
+                        if (powerBins[i] < _noiseFloor)
+                        {
+                            powerBins[i] = 0;
+                        }
+
+                        double _relativePower = powerBins[Math.Max(i - 1, 0)] + powerBins[Math.Max(i + 1, 0)] + powerBins[Math.Max(i, 0)];
+                        if ((max < _relativePower))
+                        {
+                            max = _relativePower;
+                            index = i;
+                        }
+                        powerBins[i] = powerBins[i] / fftCalc.PowerBins.Max() * 1000;
+                        powerBins[powerBins.Length - 1 - i] = 0;
+                    }
+                }
+
+
+                index = index;
+                _lastMax = max;
+                //_noiseFloor = 0.7 * _lastMax;
+
+
+                //freq = DetectFrequency2(powerBins, index);
+                freq = DetectFrequency_Mirrored(fftCalc.PowerBins, index - 1, index + 1);
+                System.Diagnostics.Debug.Write(freq + "\n");
+
+                Note[] notes = new Note[1] { new Note() };
+                notes[0].startTime = DateTime.Now;
+                notes[0].frequency = freq;
+
+                //Console.WriteLine(notes[0].closestRealNoteFrequency);
+                NoteQueue.Enqueue(notes);
+                if (NoteQueue.Count > _maxNoteQueueSize)
+                {
+                    Note[] dqnotes;
+                    NoteQueue.TryDequeue(out dqnotes);
+                }
+            }
+        }
+
         private void ImpulseDetectNotes()
         {
             while (!_stopDetecting)
@@ -147,7 +215,7 @@ namespace Regis.Services.Realtime.Impl
 
                 double[] powerBins = new double[AudioCapture.AudioCaptureSettings.BufferSize * AudioCapture.AudioCaptureSettings.BufferModifier];
                 _powerBinsDelta = new double[powerBins.Length];
-                fftCalc.PowerBins.CopyTo(powerBins, 0);
+                //fftCalc.PowerBins.CopyTo(powerBins, 0);
 
                 if (_powerBinsOld == null)
                 {
@@ -166,37 +234,47 @@ namespace Regis.Services.Realtime.Impl
                 //}/
                 //else
                 //{
+
                 double max = 0;
                 int index = 0;
-                for (int i = 0; i < powerBins.Length / 2; i++)
-                {
-                    powerBins[i] = powerBins[i] * _xorPowerBins[i];
-                    _powerBinsDelta[i] = (powerBins[i] - _powerBinsOld[i]);
 
-                    if (powerBins[i] < _noiseFloor)
+                for (int i = 0; i < (fftCalc.PowerBins.Length / 2); i++)
+                {
+                    if (i < (80 / _step)) 
                     {
                         powerBins[i] = 0;
-                        _powerBinsDelta[i] = 0;
                     }
-                    if (_powerBinsDelta[i] < _powerBinsDeltaCutoff)
-                        _powerBinsDelta[i] = 0;
-
-                    double _relativePower = _powerBinsDelta[Math.Max(i - 1, 0)] + _powerBinsDelta[Math.Max(i + 1, 0)] + _powerBinsDelta[Math.Max(i, 0)];
-                    if ((max < _relativePower) && (_powerBinsDelta[i] > 0) )
+                    else  
                     {
-                        max = _relativePower;
-                        index = i;
+                        powerBins[i] = powerBins[i] * _xorPowerBins[i];
+                        _powerBinsDelta[i] = (powerBins[i] - _powerBinsOld[i]);
+
+                        if (powerBins[i] < _noiseFloor)
+                        {
+                            powerBins[i] = 0;
+                            _powerBinsDelta[i] = 0;
+                        }
+                        if (_powerBinsDelta[i] < _powerBinsDeltaCutoff)
+                            _powerBinsDelta[i] = 0;
+
+                        double _relativePower = _powerBinsDelta[Math.Max(i - 1, 0)] + _powerBinsDelta[Math.Max(i + 1, 0)] + _powerBinsDelta[Math.Max(i, 0)];
+                        if ((max < _relativePower) && (_powerBinsDelta[i] > 0) )
+                        {
+                            max = _relativePower;
+                            index = i;
+                        }
+                        powerBins[powerBins.Length - 1 - i] = 0;
+                        _powerBinsDelta[powerBins.Length - 1 - i] = 0;
                     }
-                    powerBins[powerBins.Length - 1 - i] = 0;
-                    _powerBinsDelta[powerBins.Length - 1 - i] = 0;
                 }
+
 
                 index = index;
                 max = max;
 
                 //freq = DetectFrequency2(powerBins, index);
                 freq = DetectFrequency_Mirrored(fftCalc.PowerBins, index - 1, index + 1);
-                System.Diagnostics.Debug.Write(freq + "\n");
+                //System.Diagnostics.Debug.Write(freq + "\n");
 
                 Note[] notes = new Note[1] { new Note() };
                 notes[0].startTime = DateTime.Now;
