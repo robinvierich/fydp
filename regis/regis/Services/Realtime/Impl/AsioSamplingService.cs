@@ -24,6 +24,8 @@ namespace Regis.Services.Realtime.Impl
         private Channel _currentInputChannel;
         private ConcurrentQueue<SampleCollection> _sampleCollectionQueue;
         private int _sampleCollectionSize;
+        private int _index = 0;
+        private int _size = AudioCapture.AudioCaptureSettings.BufferModifier;
 
         public AsioSamplingService()
         {
@@ -80,21 +82,37 @@ namespace Regis.Services.Realtime.Impl
         void driver_BufferUpdate(object sender, EventArgs e)
         {
             SampleCollection sampleColl = new SampleCollection();
-            sampleColl.Samples = new long[_currentInputChannel.BufferSize];
+            sampleColl.Samples = new long[ (_currentInputChannel.BufferSize) ];
 
-            int chunkSize = _currentInputChannel.BufferSize / 64;
-            Parallel.For(0, _currentInputChannel.BufferSize, (i) => {
-                readBuffers(ref sampleColl.Samples, i * chunkSize, chunkSize);
-            });
+            readBuffers(ref sampleColl.Samples);
 
-            _sampleCollectionQueue.Enqueue(sampleColl);
+            if (_size == 1)
+            {
+                _sampleCollectionQueue.Enqueue(sampleColl);
+            }
+            else
+            {
+                SampleCollection sampleColl2 = new SampleCollection();
+                sampleColl2.Samples = new long[(_currentInputChannel.BufferSize * _size)];
+
+                for (int i = 0; i < _currentInputChannel.BufferSize * (_size - 1); i++)
+                {
+                    sampleColl2.Samples[i] = sampleColl2.Samples[i + _currentInputChannel.BufferSize];
+                }
+                for (int i = _currentInputChannel.BufferSize * (_size - 1); i < _currentInputChannel.BufferSize * _size; i++)
+                {
+                    sampleColl2.Samples[i] = sampleColl.Samples[i - _currentInputChannel.BufferSize * (_size - 1)];
+                }
+
+                _sampleCollectionQueue.Enqueue(sampleColl2);
+            }
         }
 
-        private void readBuffers(ref long[] toArray, int start=0, int length=-1)
+        private void readBuffers(ref long[] toArray)
         {
             // NOTE: may need to optimize this loop
-            for (int i = start; i < length; i++)
-                toArray[i] = (long)_currentInputChannel[i];
+            for (int i = 0; i < _currentInputChannel.BufferSize; i++)
+                toArray[i] = (long)_currentInputChannel[(i)];
         }
     }
 }

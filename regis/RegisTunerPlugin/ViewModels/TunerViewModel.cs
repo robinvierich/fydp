@@ -52,7 +52,7 @@ namespace RegisTunerPlugin.ViewModels
         {
             try
             {
-                StreamReader readFile = new StreamReader(Environment.CurrentDirectory + "\\tunings.cfg");
+                StreamReader readFile = new StreamReader(Environment.CurrentDirectory + "\\Config\\tunings.cfg");
                 while (true)
                 {
                     string line = readFile.ReadLine();

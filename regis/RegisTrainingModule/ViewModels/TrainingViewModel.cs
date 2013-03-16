@@ -29,7 +29,7 @@ namespace RegisTrainingModule.ViewModels
         private void LoadTraining()
         {
 
-                StreamReader readFile = new StreamReader(Environment.CurrentDirectory + "\\training_modules.cfg");
+                StreamReader readFile = new StreamReader(Environment.CurrentDirectory + "\\Config\\training_modules.cfg");
                 while (true)
                 {
                     string line = readFile.ReadLine();

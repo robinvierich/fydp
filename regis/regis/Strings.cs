@@ -8,6 +8,6 @@ namespace Regis
     public class Strings
     {
         public const string DefaulNoteStreamString = "DefaultNoteStream";
-        public const string PluginPath = "..\\..\\..\\regisPlugins\\";
+        public const string PluginPath = "..\\..\\regisPlugins\\";
     }
 }

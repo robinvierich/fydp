@@ -21,12 +21,13 @@ namespace FFTViewerPlugin
         private DispatcherTimer _fftUpdateTimer = new DispatcherTimer();
 
         private double _maxPower = 0;
+        private Queue<double> _averageMaxPower = new Queue<double>();
 
         public void StartReadingFFT() {
             if (_fftUpdateTimer.IsEnabled)
                 return;
 
-            _fftUpdateTimer.Interval = TimeSpan.FromMilliseconds(16);
+            _fftUpdateTimer.Interval = TimeSpan.FromMilliseconds(10);
             _fftUpdateTimer.Tick += new EventHandler(timer_Tick);
             _fftUpdateTimer.Start();
         }
@@ -52,7 +53,7 @@ namespace FFTViewerPlugin
             if (FFTBins == null)
                 FFTBins = new ObservableCollection<FFTBinViewModel>();
 
-            for (int i = 0; i < fftCalc.PowerBins.Length; i++) {
+            for (int i = 0; i < (fftCalc.PowerBins.Length / 2); i++) {
                 if (FFTBins.ElementAtOrDefault(i) == null)
                     FFTBins.Insert(i, new FFTBinViewModel());
 
@@ -60,7 +61,10 @@ namespace FFTViewerPlugin
                 FFTBins[i].Power = powerBins[i];
             }
 
-            _maxPower = Math.Max(FFTBins.Max(bin => bin.Power), _maxPower);
+            _averageMaxPower.Enqueue(FFTBins.Max(bin => bin.Power));
+            if (_averageMaxPower.Count() > 5)
+                _averageMaxPower.Dequeue();
+            _maxPower = _averageMaxPower.Sum() / 5;
 
             if (BarViewModels == null) {
                 BarViewModels = new ObservableCollection<BarViewModel>();
@@ -72,12 +76,13 @@ namespace FFTViewerPlugin
                     BarViewModels.Insert(j, new BarViewModel());
                 }
 
-                double height = (bin.Power / _maxPower) * ControlActualHeight;
+                double height = ((bin.Power / _maxPower) * ControlActualHeight);
 
                 BarViewModels[j].Height = height;
                 BarViewModels[j].Width = ControlActualWidth / FFTBins.Count;
                 j++;
             }
+            //System.Diagnostics.Debug.Write(FFTBins.Count + "\n");
 
         }
 
