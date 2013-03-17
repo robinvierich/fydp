@@ -3,10 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" d:DesignHeight="392" d:DesignWidth="936">
+             xmlns:pluginCtrls="clr-namespace:Regis.Plugins.Controls;assembly=regis.plugins"
+             mc:Ignorable="d"  d:DesignWidth="936">
     <Grid>
-        <TextBlock Text="REGIS Free Form Mode" />
-        <TextBlock Height="345" HorizontalAlignment="Left" Margin="26,47,0,0" Name="noteBlock" Text="&amp;===========================||" VerticalAlignment="Top" Width="863" FontFamily="StaffClefPitchesEasy" FontSize="72" FontWeight="Bold" />
-        <Button Content="Start Free Form" Height="48" HorizontalAlignment="Left" Margin="26,47,0,0" Name="button1" VerticalAlignment="Top" Width="191" Click="button1_Click" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Free Form Mode"
+                   Grid.Row="0"
+                   FontSize="32"
+                   />
+
+        <!--<pluginCtrls:ScrollingScale NotesPlayed="{Binding NotesPlayed}" 
+                                    Margin="10"
+                                    Grid.Row="1" />-->
+
+        <pluginCtrls:StaffControl x:Name="staff" Notes="{Binding NotesPlayed}" />
+
+        <Button Content="Start Free Form" 
+                Grid.Row="2"
+                MinWidth="150"
+                MinHeight="30"
+                Command="{Binding StartFreeFormCommand}"
+                CommandParameter="{Binding}"
+                Click="startButton_Click" />
     </Grid>
 </UserControl>

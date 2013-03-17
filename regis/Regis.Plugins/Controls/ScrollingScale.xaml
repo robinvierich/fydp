@@ -5,15 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" >
     <Grid>
-        <ScrollViewer MaxWidth="800"
-            VerticalScrollBarVisibility="Disabled"
-            HorizontalScrollBarVisibility="Visible">
+        <ScrollViewer x:Name="scrollViewer" 
+                      MaxWidth="800"
+                      VerticalScrollBarVisibility="Disabled"
+                	  HorizontalScrollBarVisibility="Visible">
 
-            <TextBlock Name="noteBlock" 
-                   Text="&amp;===========================||" 
-                   FontFamily="StaffClefPitchesEasy" 
+            <Grid MinWidth="800">
+                <TextBlock Name="staffTxt" 
+                   FontFamily="StaffClefPitchesEasy"                    Foreground="Black" 
                    FontSize="72" 
-                   FontWeight="Bold" />
+                   FontWeight="Bold" >
+                    <Run Text="&amp;=======[a]=======================" />
+                </TextBlock>
+
+                <Line X1="100" Y1="0" 
+                      X2="100" Y2="300" 
+                      Stroke="Black"
+                      StrokeThickness="2"
+                      />
+            </Grid>
+
         </ScrollViewer>
     </Grid>
 </UserControl>

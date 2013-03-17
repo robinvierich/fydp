@@ -71,16 +71,14 @@ namespace RegisFreeFormPlugin
 
         public string FriendlyPluginName
         {
-            get { return "FreeFormMode"; }
+            get { return "Free Form"; }
         }
 
         #endregion
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            StopFreeform();
-            _freeformThread = new Thread(new ThreadStart(StartFreeform));
-            _freeformThread.Start();
+            staff.StartTime = DateTime.Now;
         }
 
         private void StartFreeform()
@@ -147,7 +145,7 @@ namespace RegisFreeFormPlugin
         }
         private void updateStaff(string staff)
         {
-            noteBlock.Text = staff;
+            //noteBlock.Text = staff;
         }
     }
 }

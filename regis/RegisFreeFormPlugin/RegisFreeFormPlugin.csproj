@@ -50,6 +50,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StartFreeFormCommand.cs" />
+    <Compile Include="StopFreeFormCommand.cs" />
+    <Compile Include="ViewModels\DataMember.cs" />
     <Compile Include="ViewModels\FreeFormViewModel.cs" />
     <Page Include="FreeFormControl.xaml">
       <Generator>MSBuild:Compile</Generator>
