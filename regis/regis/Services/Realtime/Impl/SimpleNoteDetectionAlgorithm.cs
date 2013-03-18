@@ -200,5 +200,14 @@ namespace Regis.Services.Realtime.Impl
             NoteQueue.TryPeek(out toReturn);
             return toReturn;
         }
+
+        private void Raise_NotesDetected(Note[] notes) {
+            EventHandler<NotesDetectedEventArgs> h = NotesDetected;
+            if (h == null) return;
+
+            h(this, new NotesDetectedEventArgs(notes));
+        }
+
+        public event EventHandler<NotesDetectedEventArgs> NotesDetected;
     }
 }

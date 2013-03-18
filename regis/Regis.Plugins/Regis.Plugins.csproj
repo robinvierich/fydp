@@ -48,10 +48,6 @@
     <Compile Include="Controls\NoteControl.xaml.cs">
       <DependentUpon>NoteControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ScrollingScale.xaml.cs">
-      <DependentUpon>ScrollingScale.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ScrollingScaleViewModel.cs" />
     <Compile Include="Controls\StaffControl.xaml.cs">
       <DependentUpon>StaffControl.xaml</DependentUpon>
     </Compile>
@@ -62,6 +58,7 @@
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\ISocialNetworkingService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Interfaces\NotesDetectedEventArgs.cs" />
     <Compile Include="Models\FFTCalculation.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\TimeSignature.cs" />
@@ -90,10 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\NoteControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ScrollingScale.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

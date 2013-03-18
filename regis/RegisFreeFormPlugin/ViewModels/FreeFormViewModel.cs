@@ -16,40 +16,42 @@ using System.Windows.Threading;
 namespace RegisFreeFormPlugin.ViewModels
 {
     [Export]
-    class FreeFormViewModel : BaseViewModel
+    class FreeFormViewModel : BaseViewModel, IPartImportsSatisfiedNotification
     {
         [Import]
         private INoteDetectionSource _noteSource;
-        private DispatcherTimer _noteTimer;
+        //private DispatcherTimer _noteTimer;
+
+        public void OnImportsSatisfied() {
+        }
+
+        public void _noteSource_NotesDetected(object sender, NotesDetectedEventArgs e) {
+            foreach (Note note in e.Notes) { 
+                NotesPlayed.Add(note);
+            }
+            CurrentTime = DateTime.Now;
+        }
 
         private double[] _frequencies;
         public FreeFormViewModel() {
             _frequencies = NoteDictionary.NoteDict.Keys.ToArray<double>();
-            _noteTimer = new DispatcherTimer() {
-                Interval = TimeSpan.FromMilliseconds(20)
-            };
+            //_noteTimer = new DispatcherTimer() {
+            //    Interval = TimeSpan.FromMilliseconds(20)
+            //};
 
-            _noteTimer.Tick += new EventHandler(_noteTimer_Tick);
+            //_noteTimer.Tick += new EventHandler(_noteTimer_Tick);
 
             NotesPlayed = new ObservableCollection<Note>();
             CurrentTime = DateTime.Now;
         }
 
-        void _noteTimer_Tick(object sender, EventArgs e) {
-            foreach (Note note in _noteSource.GetNotes()) {
-                NotesPlayed.Add(note);
-                CurrentTime = DateTime.Now;
-            }
-        }
-
         internal void Start() {
-            _noteTimer.Start();
+            _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
         }
 
 
         internal void Stop() {
-            if (_noteTimer.IsEnabled)
-                _noteTimer.Stop();
+            _noteSource.NotesDetected -= _noteSource_NotesDetected;
         }
 
         #region CurrentTime
@@ -99,6 +101,7 @@ namespace RegisFreeFormPlugin.ViewModels
             }
         }
         #endregion
+
 
     }
 }

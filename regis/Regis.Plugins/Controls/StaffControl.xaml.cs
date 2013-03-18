@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using Regis.Plugins.Models;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace Regis.Plugins.Controls
 {
@@ -29,7 +30,7 @@ namespace Regis.Plugins.Controls
         public const double BelowLedgerLineTop = 160;
 
         public const double FullControlTime = 5000d; // ms - time from start of staff to end of staff.. 
-                                                     // Notes are actually ordered relatively (not based on absolute time), but this will work for now..
+        // Notes are actually ordered relatively (not based on absolute time), but this will work for now..
 
         public const double FullControlWidth = 800; // px
 
@@ -50,7 +51,7 @@ namespace Regis.Plugins.Controls
         public static readonly DependencyProperty NotesProperty =
             DependencyProperty.Register("Notes", typeof(ObservableCollection<Note>), typeof(StaffControl),
                 new FrameworkPropertyMetadata(
-                    new ObservableCollection<Note>(), 
+                    new ObservableCollection<Note>(),
                     FrameworkPropertyMetadataOptions.AffectsRender,
                     new PropertyChangedCallback(Notes_PropertyChanged)
                 ));
@@ -60,8 +61,12 @@ namespace Regis.Plugins.Controls
         #region StartTime (Dependency Property)
 
         public DateTime StartTime {
-            get { return (DateTime)GetValue(StartTimeProperty); }
-            set { SetValue(StartTimeProperty, value); }
+            get {
+                return (DateTime)this.GetValue(StaffControl.StartTimeProperty);
+            }
+            set {
+                this.SetValue(StaffControl.StartTimeProperty, value);
+            }
         }
 
         // Using a DependencyProperty as the backing store for StartTime.  This enables animation, styling, binding, etc...
@@ -79,9 +84,9 @@ namespace Regis.Plugins.Controls
 
         // Using a DependencyProperty as the backing store for CurrentTime.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CurrentTimeProperty =
-            DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(StaffControl), 
+            DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(StaffControl),
                 new FrameworkPropertyMetadata(
-                    DateTime.Now, 
+                    DateTime.Now,
                     FrameworkPropertyMetadataOptions.AffectsRender,
                     new PropertyChangedCallback(CurrentTime_PropertyChanged)
                 ));
@@ -89,16 +94,15 @@ namespace Regis.Plugins.Controls
         private static void CurrentTime_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             StaffControl me = d as StaffControl;
 
-            if ((me.CurrentTime - me.StartTime).TotalMilliseconds > FullControlTime * me._resizedCount)
-            {
+            if ((me.CurrentTime - me.StartTime).TotalMilliseconds > FullControlTime * me._resizedCount) {
                 me._resizedCount++;
                 me.rootCanvas.Width += FullControlWidth;
-                Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => {
+                me.Dispatcher.Invoke(new Action(() => {
                     me.scrollViewer.ScrollToRightEnd();
                 }));
             }
 
-            double x = me.GetLeftFromTime((me.CurrentTime - me.StartTime).TotalMilliseconds);
+            double x = me.GetLeftFromTime((me.CurrentTime - me.StartTime).TotalMilliseconds) + NoteControl.NoteWidth/2d;
             me.timeLine.X1 = x;
             me.timeLine.X2 = x;
         }
@@ -131,17 +135,19 @@ namespace Regis.Plugins.Controls
         #endregion
 
         void notes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
-            if (e.OldItems != null)
-                RemoveNotes(e.OldItems.Cast<Note>());
+            this.Dispatcher.Invoke(new Action(() => {
+                if (e.OldItems != null)
+                    RemoveNotes(e.OldItems.Cast<Note>());
 
-            if (e.NewItems != null)
-                AddNotes(e.NewItems.Cast<Note>());
+                if (e.NewItems != null)
+                    AddNotes(e.NewItems.Cast<Note>());
+            }));
         }
 
         private void RemoveNotes(IEnumerable<Note> notes) {
             foreach (Note note in notes) {
                 NoteControl noteControl = (NoteControl)rootCanvas.Children.Cast<UIElement>()
-                                                          .Where(elem => elem is NoteControl 
+                                                          .Where(elem => elem is NoteControl
                                                               && ((NoteControl)elem).Note == note)
                                                           .SingleOrDefault();
 

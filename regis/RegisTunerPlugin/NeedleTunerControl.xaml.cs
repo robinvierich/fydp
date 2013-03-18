@@ -13,10 +13,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RegisTunerPlugin.ViewModels;
 using System.ComponentModel.Composition;
+using Regis.Plugins.Interfaces;
 
 namespace RegisTunerPlugin
 {
-    public partial class NeedleTunerControl : UserControl, IPartImportsSatisfiedNotification
+    [Export(typeof(IPlugin))]
+    public partial class NeedleTunerControl : UserControl, IPartImportsSatisfiedNotification, IPlugin
     {
         public NeedleTunerControl() {
             InitializeComponent();
@@ -30,6 +32,25 @@ namespace RegisTunerPlugin
 
         public void OnImportsSatisfied() {
             DataContext = ViewModel;
+        }
+
+        public void Load() {
+        }
+
+        public FrameworkElement GetVisualContent() {
+            return this;
+        }
+
+        public string PluginName {
+            get {
+                return "NeedleTunerPlugin";
+            }
+        }
+
+        public string FriendlyPluginName {
+            get {
+                return "Tuner";
+            }
         }
     }
 }

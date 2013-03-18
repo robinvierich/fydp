@@ -24,6 +24,9 @@ namespace Regis.Plugins.Controls
             InitializeComponent();
         }
 
+        public const double NoteWidth = 30d;
+        public const double NoteHeight = 20d;
+
         #region Note (Dependency Property)
 
         public Note Note {

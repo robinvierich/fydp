@@ -8,11 +8,12 @@ using Regis.Plugins.Statics;
 using System.Collections.Concurrent;
 using System.ComponentModel.Composition;
 using System.Threading;
+using System.Windows.Threading;
 
 namespace Regis.Services.Realtime.Impl
 {
-    [Export(typeof(INoteDetectionSource))]
-    [Export(typeof(INoteDetectionService))]
+    //[Export(typeof(INoteDetectionSource))]
+    //[Export(typeof(INoteDetectionService))]
     public class RandomNoteService : INoteDetectionSource, INoteDetectionService
     {
         List<double> validFreqs = NoteDictionary.NoteDict.Keys.ToList();
@@ -28,8 +29,7 @@ namespace Regis.Services.Realtime.Impl
         private bool _detecting = false;
 
         public void NoteThread() {
-            //Random r = new Random();
-            //int semitone = 60;//r.Next(36, 37);
+
             while (_detecting) {
                 if (i > 12)
                     i = 0;
@@ -37,36 +37,37 @@ namespace Regis.Services.Realtime.Impl
                 int semitone = i + 48;
                 i++;
 
-                Note randomNote = new Note() { Semitone = semitone, startTime = DateTime.Now, endTime = DateTime.Now + TimeSpan.FromSeconds(0.1) };
-                _noteQueue.Enqueue(randomNote);
-                if (_noteQueue.Count > 10) {
-                    Note note;
-                    _noteQueue.TryDequeue(out note);
-                }
+                //Note randomNote = new Note() { Semitone = semitone, startTime = DateTime.Now, endTime = DateTime.Now + TimeSpan.FromSeconds(0.1) };
+                //_noteQueue.Enqueue(randomNote);
 
-                Thread.Sleep(10);
+                Note note = new Note() { Semitone = semitone, startTime = DateTime.Now, endTime = DateTime.Now + TimeSpan.FromSeconds(0.1) };
+                //_noteQueue.TryDequeue(out note);
+
+                Raise_NotesDetected(new Note[1] { note });
+
+                Thread.Sleep(50);
             }
-        }
-
-        public Note[] GetNotes() {
-            Note note;
-            _noteQueue.TryPeek(out note);
-            if (note != null)
-                return new Note[1] { note };
-            else
-                return new Note[0];
         }
 
         public void Start(SimpleNoteDetectionArgs args) {
             Stop();
             _detecting = true;
-            _noteThread.Start(); 
+            _noteThread.Start();
         }
 
         public void Stop() {
+            _detecting = false;
             if (_noteThread.IsAlive)
                 _noteThread.Join();
-            _detecting = false;
         }
+
+        private void Raise_NotesDetected(Note[] notes) {
+            EventHandler<NotesDetectedEventArgs> h = NotesDetected;
+            if (h == null) return;
+
+            h(this, new NotesDetectedEventArgs(notes));
+        }
+
+        public event EventHandler<NotesDetectedEventArgs> NotesDetected;
     }
 }

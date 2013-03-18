@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ctrls="clr-namespace:Regis.Plugins.Controls"
              mc:Ignorable="d"
-             Width="30"
-             Height="20">
+             Width="{x:Static ctrls:NoteControl.NoteWidth}"
+             Height="{x:Static ctrls:NoteControl.NoteHeight}" >
     <Canvas x:Name="noteCanvas"
             Width="30" 
             Height="20" 
@@ -13,8 +14,8 @@
 
         <Ellipse x:Name="noteEllipse"
                 Fill="Black" Stroke="Black" 
-				Width="30" 
-				Height="20" 
+				Width="{x:Static ctrls:NoteControl.NoteWidth}" 
+				Height="{x:Static ctrls:NoteControl.NoteHeight}" 
 				Canvas.Top="0"
 				RenderTransformOrigin="0.5,0.5">
             <Ellipse.RenderTransform>

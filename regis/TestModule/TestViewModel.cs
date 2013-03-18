@@ -19,20 +19,8 @@ namespace TestModule
         [Import]
         private INoteDetectionSource _ns;
 
-        private DispatcherTimer timer;
-
         public TestViewModel() {
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(100);
-            timer.Tick += new EventHandler(timer_Tick);
             Notes = new ObservableCollection<Note>();
-        }
-
-        void timer_Tick(object sender, EventArgs e) {
-            Note[] notes = _ns.GetNotes();
-            foreach (Note note in notes) {
-                this.Notes.Add(note);
-            }
         }
 
         private ObservableCollection<Note> _Notes;
@@ -46,9 +34,14 @@ namespace TestModule
             }
         }
 
+        public void _ns_NotesDetected(object sender, NotesDetectedEventArgs e) {
+            foreach (Note note in e.Notes) {
+                this.Notes.Add(note);
+            }
+        }
 
         public void OnImportsSatisfied() {
-            timer.Start();
+            _ns.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_ns_NotesDetected);
         }
     }
 }

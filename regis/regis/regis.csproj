@@ -128,6 +128,7 @@
     <Compile Include="Services\Impl\DataContractPersistenceService.cs" />
     <Compile Include="Services\Realtime\Impl\AsioDeviceService.cs" />
     <Compile Include="Services\Realtime\Impl\AsioSamplingService.cs" />
+    <Compile Include="Services\Realtime\Impl\OffTuneNoteService.cs" />
     <Compile Include="Services\Realtime\Impl\RandomNoteService.cs" />
     <Compile Include="Services\Realtime\Serial\ByteArraySerialService.cs" />
     <Compile Include="Services\Realtime\Serial\FFTPowerSerialService.cs" />

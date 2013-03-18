@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -58,9 +58,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Tuning.cs" />
-    <Compile Include="Models\GuitarString.cs" />
-    <Compile Include="MultiplyConverter.cs" />
     <Compile Include="NeedleTunerControl.xaml.cs">
       <DependentUpon>NeedleTunerControl.xaml</DependentUpon>
     </Compile>
@@ -77,11 +74,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="TunerControl.xaml.cs">
-      <DependentUpon>TunerControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\NeedleTunerViewModel.cs" />
-    <Compile Include="ViewModels\TunerViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -97,10 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="NeedleTunerControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="TunerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

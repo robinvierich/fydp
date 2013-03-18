@@ -19,31 +19,30 @@ namespace Regis.Controls
     /// <summary>
     /// Interaction logic for PostTwitterControl.xaml
     /// </summary>
-    [Export(typeof(IPlugin))]
-    public partial class PostToTwitterControl : UserControl, IPlugin
+    public partial class PostToTwitterControl : UserControl
     {
         public PostToTwitterControl()
         {
             InitializeComponent();
         }
 
-        public void Load()
-        {
-        }
+        //public void Load()
+        //{
+        //}
 
-        public FrameworkElement GetVisualContent()
-        {
-            return this;
-        }
+        //public FrameworkElement GetVisualContent()
+        //{
+        //    return this;
+        //}
 
-        public string PluginName
-        {
-            get { return "PostToTwitterControl"; }
-        }
+        //public string PluginName
+        //{
+        //    get { return "PostToTwitterControl"; }
+        //}
 
-        public string FriendlyPluginName
-        {
-            get { return "Post to Twitter"; }
-        }
+        //public string FriendlyPluginName
+        //{
+        //    get { return "Post to Twitter"; }
+        //}
     }
 }
