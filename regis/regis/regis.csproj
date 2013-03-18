@@ -126,6 +126,7 @@
     <Compile Include="Models\SampleCollection.cs" />
     <Compile Include="Models\SerialData.cs" />
     <Compile Include="Services\Impl\DataContractPersistenceService.cs" />
+    <Compile Include="Services\Impl\FeedbackService.cs" />
     <Compile Include="Services\Realtime\Impl\AsioDeviceService.cs" />
     <Compile Include="Services\Realtime\Impl\AsioSamplingService.cs" />
     <Compile Include="Services\Realtime\Impl\OffTuneNoteService.cs" />

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{730CC1CC-9028-4EF6-83BD-A5D5E5BAF9C8}</ProjectGuid>
+    <ProjectGuid>{6792B964-3833-4FB4-822F-102F357F5216}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Regis.Plugins</RootNamespace>
-    <AssemblyName>regis.plugins</AssemblyName>
+    <RootNamespace>RegisPlayAlongPlugin</RootNamespace>
+    <AssemblyName>RegisPlayAlongPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -34,8 +34,8 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,66 +45,33 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\NoteControl.xaml.cs">
-      <DependentUpon>NoteControl.xaml</DependentUpon>
+    <Compile Include="PlayAlongControl.xaml.cs">
+      <DependentUpon>PlayAlongControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\StaffControl.xaml.cs">
-      <DependentUpon>StaffControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Interfaces\IChordDetectionSource.cs" />
-    <Compile Include="Interfaces\IFeedbackService.cs" />
-    <Compile Include="Interfaces\IFFTSource.cs" />
-    <Compile Include="Interfaces\INoteDetectionSource.cs" />
-    <Compile Include="Interfaces\IPersistenceService.cs" />
-    <Compile Include="Interfaces\IPlugin.cs" />
-    <Compile Include="Interfaces\ISocialNetworkingService.cs" />
-    <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Interfaces\NotesDetectedEventArgs.cs" />
-    <Compile Include="Models\Feedback.cs" />
-    <Compile Include="Models\FFTCalculation.cs" />
-    <Compile Include="Models\Note.cs" />
-    <Compile Include="Models\TimeSignature.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\UserTrainingStats.cs" />
-    <Compile Include="NoteDetectionAlgorithm.cs" />
+    <Compile Include="PlayAlongViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Statics\ChordDictionary.cs" />
-    <Compile Include="Models\Chord.cs" />
-    <Compile Include="Statics\NoteDictionary.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Statics\Dictionaries\ChordDict.dict">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Statics\Dictionaries\TrebleDict.dict">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Regis.Base\Regis.Base.csproj">
       <Project>{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}</Project>
       <Name>Regis.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\regis.plugins\Regis.Plugins.csproj">
+      <Project>{730CC1CC-9028-4EF6-83BD-A5D5E5BAF9C8}</Project>
+      <Name>Regis.Plugins</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\NoteControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\StaffControl.xaml">
+    <Page Include="PlayAlongControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PostBuildEvent>robocopy $(TargetDir) $(SolutionDir)regisPlugins\ $(TargetName).dll $(TargetName).pdb
+set rce=%25errorlevel%25
+if not %25rce%25 == 1 exit %25rce%25 else exit 0</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
