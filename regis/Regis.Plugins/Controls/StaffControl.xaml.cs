@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using Regis.Plugins.Models;
+using System.Windows.Threading;
 
 namespace Regis.Plugins.Controls
 {
@@ -31,6 +32,8 @@ namespace Regis.Plugins.Controls
                                                      // Notes are actually ordered relatively (not based on absolute time), but this will work for now..
 
         public const double FullControlWidth = 800; // px
+
+        private int _resizedCount = 1;
 
         public StaffControl() {
             InitializeComponent();
@@ -85,6 +88,16 @@ namespace Regis.Plugins.Controls
 
         private static void CurrentTime_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             StaffControl me = d as StaffControl;
+
+            if ((me.CurrentTime - me.StartTime).TotalMilliseconds > FullControlTime * me._resizedCount)
+            {
+                me._resizedCount++;
+                me.rootCanvas.Width += FullControlWidth;
+                Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => {
+                    me.scrollViewer.ScrollToRightEnd();
+                }));
+            }
+
             double x = me.GetLeftFromTime((me.CurrentTime - me.StartTime).TotalMilliseconds);
             me.timeLine.X1 = x;
             me.timeLine.X2 = x;

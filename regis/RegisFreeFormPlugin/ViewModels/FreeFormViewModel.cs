@@ -32,11 +32,13 @@ namespace RegisFreeFormPlugin.ViewModels
             _noteTimer.Tick += new EventHandler(_noteTimer_Tick);
 
             NotesPlayed = new ObservableCollection<Note>();
+            CurrentTime = DateTime.Now;
         }
 
         void _noteTimer_Tick(object sender, EventArgs e) {
             foreach (Note note in _noteSource.GetNotes()) {
                 NotesPlayed.Add(note);
+                CurrentTime = DateTime.Now;
             }
         }
 
@@ -49,6 +51,20 @@ namespace RegisFreeFormPlugin.ViewModels
             if (_noteTimer.IsEnabled)
                 _noteTimer.Stop();
         }
+
+        #region CurrentTime
+        private DateTime _CurrentTime;
+        private static PropertyChangedEventArgs _CurrentTime_ChangedEventArgs = new PropertyChangedEventArgs("CurrentTime");
+
+        [DataMember]
+        public DateTime CurrentTime {
+            get { return _CurrentTime; }
+            set {
+                _CurrentTime = value;
+                NotifyPropertyChanged(_CurrentTime_ChangedEventArgs);
+            }
+        }
+        #endregion
 
         #region StartFreeFormCommand
         private StartFreeFormCommand _StartFreeFormCommand = new StartFreeFormCommand();

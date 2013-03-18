@@ -20,7 +20,7 @@
                                     Margin="10"
                                     Grid.Row="1" />-->
 
-        <pluginCtrls:StaffControl x:Name="staff" Notes="{Binding NotesPlayed}" />
+        <pluginCtrls:StaffControl x:Name="staff" Notes="{Binding NotesPlayed}" CurrentTime="{Binding CurrentTime}" />
 
         <Button Content="Start Free Form" 
                 Grid.Row="2"
