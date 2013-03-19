@@ -18,6 +18,10 @@ namespace FFTViewerPlugin
     {
         [Import]
         private IFFTSource _fftSource = null;
+
+        [Import]
+        private INoteDetectionSource _noteSource = null;
+
         private DispatcherTimer _fftUpdateTimer = new DispatcherTimer();
 
         private double _maxPower = 0;
@@ -27,7 +31,7 @@ namespace FFTViewerPlugin
             if (_fftUpdateTimer.IsEnabled)
                 return;
 
-            _fftUpdateTimer.Interval = TimeSpan.FromMilliseconds(10);
+            _fftUpdateTimer.Interval = TimeSpan.FromMilliseconds(1);
             _fftUpdateTimer.Tick += new EventHandler(timer_Tick);
             _fftUpdateTimer.Start();
         }
@@ -83,9 +87,27 @@ namespace FFTViewerPlugin
                 BarViewModels[j].Width = ControlActualWidth / FFTBins.Count;
                 j++;
             }
+
+            Note[] notes = _noteSource.GetNotes();
+            if (notes.Length > 0)
+                Frequency = notes.Last().frequency;
+            
             //System.Diagnostics.Debug.Write(FFTBins.Count + "\n");
 
         }
+
+        #region Frequency
+        private double _Frequency;
+        private static PropertyChangedEventArgs _Frequency_ChangedEventArgs = new PropertyChangedEventArgs("Frequency");
+        public double Frequency
+        {
+            get { return _Frequency; }
+            set { 
+                _Frequency = value;
+                NotifyPropertyChanged(_Frequency_ChangedEventArgs);
+            }
+        }
+        #endregion
 
         #region MaxValue
         private static PropertyChangedEventArgs _MaxValue_ChangedEventArgs = new PropertyChangedEventArgs("MaxValue");

@@ -23,7 +23,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
-        <TextBlock Text="{Binding MaxValue}" />
+        <TextBlock Text="{Binding Frequency}" />
         <ListView ItemsSource="{Binding BarViewModels}"
               Grid.Row="1"
               ScrollViewer.VerticalScrollBarVisibility="Hidden"
