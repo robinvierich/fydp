@@ -8,6 +8,7 @@ using Regis.Plugins.Models;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using Regis.Plugins.Interfaces;
+using System.Windows.Threading;
 
 namespace RegisPlayAlongPlugin
 {
@@ -15,11 +16,38 @@ namespace RegisPlayAlongPlugin
     public class PlayAlongViewModel : BaseViewModel 
     {
         [Import]
-        INoteDetectionSource _noteSource;
+        INoteDetectionSource _noteSource = null;
+
+        [Import]
+        IFeedbackService _feedbackService = null;
+
+        DispatcherTimer _timer;
+        DispatcherTimer _feedbackTimer;
 
         public PlayAlongViewModel() {
             PlayedNotes = new ObservableCollection<Note>();
             GoalNotes = new ObservableCollection<Note>();
+
+
+            _timer = new DispatcherTimer() {
+                Interval = TimeSpan.FromMilliseconds(20)
+            };
+            _timer.Tick += new EventHandler(_timer_Tick);
+
+            _feedbackTimer = new DispatcherTimer() {
+                Interval = TimeSpan.FromMilliseconds(100)
+            };
+            _feedbackTimer.Tick += new EventHandler(_feedbackTimer_Tick);
+        }
+
+        void _timer_Tick(object sender, EventArgs e) {
+            CurrentTime = DateTime.Now;
+        }
+
+        void _feedbackTimer_Tick(object sender, EventArgs e) {
+            if (_feedbackService == null) return;
+
+            _feedbackService.GetFeedback(PlayedNotes, GoalNotes);
         }
 
         private ObservableCollection<Note> GetTwinkleTwinkleNotes(){ 
@@ -58,15 +86,12 @@ namespace RegisPlayAlongPlugin
             return notes;
         }
 
-
-
         #region StartPlayAlongCommand
         private StartPlayAlongCommand _StartPlayAlongCommand = new StartPlayAlongCommand();
         public StartPlayAlongCommand StartPlayAlongCommand {
             get { return _StartPlayAlongCommand; }
         }
         #endregion
-
 
         #region StopPlayAlongCommand
         private StopPlayAlongCommand _StopPlayAlongCommand = new StopPlayAlongCommand();
@@ -75,7 +100,6 @@ namespace RegisPlayAlongPlugin
         }
         #endregion
 
-
         public void Start() {
             StartTime = DateTime.Now;
             CurrentTime = DateTime.Now;
@@ -83,10 +107,15 @@ namespace RegisPlayAlongPlugin
             PlayedNotes.Clear();
             GoalNotes = GetTwinkleTwinkleNotes();
 
+            _timer.Start();
+            _feedbackTimer.Start();
+
             _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
         }
 
         public void Stop() {
+            _timer.Stop();
+            _feedbackTimer.Stop();
             _noteSource.NotesDetected -= _noteSource_NotesDetected;
         }
 
@@ -147,5 +176,7 @@ namespace RegisPlayAlongPlugin
             }
         }
         #endregion
+
+        
     }
 }

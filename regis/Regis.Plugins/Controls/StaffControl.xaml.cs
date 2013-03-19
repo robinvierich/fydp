@@ -38,8 +38,11 @@ namespace Regis.Plugins.Controls
 
         private int _resizedCount = 1;
 
+
         public StaffControl() {
             InitializeComponent();
+            _autoTimeTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(20) };
+            _autoTimeTimer.Tick += new EventHandler(_autoTimeTimer_Tick);
         }
 
         #region Notes (Dependency Property)
@@ -96,6 +99,11 @@ namespace Regis.Plugins.Controls
         #endregion
 
         #region AutoTime (Dependency Property)
+        private DispatcherTimer _autoTimeTimer;
+
+        void _autoTimeTimer_Tick(object sender, EventArgs e) {
+            CurrentTime = DateTime.Now;
+        }
 
         public bool AutoTime {
             get { return (bool)GetValue(AutoTimeProperty); }
@@ -105,10 +113,21 @@ namespace Regis.Plugins.Controls
         // Using a DependencyProperty as the backing store for AutoTime.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AutoTimeProperty =
             DependencyProperty.Register("AutoTime", typeof(bool), typeof(StaffControl), 
-                new FrameworkPropertyMetadata(false));
+                new FrameworkPropertyMetadata(false, 
+                    FrameworkPropertyMetadataOptions.None,
+                    new PropertyChangedCallback(AutoTime_PropertyChanged)
+                )
+            );
 
+        private static void AutoTime_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            StaffControl me = d as StaffControl;
+
+            if ((bool)e.NewValue)
+                me._autoTimeTimer.Start();
+            else
+                me._autoTimeTimer.Stop();
+        }
         #endregion
-
 
         #region CurrentTime (Dependency Property)
 
@@ -144,7 +163,7 @@ namespace Regis.Plugins.Controls
 
         #endregion
 
-        #region Property Changed Handlers
+        #region Notes/GoalNotes Property Changed Handlers
         private static void Notes_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             ObservableCollection<Note> oldNotes = e.OldValue as ObservableCollection<Note>;
             ObservableCollection<Note> newNotes = e.NewValue as ObservableCollection<Note>;
@@ -198,6 +217,18 @@ namespace Regis.Plugins.Controls
             }));
         }
 
+        private void AddNotes(IList<Note> notes, Color color) {
+            foreach (Note n in notes) {
+                NoteControl noteControl = new NoteControl() { Note = n, NoteBrush = new SolidColorBrush(color) };
+                double t = (n.startTime - this.StartTime).TotalMilliseconds;
+
+                Canvas.SetLeft(noteControl, GetLeftFromTime(t));
+
+                rootCanvas.Children.Add(noteControl);
+
+            }
+        }
+
         private void RemoveNotes(IEnumerable<Note> notes) {
             foreach (Note note in notes) {
                 NoteControl noteControl = (NoteControl)rootCanvas.Children.Cast<UIElement>()
@@ -210,25 +241,11 @@ namespace Regis.Plugins.Controls
             }
         }
 
-
         private double GetLeftFromTime(double milliseconds) {
             return (milliseconds / FullControlTime) * FullControlWidth;
         }
 
 
-        private void AddNotes(IList<Note> notes, Color color) {
-            if (notes.Count > 0 && AutoTime)
-                CurrentTime = notes.Last().startTime;
-
-            foreach (Note n in notes) {
-                NoteControl noteControl = new NoteControl() { Note = n, NoteBrush = new SolidColorBrush(color) };
-                double t = (n.startTime - this.StartTime).TotalMilliseconds;
-
-                Canvas.SetLeft(noteControl, GetLeftFromTime(t));
-
-                rootCanvas.Children.Add(noteControl);
-
-            }
-        }
+        
     }
 }
