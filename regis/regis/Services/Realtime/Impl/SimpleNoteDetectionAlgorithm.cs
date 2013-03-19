@@ -28,7 +28,7 @@ namespace Regis.Services.Realtime.Impl
         private double _samples = AudioCapture.AudioCaptureSettings.BufferSize * AudioCapture.AudioCaptureSettings.BufferModifier;
         private double _step;
         private double _noiseFloor = AudioCapture.AudioCaptureSettings.NoiseFloor;//500000000000000;
-
+        private int _subPeaks = AudioCapture.AudioCaptureSettings.SubPeaks;
         private bool _impulseAlg = false;
         private double[] _powerBinsOld, _powerBinsDelta;
         private double _powerBinsDeltaCutoff = 0;
@@ -37,13 +37,26 @@ namespace Regis.Services.Realtime.Impl
 
         public event EventHandler<NotesDetectedEventArgs> NotesDetected;
 
+        private Timer _eventTimer;
+
         public SimpleNoteDetectionAlgorithm()
         {
             NoteQueue = new ConcurrentQueue<Note[]>();
             _step = _sampleRate / _samples;
-            _xorPowerBins = NoiseFilter();            
-        }
+            _eventTimer = new Timer(new TimerCallback(eventTimer_tick), null, 0, 500);
 
+            //_xorPowerBins = NoiseFilter();            
+        }
+        
+        private void eventTimer_tick(object state)
+        {
+            Note[] notes;
+            if (NoteQueue.TryDequeue(out notes))
+            {
+                Raise_NotesDetected(notes);
+            }
+        }
+        
         public void Start(SimpleNoteDetectionArgs args)
         {
             if (_noteDetectionThread != null)
@@ -81,37 +94,45 @@ namespace Regis.Services.Realtime.Impl
             double[] xorPowerBins = new double[size];
             for (int i = 0; i < size; i++)
             {
-                if ((i == 0) || ((i * _step) < 70))
+                
+                if ((i == 0) || ((i * _step) < 75))
+                    xorPowerBins[i] = 1;
+                else if (true)
                     xorPowerBins[i] = 0;
                 else if ((i * _step) <= NoteDictionary.GetClosestNoteFrequency(i * _step) && ((i + 1) * _step) >= NoteDictionary.GetClosestNoteFrequency(i * _step))
-                    xorPowerBins[i] = 1;
+                {
+                    xorPowerBins[i] = 0;
+                    xorPowerBins[i + 1] = 0;
+                }
                 //else if (i == Math.Floor(NoteDictionary.GetClosestNoteFrequency(i * _step)) || i == Math.Ceiling(NoteDictionary.GetClosestNoteFrequency(i * _step)))
                 //xorPowerBins[i] = 1;
-                else
-                    xorPowerBins[i] = 0;
+                else if (xorPowerBins[i] != 0)
+                    xorPowerBins[i] = 1;
             }
             return xorPowerBins;
         }
-
+        double rootNote;
+        double _relativePower;
+        int rootIndex;
         //Creates array which will create an array which will remove all harmonic octaves from a root note.
-        private double[] HarmonicOctaveFilter(double[] xorArray, double freq)
+        private double[] HarmonicOctaveFilter(double[] xorArray, int rootIndex)
         {
-            double rootNote = NoteDictionary.GetClosestNoteFrequency(freq);
-            int rootIndex = (int)Math.Floor(freq / _step);
+            //rootNote = NoteDictionary.GetClosestNoteFrequency(freq);
+            //rootIndex = (int)Math.Floor(freq / _step);
+            if (rootIndex == 0)
+                return xorArray;
 
-            for (int i = rootIndex * 2; i < xorArray.Length; i = i * 2)
+            for (int i = rootIndex * 2; i < (_sampleRate / 2) / _step; i = i * 2)
             {
-                if ((i * _step) <= NoteDictionary.GetClosestNoteFrequency(i * _step) && ((i + 1) * _step) >= NoteDictionary.GetClosestNoteFrequency(i * _step))
-                {
-                    xorArray[Math.Max(i - 1, 0)] = 0;
+                //if ((i * _step) <= NoteDictionary.GetClosestNoteFrequency(i * _step) && ((i + 1) * _step) >= NoteDictionary.GetClosestNoteFrequency(i * _step))
+                //{
+                    xorArray[i-1] = 0;
                     xorArray[i] = 0;
-                    xorArray[Math.Min(i + 1, xorArray.Length - 1)] = 0;
-                }
+                    xorArray[i + 1] = 0;
+                //}
             }
             return xorArray;
         }
-
-
 
         private void Raise_NotesDetected(Note[] notes) {
             EventHandler<NotesDetectedEventArgs> h = NotesDetected;
@@ -125,6 +146,7 @@ namespace Regis.Services.Realtime.Impl
         double[] xorPowerBins;
         double max;
         int index;
+        double[] powerBins;
         private void SimpleDetectNotesImproved()
         {
             while (!_stopDetecting)
@@ -133,45 +155,61 @@ namespace Regis.Services.Realtime.Impl
                 if (!_fftSource.FFTQueue.TryPeek(out fftCalc))
                     continue;
 
-                double[] powerBins = new double[AudioCapture.AudioCaptureSettings.BufferSize * AudioCapture.AudioCaptureSettings.BufferModifier];
+                if (powerBins == null)
+                    powerBins = new double[AudioCapture.AudioCaptureSettings.BufferSize * AudioCapture.AudioCaptureSettings.BufferModifier];
 
                 freq = 0;
                 max = 0;
                 index = 0;
+                _relativePower = 0;
 
                 if (xorPowerBins == null)
                     xorPowerBins = new double[_xorPowerBins.Length];
 
                 currentTotalPower = powerBins.Sum();
-                Buffer.BlockCopy(_xorPowerBins, 0, xorPowerBins, 0, _xorPowerBins.Length * sizeof(double));
+                //Buffer.BlockCopy(_xorPowerBins, 0, xorPowerBins, 0, _xorPowerBins.Length * sizeof(double));
 
-                for (int i = 0; i < (1500 / _step); i++)//(fftCalc.PowerBins.Length / 2); i++)
+                Array.Clear(xorPowerBins, 0, xorPowerBins.Length);
+                for (int i = 0; i < ((_sampleRate / 2) / _step); i++)//(fftCalc.PowerBins.Length / 2); i++)
                 {
-                    powerBins[i] = (fftCalc.PowerBins[i]);// * xorPowerBins[i]);
+                    if ((i == 0) || ((i * _step) < 75))
+                        powerBins[i] = 0;
+                    else
+                        powerBins[i] = (fftCalc.PowerBins[i] * (1 - xorPowerBins[i]));
 
                     if (powerBins[i] < _noiseFloor)
                     {
                         powerBins[i] = 0;
                     }
 
-                    double _relativePower = powerBins[Math.Max(i - 1, 0)] + powerBins[Math.Max(i + 1, 0)] + powerBins[Math.Max(i, 0)];
+                    _relativePower = powerBins[Math.Max(i - 1, 0)] + powerBins[Math.Max(i + 1, 0)] + powerBins[Math.Max(i, 0)];
+                    
                     if ((max < _relativePower))
                     {
                         max = _relativePower;
-                        index = i;
-                        //xorPowerBins = HarmonicOctaveFilter(xorPowerBins, index * _step);
+                        index = i;          
                     }
-                    powerBins[i] = powerBins[i] / fftCalc.PowerBins.Max() * 1000;
-                    powerBins[powerBins.Length - 1 - i] = 0;
+                    else if (max > _relativePower)
+                    {
+                        if (index > 1)
+                        {
+                            for (int j = index * 2; (j < (((_sampleRate / 2) / _step) - 2)) || (j < index * 6); j = j + index)
+                            {
+                                //xorPowerBins[j - 2] = 1;
+                                xorPowerBins[j - 1] = 1;
+                                xorPowerBins[j] = 1;
+                                xorPowerBins[j + 1] = 1;
+                                //xorPowerBins[j + 2] = 1;
+                            }
+                        }
+                    }
+                    //powerBins[i] = powerBins[i] / fftCalc.PowerBins.Max() * 1000;
                 }
-
-
 
                 //_noiseFloor = 0.7 * _lastMax;
 
-
                 //freq = DetectFrequency2(powerBins, index);
-                freq = DetectFrequency_Mirrored(fftCalc.PowerBins, index - 3, index + 3);
+                freq = DetectFrequency_Mirrored(fftCalc.PowerBins, index - _subPeaks, index + _subPeaks);
                 //System.Diagnostics.Debug.Write(freq + "\n");
 
                 Note[] notes = new Note[1] { new Note() };
@@ -180,9 +218,7 @@ namespace Regis.Services.Realtime.Impl
 
                 //Console.WriteLine(notes[0].closestRealNoteFrequency);
 
-                Raise_NotesDetected(notes);
-
-                //NoteQueue.Enqueue(notes);
+                NoteQueue.Enqueue(notes);
                 //if (NoteQueue.Count > _maxNoteQueueSize)
                 //{
                 //    Note[] dqnotes;
@@ -210,16 +246,20 @@ namespace Regis.Services.Realtime.Impl
                 minIndex = index.Item1 - (index.Item2 - index.Item1);
                 maxIndex = index.Item2;
             }
+            if (maxIndex >= inputArray.Length)
+                maxIndex = inputArray.Length - 1;
+            if (minIndex < 0)
+                minIndex = 0;
 
             double sum = 0;
             double freq = 0;    
 
-            for (int i = Math.Max(minIndex, 0); i < maxIndex; i++)
+            for (int i = Math.Max(minIndex, 0); i <= maxIndex; i++)
             {
                 sum += inputArray[i];
             }
 
-            for (int i = Math.Max(minIndex, 0); i < maxIndex; i++)
+            for (int i = Math.Max(minIndex, 0); i <= maxIndex; i++)
             {
                 freq += (inputArray[i] / sum) * (i * _step);
             }

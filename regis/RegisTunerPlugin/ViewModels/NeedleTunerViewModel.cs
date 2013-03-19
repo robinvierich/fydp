@@ -34,7 +34,6 @@ namespace RegisTunerPlugin.ViewModels
             Note prevNote = new Note { Semitone = note.Semitone - 1 };
 
             FrequencyRange = note.ClosestRealNoteFrequency - prevNote.ClosestRealNoteFrequency;
-
             GoalFrequency = note.ClosestRealNoteFrequency;
             Frequency = note.frequency;
         }

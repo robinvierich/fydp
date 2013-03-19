@@ -113,8 +113,9 @@ namespace Regis.Services.Realtime.Impl
             }
             else
             {
-                if (j == _currentInputChannel.BufferSize)
+                if (j >= _currentInputChannel.BufferSize - 1)
                 {
+
                     if (_fftCounterTail >= (_size * _currentInputChannel.BufferSize * _fftPer))
                     {
                         _fftCounterTail = (_size * _currentInputChannel.BufferSize * _fftPer) / 2;
@@ -166,6 +167,8 @@ namespace Regis.Services.Realtime.Impl
         {
             for (int i = 0; i < _currentInputChannel.BufferSize; i += _skip)
             {
+                if (j == 128)
+                    return;
                 toArray[j] = (long)_currentInputChannel[(i)];
                 j ++;
             }
