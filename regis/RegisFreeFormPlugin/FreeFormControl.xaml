@@ -20,14 +20,14 @@
                                     Margin="10"
                                     Grid.Row="1" />-->
 
-        <pluginCtrls:StaffControl x:Name="staff" Notes="{Binding NotesPlayed}" CurrentTime="{Binding CurrentTime}" />
+        <pluginCtrls:StaffControl x:Name="staff" Notes="{Binding NotesPlayed}" CurrentTime="{Binding CurrentTime}" Grid.Row="1" />
 
         <Button Content="Start Free Form" 
                 Grid.Row="2"
-                MinWidth="150"
+                MinWidth="50"
                 MinHeight="30"
                 Command="{Binding StartFreeFormCommand}"
                 CommandParameter="{Binding}"
-                Click="startButton_Click" />
+                Click="startButton_Click" Margin="371,0,370,0" />
     </Grid>
 </UserControl>
