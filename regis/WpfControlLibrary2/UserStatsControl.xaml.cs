@@ -16,11 +16,7 @@ using Regis.Plugins.Interfaces;
 
 namespace RegisUserStatsPlugin
 {
-    /// <summary>
-    /// Interaction logic for UserStatsControl.xaml
-    /// </summary>
-
-    [Export(typeof(IPlugin))]
+    //[Export(typeof(IPlugin))]
     public partial class UserStatsControl : UserControl, IPlugin, IPartImportsSatisfiedNotification
     {
         public UserStatsControl()

@@ -16,9 +16,6 @@ using System.ComponentModel.Composition;
 
 namespace Regis.Controls
 {
-    /// <summary>
-    /// Interaction logic for PostTwitterControl.xaml
-    /// </summary>
     public partial class PostToTwitterControl : UserControl
     {
         public PostToTwitterControl()

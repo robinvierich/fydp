@@ -73,7 +73,6 @@ namespace Regis.Plugins.Controls
         }
         #endregion
 
-
         private void UpdatePositionAndLedgerLines() {
             UpdateTopPosition();
             RedrawLedgerLines(Canvas.GetTop(this));

@@ -17,10 +17,7 @@ using Regis.ViewModels;
 
 namespace Regis.Controls
 {
-    /// <summary>
-    /// Control to connect to and authorize twitter
-    /// </summary>
-    [Export(typeof(IPlugin))]
+    //[Export(typeof(IPlugin))]
     public partial class AuthTwitterControl : UserControl, IPlugin, IPartImportsSatisfiedNotification
     {
         public AuthTwitterControl()

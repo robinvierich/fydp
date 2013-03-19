@@ -25,7 +25,7 @@ namespace RegisTrainingModule
     /// Interaction logic for TrainingControl.xaml
     /// </summary>
     
-    [Export(typeof(IPlugin))]
+    //[Export(typeof(IPlugin))]
     public partial class TrainingControl : UserControl, IPlugin
     {
         Thread _trainingThread;

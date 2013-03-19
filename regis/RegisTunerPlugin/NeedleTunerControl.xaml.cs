@@ -43,7 +43,7 @@ namespace RegisTunerPlugin
 
         public string PluginName {
             get {
-                return "NeedleTunerPlugin";
+                return "TunerPlugin";
             }
         }
 

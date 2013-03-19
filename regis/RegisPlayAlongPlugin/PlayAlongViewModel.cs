@@ -77,15 +77,17 @@ namespace RegisPlayAlongPlugin
 
 
         public void Start() {
-            _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
             StartTime = DateTime.Now;
             CurrentTime = DateTime.Now;
+
+            PlayedNotes.Clear();
             GoalNotes = GetTwinkleTwinkleNotes();
+
+            _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
         }
 
         public void Stop() {
             _noteSource.NotesDetected -= _noteSource_NotesDetected;
-            GoalNotes.Clear();
         }
 
         void _noteSource_NotesDetected(object sender, NotesDetectedEventArgs e) {

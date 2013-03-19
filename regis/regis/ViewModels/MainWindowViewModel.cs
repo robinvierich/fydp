@@ -25,6 +25,9 @@ namespace Regis.ViewModels
         {
             _pluginService.PluginLoaded += new EventHandler<PluginLoadedEventArgs>(_pluginService_PluginLoaded);
             NotifyPropertyChanged(_PluginsChangedArgs);
+
+            LoadPluginCommand.Execute("FFTViewerPlugin");
+            LoadPluginCommand.Execute("TunerPlugin");
         }
 
         [Import]
@@ -33,6 +36,32 @@ namespace Regis.ViewModels
             get;
             private set;
         }
+
+        #region TunerPlugin
+        private IPlugin _TunerPlugin;
+        private static PropertyChangedEventArgs _TunerPlugin_ChangedEventArgs = new PropertyChangedEventArgs("TunerPlugin");
+
+        public IPlugin TunerPlugin {
+            get { return _TunerPlugin; }
+            set {
+                _TunerPlugin = value;
+                NotifyPropertyChanged(_TunerPlugin_ChangedEventArgs);
+            }
+        }
+        #endregion
+
+        #region FFTPlugin
+        private IPlugin _FFTPlugin;
+        private static PropertyChangedEventArgs _FFTPlugin_ChangedEventArgs = new PropertyChangedEventArgs("FFTPlugin");
+
+        public IPlugin FFTPlugin {
+            get { return _FFTPlugin; }
+            set {
+                _FFTPlugin = value;
+                NotifyPropertyChanged(_FFTPlugin_ChangedEventArgs);
+            }
+        }
+        #endregion
 
         private PropertyChangedEventArgs _currentPluginChangedArgs = new PropertyChangedEventArgs("CurrentPlugin");
         public IPlugin CurrentPlugin
@@ -60,6 +89,17 @@ namespace Regis.ViewModels
 
         void _pluginService_PluginLoaded(object sender, PluginLoadedEventArgs e)
         {
+            if (e.Plugin.PluginName == "TunerPlugin") {
+                TunerPlugin = e.Plugin;
+                return;
+            }
+
+            if (e.Plugin.PluginName == "FFTViewerPlugin") {
+                FFTPlugin = e.Plugin;
+                return;
+            }
+
+
             CurrentPlugin = e.Plugin;
         }
     }
