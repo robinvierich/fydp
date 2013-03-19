@@ -14,7 +14,7 @@ namespace Regis.Plugins.Statics
         {
             ChordList = new List<Chord>();
 
-            StreamReader readFile = new StreamReader(Environment.CurrentDirectory + "\\ChordDict.dict");
+            StreamReader readFile = new StreamReader(Environment.CurrentDirectory + "\\Config\\ChordDict.dict");
 
             while (true)
             {

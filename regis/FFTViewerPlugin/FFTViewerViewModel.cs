@@ -18,15 +18,20 @@ namespace FFTViewerPlugin
     {
         [Import]
         private IFFTSource _fftSource = null;
+
+        [Import]
+        private INoteDetectionSource _noteSource = null;
+
         private DispatcherTimer _fftUpdateTimer = new DispatcherTimer();
 
         private double _maxPower = 0;
+        private Queue<double> _averageMaxPower = new Queue<double>();
 
         public void StartReadingFFT() {
             if (_fftUpdateTimer.IsEnabled)
                 return;
 
-            _fftUpdateTimer.Interval = TimeSpan.FromMilliseconds(16);
+            _fftUpdateTimer.Interval = TimeSpan.FromMilliseconds(1);
             _fftUpdateTimer.Tick += new EventHandler(timer_Tick);
             _fftUpdateTimer.Start();
         }
@@ -52,15 +57,19 @@ namespace FFTViewerPlugin
             if (FFTBins == null)
                 FFTBins = new ObservableCollection<FFTBinViewModel>();
 
-            for (int i = 0; i < fftCalc.PowerBins.Length; i++) {
+            for (int i = 0; i < (fftCalc.PowerBins.Length / 2); i++) {
                 if (FFTBins.ElementAtOrDefault(i) == null)
                     FFTBins.Insert(i, new FFTBinViewModel());
 
                 FFTBins[i].BinNumber = i;
+
                 FFTBins[i].Power = powerBins[i];
             }
 
-            _maxPower = Math.Max(FFTBins.Max(bin => bin.Power), _maxPower);
+            _averageMaxPower.Enqueue(FFTBins.Max(bin => bin.Power));
+            if (_averageMaxPower.Count() > 5)
+                _averageMaxPower.Dequeue();
+            _maxPower = _averageMaxPower.Sum() / 5;
 
             if (BarViewModels == null) {
                 BarViewModels = new ObservableCollection<BarViewModel>();
@@ -72,14 +81,33 @@ namespace FFTViewerPlugin
                     BarViewModels.Insert(j, new BarViewModel());
                 }
 
-                double height = (bin.Power / _maxPower) * ControlActualHeight;
-
+                double height = ((bin.Power / _maxPower) * ControlActualHeight);
+       
                 BarViewModels[j].Height = height;
                 BarViewModels[j].Width = ControlActualWidth / FFTBins.Count;
                 j++;
             }
 
+            Note[] notes = _noteSource.GetNotes();
+            if (notes.Length > 0)
+                Frequency = notes.Last().frequency;
+            
+            //System.Diagnostics.Debug.Write(FFTBins.Count + "\n");
+
         }
+
+        #region Frequency
+        private double _Frequency;
+        private static PropertyChangedEventArgs _Frequency_ChangedEventArgs = new PropertyChangedEventArgs("Frequency");
+        public double Frequency
+        {
+            get { return _Frequency; }
+            set { 
+                _Frequency = value;
+                NotifyPropertyChanged(_Frequency_ChangedEventArgs);
+            }
+        }
+        #endregion
 
         #region MaxValue
         private static PropertyChangedEventArgs _MaxValue_ChangedEventArgs = new PropertyChangedEventArgs("MaxValue");

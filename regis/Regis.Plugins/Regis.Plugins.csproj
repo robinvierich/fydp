@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -72,10 +72,10 @@
     <Compile Include="Statics\NoteDictionary.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Statics\Dictionaries\ChordDict.dict">
+    <None Include="Config\ChordDict.dict">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Statics\Dictionaries\TrebleDict.dict">
+    <None Include="Config\TrebleDict.dict">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
