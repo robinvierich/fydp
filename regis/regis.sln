@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regis.Plugins", "regis.plug
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisTunerPlugin", "RegisTunerPlugin\RegisTunerPlugin.csproj", "{C2071062-3C43-479E-91AE-686DC856AD55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldPlugin", "HelloWorldPlugin\HelloWorldPlugin.csproj", "{BF9A682B-5074-44DB-8F6D-8039FFCE0694}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bluewave.Interop.Asio", "BlueWave.Interop.Asio\Bluewave.Interop.Asio.vcxproj", "{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regis.Base", "Regis.Base\Regis.Base.csproj", "{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}"
@@ -87,18 +85,6 @@ Global
 		{C2071062-3C43-479E-91AE-686DC856AD55}.Release|Win32.ActiveCfg = Release|x86
 		{C2071062-3C43-479E-91AE-686DC856AD55}.Release|x86.ActiveCfg = Release|x86
 		{C2071062-3C43-479E-91AE-686DC856AD55}.Release|x86.Build.0 = Release|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Debug|Win32.ActiveCfg = Debug|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Debug|x86.ActiveCfg = Debug|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Debug|x86.Build.0 = Debug|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Release|Any CPU.ActiveCfg = Release|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Release|Mixed Platforms.Build.0 = Release|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Release|Win32.ActiveCfg = Release|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Release|x86.ActiveCfg = Release|x86
-		{BF9A682B-5074-44DB-8F6D-8039FFCE0694}.Release|x86.Build.0 = Release|x86
 		{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}.Debug|Mixed Platforms.Build.0 = Debug|Win32

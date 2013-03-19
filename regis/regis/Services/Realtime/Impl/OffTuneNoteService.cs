@@ -11,8 +11,8 @@ using Regis.Plugins.Statics;
 using System.Windows.Threading;
 
 namespace Regis.Services.Realtime.Impl
-{    [Export(typeof(INoteDetectionSource))]
-    [Export(typeof(INoteDetectionService))]
+{    //[Export(typeof(INoteDetectionSource))]
+    //[Export(typeof(INoteDetectionService))]
     public class OffTuneNoteService : INoteDetectionSource, INoteDetectionService
     {
         List<double> validFreqs = NoteDictionary.NoteDict.Keys.ToList();

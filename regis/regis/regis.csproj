@@ -263,10 +263,6 @@
       <Project>{6DB00BA8-EFDE-4D3A-8983-F01857A36C1A}</Project>
       <Name>Bluewave.Interop.Asio</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HelloWorldPlugin\HelloWorldPlugin.csproj">
-      <Project>{BF9A682B-5074-44DB-8F6D-8039FFCE0694}</Project>
-      <Name>HelloWorldPlugin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Regis.Base\Regis.Base.csproj">
       <Project>{F1BEFDA3-8AF4-4A59-8FD1-6A9A8B02483B}</Project>
       <Name>Regis.Base</Name>

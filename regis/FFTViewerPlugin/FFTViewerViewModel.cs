@@ -14,13 +14,22 @@ using System.Threading.Tasks;
 namespace FFTViewerPlugin
 {
     [Export]
-    public class FFTViewerViewModel : BaseViewModel
+    public class FFTViewerViewModel : BaseViewModel, IPartImportsSatisfiedNotification
     {
         [Import]
         private IFFTSource _fftSource = null;
 
         [Import]
         private INoteDetectionSource _noteSource = null;
+
+        public void OnImportsSatisfied() {
+            _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
+        }
+
+        public void _noteSource_NotesDetected(object sender, NotesDetectedEventArgs e) {
+            if (e.Notes.Length > 0)
+                Frequency = e.Notes.Last().frequency;
+        }
 
         private DispatcherTimer _fftUpdateTimer = new DispatcherTimer();
 
@@ -88,10 +97,6 @@ namespace FFTViewerPlugin
                 j++;
             }
 
-            Note[] notes = _noteSource.GetNotes();
-            if (notes.Length > 0)
-                Frequency = notes.Last().frequency;
-            
             //System.Diagnostics.Debug.Write(FFTBins.Count + "\n");
 
         }
@@ -170,5 +175,7 @@ namespace FFTViewerPlugin
             }
         }
         #endregion
+
+        
     }
 }

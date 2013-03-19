@@ -27,7 +27,9 @@ namespace RegisTunerPlugin.ViewModels
 
 
             if (note.Semitone < 1)
-                throw new NotImplementedException(" note is too low for current tuner implementation (can be fixed)");
+                return;
+                
+               // throw new NotImplementedException(" note is too low for current tuner implementation (can be fixed)");
 
             Note prevNote = new Note { Semitone = note.Semitone - 1 };
 
