@@ -59,7 +59,6 @@
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\ISocialNetworkingService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Interfaces\NotesDetectedEventArgs.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\FFTCalculation.cs" />
     <Compile Include="Models\Note.cs" />

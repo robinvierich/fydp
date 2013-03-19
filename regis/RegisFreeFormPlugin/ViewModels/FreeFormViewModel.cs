@@ -58,7 +58,6 @@ namespace RegisFreeFormPlugin.ViewModels
         private DateTime _CurrentTime;
         private static PropertyChangedEventArgs _CurrentTime_ChangedEventArgs = new PropertyChangedEventArgs("CurrentTime");
 
-        [DataMember]
         public DateTime CurrentTime {
             get { return _CurrentTime; }
             set {
@@ -92,7 +91,6 @@ namespace RegisFreeFormPlugin.ViewModels
         private ObservableCollection<Note> _PlayedNotes;
         private static PropertyChangedEventArgs _PlayedNotes_ChangedEventArgs = new PropertyChangedEventArgs("PlayedNotes");
 
-        [DataMember]
         public ObservableCollection<Note> NotesPlayed {
             get { return _PlayedNotes; }
             set {
