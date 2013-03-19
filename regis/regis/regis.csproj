@@ -39,8 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>Regis.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AForge.Math, Version=2.2.4.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
@@ -123,7 +122,6 @@
     </Compile>
     <Compile Include="Models\Pulse.cs" />
     <Compile Include="Models\SampleCollection.cs" />
-    <Compile Include="Models\SerialData.cs" />
     <Compile Include="Services\Impl\DataContractPersistenceService.cs" />
     <Compile Include="Services\Impl\FeedbackService.cs" />
     <Compile Include="Services\Realtime\Impl\AsioDeviceService.cs" />
@@ -162,6 +160,9 @@
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\AuthTwitterControl.xaml">
       <SubType>Designer</SubType>
@@ -227,6 +228,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\PluginContainer.cs" />
@@ -248,6 +253,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="libfftw3-3.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -307,6 +313,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\twitter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\REGISlogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.0\Microsoft.Expression.Blend.WPF.targets" />
