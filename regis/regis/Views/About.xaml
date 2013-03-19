@@ -6,7 +6,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
 	Title="About">
-    <!--<TextBlock Content =" "</TextBox>-->
+    <!--<TextBlock Content =" "</TextBox>
     <Grid>
     <Button Content="Close"
         Click="CloseAbout_Click"
@@ -15,7 +15,7 @@
     MinHeight="20"
     Margin="92,261,84,12"/>
 
-    </Grid>
+    </Grid>-->
     
 
 

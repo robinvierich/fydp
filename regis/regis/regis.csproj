@@ -253,7 +253,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config" />
     <None Include="libfftw3-3.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
