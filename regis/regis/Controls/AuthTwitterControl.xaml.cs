@@ -44,7 +44,7 @@ namespace Regis.Controls
 
         public string FriendlyPluginName
         {
-            get { return "Conenct to Twitter"; }
+            get { return "Login to Twitter"; }
         }
 
         [Import(typeof(AuthorizeTwitterViewModel))]

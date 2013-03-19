@@ -19,12 +19,12 @@ namespace Regis.Services.Realtime.SerialImpl
         protected SerialPort _serialPort;
         private byte[] _serialBuffer;
 
-        public void Start(SerialPort args) {
-            if (args == null)
+        public void Start(SerialPort port) {
+            if (port == null)
                 throw new ArgumentNullException("args");
 
-            _serialPort = args;
-            _serialBuffer = new byte[args.ReadBufferSize];
+            _serialPort = port;
+            _serialBuffer = new byte[port.ReadBufferSize];
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(_serialPort_DataReceived);
             _serialPort.ErrorReceived += new SerialErrorReceivedEventHandler(_serialPort_ErrorReceived);
             _serialPort.Open();

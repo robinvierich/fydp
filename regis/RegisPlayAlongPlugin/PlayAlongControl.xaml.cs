@@ -11,27 +11,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using RegisTunerPlugin.ViewModels;
-using System.ComponentModel.Composition;
 using Regis.Plugins.Interfaces;
+using System.ComponentModel.Composition;
 
-namespace RegisTunerPlugin
+namespace RegisPlayAlongPlugin
 {
     [Export(typeof(IPlugin))]
-    public partial class NeedleTunerControl : UserControl, IPartImportsSatisfiedNotification, IPlugin
+    public partial class PlayAlongControl : UserControl, IPartImportsSatisfiedNotification, IPlugin
     {
-        public NeedleTunerControl() {
+        public PlayAlongControl() {
             InitializeComponent();
-        }
-
-        [Import]
-        private NeedleTunerViewModel ViewModel {
-            get;
-            set;
         }
 
         public void OnImportsSatisfied() {
             DataContext = ViewModel;
+        }
+
+        [Import]
+        public PlayAlongViewModel ViewModel {
+            get;
+            set;
         }
 
         public void Load() {
@@ -42,15 +41,12 @@ namespace RegisTunerPlugin
         }
 
         public string PluginName {
-            get {
-                return "NeedleTunerPlugin";
-            }
+            get { return "PlayAlongControl"; }
         }
 
         public string FriendlyPluginName {
-            get {
-                return "Tuner";
-            }
+            get { return "Play Along"; }
         }
+
     }
 }

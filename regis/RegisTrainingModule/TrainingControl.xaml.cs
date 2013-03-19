@@ -121,61 +121,65 @@ namespace RegisTrainingModule
 
         private void RunTraining()
         {
-            while(_runningTraining)
-            {
-                for (int i = 0; i < 8; i++)
-                {
-                    string _arrow = "arrow" + i.ToString();
-                    string _green = "green" + i.ToString();
-                    Application.Current.Dispatcher.Invoke(
-                        DispatcherPriority.Render,
-                        new Action<string>(ArrowShow),
-                        _arrow);
-
-                    while (true)
-                    {
-                        Note[] notes = _noteSource.GetNotes();
-                        if (notes[0].ClosestRealNoteFrequency == 0)
-                            continue;
-
-                        if (notes[0].ClosestRealNoteFrequency == ViewModel.TrainingModules[0].TargetFreq[i])
-                        {
-                            Application.Current.Dispatcher.Invoke(
-                                DispatcherPriority.Render,
-                                new Action<string>(GreenShow),
-                                _green);
-                            notesCorrect += 1;
-                            notesTotal += 1;
-
-                            break;
-                        }
-                   }
-
-                    Application.Current.Dispatcher.Invoke(
-                        DispatcherPriority.Render,
-                        new Action<string>(ArrowHide),
-                        _arrow);
-                }
-
-                User currentUser = _userService.GetCurrentUser();
+            // TODO: Refactor this to use NotesDetected event
 
 
-                Application.Current.Dispatcher.Invoke(
-                        DispatcherPriority.Render, new Action(() =>
-                currentUser.TrainingStats.Add(new UserTrainingStats()
-                {
-                    TimeStamp = DateTime.Now,
-                    PercentCorrectNotes = ((double)notesCorrect/(double)notesTotal) * 100,
-                    TotalNotesPlayed = notesTotal
-                })));
+
+            //while(_runningTraining)
+            //{
+            //    for (int i = 0; i < 8; i++)
+            //    {
+            //        string _arrow = "arrow" + i.ToString();
+            //        string _green = "green" + i.ToString();
+            //        Application.Current.Dispatcher.Invoke(
+            //            DispatcherPriority.Render,
+            //            new Action<string>(ArrowShow),
+            //            _arrow);
+
+            //        while (true)
+            //        {
+            //            Note[] notes = _noteSource.GetNotes();
+            //            if (notes[0].ClosestRealNoteFrequency == 0)
+            //                continue;
+
+            //            if (notes[0].ClosestRealNoteFrequency == ViewModel.TrainingModules[0].TargetFreq[i])
+            //            {
+            //                Application.Current.Dispatcher.Invoke(
+            //                    DispatcherPriority.Render,
+            //                    new Action<string>(GreenShow),
+            //                    _green);
+            //                notesCorrect += 1;
+            //                notesTotal += 1;
+
+            //                break;
+            //            }
+            //       }
+
+            //        Application.Current.Dispatcher.Invoke(
+            //            DispatcherPriority.Render,
+            //            new Action<string>(ArrowHide),
+            //            _arrow);
+            //    }
+
+            //    User currentUser = _userService.GetCurrentUser();
+
+
+            //    Application.Current.Dispatcher.Invoke(
+            //            DispatcherPriority.Render, new Action(() =>
+            //    currentUser.TrainingStats.Add(new UserTrainingStats()
+            //    {
+            //        TimeStamp = DateTime.Now,
+            //        PercentCorrectNotes = ((double)notesCorrect/(double)notesTotal) * 100,
+            //        TotalNotesPlayed = notesTotal
+            //    })));
                
 
-                Application.Current.Dispatcher.Invoke(
-                        DispatcherPriority.Render,
-                        new Action(ShowSummary));
+            //    Application.Current.Dispatcher.Invoke(
+            //            DispatcherPriority.Render,
+            //            new Action(ShowSummary));
 
-                StopTraining();
-            }
+            //    StopTraining();
+            //}
         }
 
         private static int GetTimeSpan(DateTime value)

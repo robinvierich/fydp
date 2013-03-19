@@ -10,8 +10,8 @@ using Regis.Plugins.Models;
 
 namespace Regis.Services.Realtime.Impl
 {
-    [Export(typeof(INoteDetectionSource))]
-    [Export(typeof(INoteDetectionService))]
+    //[Export(typeof(INoteDetectionSource))]
+    //[Export(typeof(INoteDetectionService))]
     public class SimpleNoteDetectionAlgorithm : INoteDetectionSource, INoteDetectionService
     {
         private ConcurrentQueue<Note[]> NoteQueue { get; set; }
@@ -77,7 +77,7 @@ namespace Regis.Services.Realtime.Impl
                 //Console.WriteLine(freq);
                 _previousTotalPower = currentTotalPower;
 
-                Note[] notes = new Note[1];
+                Note[] notes = new Note[1] { new Note() };
                 notes[0].startTime = DateTime.Now;
                 notes[0].frequency = freq;
                
@@ -200,5 +200,14 @@ namespace Regis.Services.Realtime.Impl
             NoteQueue.TryPeek(out toReturn);
             return toReturn;
         }
+
+        private void Raise_NotesDetected(Note[] notes) {
+            EventHandler<NotesDetectedEventArgs> h = NotesDetected;
+            if (h == null) return;
+
+            h(this, new NotesDetectedEventArgs(notes));
+        }
+
+        public event EventHandler<NotesDetectedEventArgs> NotesDetected;
     }
 }

@@ -8,7 +8,5 @@ namespace Regis
     public static class Settings
     {
 
-        
-
     }
 }

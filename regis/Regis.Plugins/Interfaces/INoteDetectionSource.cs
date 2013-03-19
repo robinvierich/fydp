@@ -9,6 +9,15 @@ namespace Regis.Plugins.Interfaces
 {
     public interface INoteDetectionSource
     {
-        Note[] GetNotes();
+        event EventHandler<NotesDetectedEventArgs> NotesDetected;
+    }
+
+    public class NotesDetectedEventArgs: EventArgs
+    {
+        public NotesDetectedEventArgs(Note[] notes) {
+            Notes = notes;
+        }
+
+        public Note[] Notes { get; private set; }
     }
 }

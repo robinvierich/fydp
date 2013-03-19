@@ -71,83 +71,81 @@ namespace RegisFreeFormPlugin
 
         public string FriendlyPluginName
         {
-            get { return "FreeFormMode"; }
+            get { return "Free Form"; }
         }
 
         #endregion
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            StopFreeform();
-            _freeformThread = new Thread(new ThreadStart(StartFreeform));
-            _freeformThread.Start();
+            staff.StartTime = DateTime.Now;
         }
 
-        private void StartFreeform()
-        {
-            _runningFreeform = true;
-            string[] noteStaff = new string[19];
-            noteStaff[0] = "&=";
-            for (int count = 1; count < 18; count++)
-            {
-                if (count % 2 == 1) 
-                    noteStaff[count] = "==";
-                else
-                    noteStaff[count] = "=";
-            }
-            noteStaff[18] = "||";
-            RunFreeform(noteStaff);
-        }
+        //private void StartFreeform()
+        //{
+        //    _runningFreeform = true;
+        //    string[] noteStaff = new string[19];
+        //    noteStaff[0] = "&=";
+        //    for (int count = 1; count < 18; count++)
+        //    {
+        //        if (count % 2 == 1) 
+        //            noteStaff[count] = "==";
+        //        else
+        //            noteStaff[count] = "=";
+        //    }
+        //    noteStaff[18] = "||";
+        //    RunFreeform(noteStaff);
+        //}
 
-        private void StopFreeform()
-        {
-            if (_freeformThread == null)
-                return;
+        //private void StopFreeform()
+        //{
+        //    if (_freeformThread == null)
+        //        return;
 
-            _runningFreeform = false;
-            _freeformThread.Join();
-        }
+        //    _runningFreeform = false;
+        //    _freeformThread.Join();
+        //}
 
-        private void RunFreeform(string[] noteStaff)
-        {
-            int index;
-            Note[] prevNote = new Note[3];
-            Note[] curNotes;
-            index = 1; 
-            while (_runningFreeform)
-            {
+        //private void RunFreeform(string[] noteStaff)
+        //{
+        //    int index;
+        //    Note[] prevNote = new Note[3];
+        //    Note[] curNotes;
+        //    index = 1; 
+        //    while (_runningFreeform)
+        //    {
                 
                 
-                // "&amp;= == = == = == = == = == = == = == = == = == ||" 
-                curNotes = noteSource.GetNotes();
-                if (curNotes == null)
-                    continue;
+        //        // "&amp;= == = == = == = == = == = == = == = == = == ||" 
+        //        curNotes = noteSource.GetNotes();
+        //        if (curNotes == null)
+        //            continue;
 
-                if (curNotes[0].ClosestRealNoteFrequency == prevNote[0].ClosestRealNoteFrequency)
-                    continue;
-                else if (curNotes[0].ClosestRealNoteFrequency == 0)
-                    continue;
+        //        if (curNotes[0].ClosestRealNoteFrequency == prevNote[0].ClosestRealNoteFrequency)
+        //            continue;
+        //        else if (curNotes[0].ClosestRealNoteFrequency == 0)
+        //            continue;
 
-                prevNote = curNotes;
+        //        prevNote = curNotes;
        
-                noteStaff[index] = NoteDictionary.NoteDict[curNotes[0].ClosestRealNoteFrequency].ToString();
-                String mystaff = string.Join("", noteStaff);
-                Application.Current.Dispatcher.Invoke(
-                    DispatcherPriority.Render,
-                    new Action<string>(updateStaff),
-                    mystaff);
+        //        noteStaff[index] = NoteDictionary.NoteDict[curNotes[0].ClosestRealNoteFrequency].ToString();
+        //        String mystaff = string.Join("", noteStaff);
+        //        Application.Current.Dispatcher.Invoke(
+        //            DispatcherPriority.Render,
+        //            new Action<string>(updateStaff),
+        //            mystaff);
 
-                //noteBlock.Text = noteStaff.ToString();
+        //        //noteBlock.Text = noteStaff.ToString();
 
-                index += 2;
+        //        index += 2;
 
-                if (index >= 18)
-                    index = 1; 
-            }
-        }
-        private void updateStaff(string staff)
-        {
-            noteBlock.Text = staff;
-        }
+        //        if (index >= 18)
+        //            index = 1; 
+        //    }
+        //}
+        //private void updateStaff(string staff)
+        //{
+        //    //noteBlock.Text = staff;
+        //}
     }
 }
