@@ -7,6 +7,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ctrls:StaffControl Notes="{Binding PlayedNotes}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Start" 
+                    Command="{Binding StartPlayAlongCommand}" 
+                    CommandParameter="{Binding}"
+                    Margin="5" Padding="5" />
+            <Button Content="Stop" 
+                    Command="{Binding StopPlayAlongCommand}" 
+                    CommandParameter="{Binding}"
+                    Margin="5" Padding="5" />
+        </StackPanel>
+        <ctrls:StaffControl Grid.Row="1" 
+                            Notes="{Binding PlayedNotes}" 
+                            GoalNotes="{Binding GoalNotes}" 
+                            StartTime="{Binding StartTime}"
+                            CurrentTime="{Binding CurrentTime}" />
     </Grid>
 </UserControl>

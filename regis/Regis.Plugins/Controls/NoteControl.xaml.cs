@@ -49,6 +49,31 @@ namespace Regis.Plugins.Controls
 
         #endregion
 
+        #region NoteBrush (Dependency Property)
+        public Brush NoteBrush {
+            get { return (Brush)GetValue(NoteBrushProperty); }
+            set { SetValue(NoteBrushProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for NoteBrush.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty NoteBrushProperty =
+            DependencyProperty.Register("NoteBrush", typeof(Brush), typeof(NoteControl), 
+                new UIPropertyMetadata(Brushes.Black, new PropertyChangedCallback(NoteBrush_PropertyChanged))
+            );
+
+        private static void NoteBrush_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            NoteControl me = d as NoteControl;
+            Brush newBrush = e.NewValue as Brush;
+
+            me.noteEllipse.Fill = newBrush;
+            me.noteEllipse.Stroke = newBrush;
+
+            me.noteStem.Fill = newBrush;
+            me.noteStem.Stroke = newBrush;
+        }
+        #endregion
+
+
         private void UpdatePositionAndLedgerLines() {
             UpdateTopPosition();
             RedrawLedgerLines(Canvas.GetTop(this));

@@ -34,6 +34,8 @@ namespace Regis.Plugins.Controls
 
         public const double FullControlWidth = 800; // px
 
+        private static Color goalNoteColor = Color.FromArgb(100, 0, 0, 0);
+
         private int _resizedCount = 1;
 
         public StaffControl() {
@@ -147,6 +149,8 @@ namespace Regis.Plugins.Controls
             }
         }
 
+
+
         private static void GoalNotes_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             ObservableCollection<Note> oldNotes = e.OldValue as ObservableCollection<Note>;
             ObservableCollection<Note> newNotes = e.NewValue as ObservableCollection<Note>;
@@ -158,7 +162,7 @@ namespace Regis.Plugins.Controls
             }
 
             if (newNotes != null) {
-                me.AddNotes(newNotes, Color.FromArgb(100, 255, 255, 255));
+                me.AddNotes(newNotes, goalNoteColor);
                 newNotes.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(me.goalNotes_CollectionChanged);
             }
         }
@@ -170,7 +174,7 @@ namespace Regis.Plugins.Controls
                     RemoveNotes(e.OldItems.Cast<Note>());
 
                 if (e.NewItems != null)
-                    AddNotes(e.NewItems.Cast<Note>(), Color.FromArgb(100, 255, 255, 255));
+                    AddNotes(e.NewItems.Cast<Note>(), goalNoteColor);
             }));
         }
 
@@ -204,7 +208,7 @@ namespace Regis.Plugins.Controls
 
         private void AddNotes(IEnumerable<Note> notes, Color color) {
             foreach (Note n in notes) {
-                NoteControl noteControl = new NoteControl() { Note = n, Background = new SolidColorBrush(color) };
+                NoteControl noteControl = new NoteControl() { Note = n, NoteBrush = new SolidColorBrush(color) };
                 double t = (n.startTime - this.StartTime).TotalMilliseconds;
 
                 Canvas.SetLeft(noteControl, GetLeftFromTime(t));

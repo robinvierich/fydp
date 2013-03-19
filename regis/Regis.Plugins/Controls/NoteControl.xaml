@@ -28,7 +28,7 @@
             </Ellipse.RenderTransform>
         </Ellipse>
 
-        <Line x:Name="stem"
+        <Line x:Name="noteStem"
             X1="27.25" Y1="-52"
 			  X2="27.25" Y2="5" 
 			  Stroke="Black"
