@@ -49,6 +49,7 @@
       <DependentUpon>PlayAlongControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="PlayAlongViewModel.cs" />
+    <Compile Include="PlayedFirstSongAchievement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartPlayAlongCommand.cs" />
     <Compile Include="StopPlayAlongCommand.cs" />

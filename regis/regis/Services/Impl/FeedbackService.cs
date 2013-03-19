@@ -11,18 +11,28 @@ namespace Regis.Services.Impl
     [Export(typeof(IFeedbackService))]
     public class FeedbackService : IFeedbackService
     {
-        public Feedback GetFeedback(IList<Note> playedNotes, IList<Note> goalNotes) {
+
+        double maxTimeDiffForMatch = 0.2; // s
+
+        private Dictionary<Note, Note> GetMatches(IList<Note> playedNotes, IList<Note> goalNotes){
+            Dictionary<Note, Note> matches = new Dictionary<Note, Note>();
+
+            // look for notes where time difference is within a threshold (maxTimeDiffForMatch)
+            foreach (Note goalNote in goalNotes) {
+                playedNotes.Where(playedNote => {
+                    return (playedNote.startTime - goalNote.startTime).TotalSeconds < maxTimeDiffForMatch;
+                });
+            }
+
+            return matches;
+        }
+
+        public Feedback GetFeedback(IList<Note> playedNotes, IList<Note> goalNotes, DateTime currentTime) {
             string feedbackString = string.Empty;
 
-            if (playedNotes.Count > goalNotes.Count) {
-                throw new NotImplementedException("Played notes and goal notes must be the same length");
-            }
+            Dictionary<Note, Note> matches = GetMatches(playedNotes, goalNotes);
 
-            for (int i = 0; i < playedNotes.Count; i++) {
-                if (playedNotes[i].startTime - goalNotes[i].startTime > TimeSpan.FromSeconds(0.01)) {
-                    feedbackString += "Your timing was a bit off ";
-                }
-            }
+
 
             return new Feedback() { FeedbackString = feedbackString };
         }

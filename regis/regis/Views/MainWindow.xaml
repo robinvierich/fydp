@@ -20,17 +20,35 @@
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="23" />
+            <RowDefinition Height="200" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="23" />
         </Grid.RowDefinitions>
+        
 
-        <Menu Height="23" Name="mainMenu" Grid.ColumnSpan="3">
-            <MenuItem Header="File">
-                <MenuItem Header="Exit" Click="Exit_Click" />
-            </MenuItem>
-            <MenuItem Header="Plugins" ItemsSource="{Binding MenuPlugins}" />
+        <Menu Name="mainMenu" Grid.ColumnSpan="3">
+            <Menu.Resources>
+                <CollectionViewSource Source="{Binding Path=MenuPlugins}" x:Key="menuPlugins" />
+            </Menu.Resources>
+            
+            <Menu.ItemsSource>
+                <CompositeCollection>
+                    <MenuItem Header="File">
+                        <MenuItem Header="Exit" Click="Exit_Click" />
+                    </MenuItem>
+                    <CollectionContainer Collection="{Binding Source={StaticResource menuPlugins}}" />
+                </CompositeCollection>
+            </Menu.ItemsSource>
+
+            <Menu.ItemTemplate>
+                <DataTemplate>
+                    <MenuItem Header="{Binding FriendlyPluginName}">
+                        <ContentPresenter Content="{Binding}" />
+                    </MenuItem>
+                </DataTemplate>
+            </Menu.ItemTemplate>
+
         </Menu>
         <ListView ItemsSource="{Binding ButtonPlugins}" 
         Margin="20"
