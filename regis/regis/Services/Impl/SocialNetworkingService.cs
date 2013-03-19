@@ -52,7 +52,7 @@ namespace Regis.Services.Impl
             // Step 2 - Redirect to the OAuth Authorization URL
             Uri uri = _twitter.GetAuthorizationUri(_twtrRequestToken);
 
-            Process browserProc = new Process();
+            Process browserProc;
             browserProc = new Process();
             browserProc.StartInfo = new ProcessStartInfo(uri.ToString());
             browserProc.Start();
@@ -94,7 +94,8 @@ namespace Regis.Services.Impl
         }
         #endregion
         #endregion
-                public event EventHandler<TwitterAuthEventArgs> TwitterAuthUpdated;
+        
+        public event EventHandler<TwitterAuthEventArgs> TwitterAuthUpdated;
         private void Raise_TwitterAuthUpdated(AuthorizationStatus newStatus)
         {
             TwitterAuthEventArgs args = new TwitterAuthEventArgs(newStatus);
