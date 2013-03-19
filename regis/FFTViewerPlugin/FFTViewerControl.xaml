@@ -8,7 +8,7 @@
              Name="thisFFFViewerControl"
              SizeChanged="thisFFFViewerControl_SizeChanged"
              Width="800"
-             Height="600"
+             Height="400"
              BorderBrush="Black"
              BorderThickness="1"
              >
