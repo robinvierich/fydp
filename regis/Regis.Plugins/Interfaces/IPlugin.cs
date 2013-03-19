@@ -7,11 +7,19 @@ using Regis.Plugins.Models;
 
 namespace Regis.Plugins.Interfaces
 {
+    public enum PluginLayout
+    {
+        Button,
+        Menu,
+        Panel
+    }
+
     public interface IPlugin
     {
         void Load();
         FrameworkElement GetVisualContent();
         string PluginName { get; }
         string FriendlyPluginName { get; }
+        PluginLayout Layout { get; }
     }
 }

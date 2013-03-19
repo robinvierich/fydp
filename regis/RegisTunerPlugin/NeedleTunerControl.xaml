@@ -6,7 +6,10 @@
              mc:Ignorable="d" >
 
     <Border BorderBrush="Black" BorderThickness="0">
-        <Grid HorizontalAlignment="Center">
+        <Grid  
+            HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+            >
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -36,8 +39,7 @@
                 Background="#20000000"
                 Grid.Row="1"
                 Grid.ColumnSpan="3"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
+                
                 >
                 <Line x:Name="needleLine"
               X1="{Binding X}" Y1="300" 

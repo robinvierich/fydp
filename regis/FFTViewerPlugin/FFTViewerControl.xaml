@@ -10,7 +10,7 @@
              Width="800"
              Height="400"
              BorderBrush="Black"
-             BorderThickness="1"
+             BorderThickness="0"
              >
     <UserControl.Resources>
         

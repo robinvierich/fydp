@@ -157,5 +157,10 @@ namespace RegisChordFreeFormPlugin
         {
             noteBlock.Text = staff;
         }
+
+
+        public PluginLayout Layout {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

@@ -8,8 +8,8 @@
         Icon="/Icons/guitar24.ico" >
 	<Window.Background>
 		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-			<GradientStop Color="#FFBAE4FF" Offset="0.141"/>
-			<GradientStop Color="#FF0094C6" Offset="1"/>
+			<GradientStop Color="#FF4C9AFF" Offset="1"/>
+			<GradientStop Color="#FFBFDBFF"/>
 		</LinearGradientBrush>
 	</Window.Background>
     <Grid Name="MainGrid">
@@ -30,8 +30,11 @@
             <MenuItem Header="File">
                 <MenuItem Header="Exit" Click="Exit_Click" />
             </MenuItem>
+            <MenuItem Header="Plugins" ItemsSource="{Binding MenuPlugins}" />
         </Menu>
-        <ListView ItemsSource="{Binding Plugins}" Grid.Row="1" Background="#00000000" BorderThickness="0">
+        <ListView ItemsSource="{Binding ButtonPlugins}" 
+        Margin="20"
+                  Grid.Row="1" Background="#00000000" BorderThickness="0" BorderBrush="{x:Null}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -51,13 +54,17 @@
         
         <ctrls:PluginContainer Plugin="{Binding TunerPlugin}"
                                Grid.Column="1"
-                               Grid.Row="1" />
+                               Grid.Row="1" BorderBrush="DarkBlue" BorderThickness="1" />
 
         <ctrls:PluginContainer Plugin="{Binding FFTPlugin}"
                                Grid.Column="2"
+                               BorderBrush="DarkBlue" 
+                               BorderThickness="0,1,1,1"
                                Grid.Row="1" />
         
-        <ctrls:PluginContainer Plugin="{Binding CurrentPlugin}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="0"/>
+        <ctrls:PluginContainer Plugin="{Binding CurrentPlugin}" Grid.Column="1" 
+                               BorderBrush="DarkBlue" BorderThickness="0,0,1,1"
+                               Grid.Row="2" Grid.ColumnSpan="2" />
         <!--<StatusBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="1" Height="23" Margin="0,0,0,0" Name="statusBar" />-->
     </Grid>
 </Window>

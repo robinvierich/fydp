@@ -3468,7 +3468,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style TargetType="{x:Type ListView}">
+    <!--<Style TargetType="{x:Type ListView}">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
@@ -3505,7 +3505,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style>-->
     <Style x:Key="ListViewItemFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>

@@ -83,8 +83,9 @@ namespace FFTViewerPlugin
         }
         #endregion
 
-        
 
-        
+        public PluginLayout Layout {
+            get { return PluginLayout.Panel; }
+        }
     }
 }

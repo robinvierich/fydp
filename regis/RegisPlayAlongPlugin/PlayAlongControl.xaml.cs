@@ -48,5 +48,8 @@ namespace RegisPlayAlongPlugin
             get { return "Play Along"; }
         }
 
+        public PluginLayout Layout {
+            get { return PluginLayout.Button; }
+        }
     }
 }

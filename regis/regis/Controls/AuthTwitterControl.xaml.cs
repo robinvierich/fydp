@@ -55,5 +55,10 @@ namespace Regis.Controls
         {
             DataContext = ViewModel;
         }
+
+
+        public PluginLayout Layout {
+            get { throw new NotImplementedException(); }
+        }
     }
 }
