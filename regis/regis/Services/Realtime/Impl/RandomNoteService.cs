@@ -45,7 +45,7 @@ namespace Regis.Services.Realtime.Impl
 
                 Raise_NotesDetected(new Note[1] { note });
 
-                Thread.Sleep(50);
+                Thread.Sleep(200);
             }
         }
 

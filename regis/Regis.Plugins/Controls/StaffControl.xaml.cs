@@ -62,8 +62,6 @@ namespace Regis.Plugins.Controls
 
         #region GoalNotes (Dependency Property)
 
-
-
         public ObservableCollection<Note> GoalNotes {
             get { return (ObservableCollection<Note>)GetValue(GoalNotesProperty); }
             set { SetValue(GoalNotesProperty, value); }
@@ -77,7 +75,6 @@ namespace Regis.Plugins.Controls
                     FrameworkPropertyMetadataOptions.AffectsRender,
                     new PropertyChangedCallback(GoalNotes_PropertyChanged)
                 ));
-
         
         #endregion
 
@@ -97,6 +94,21 @@ namespace Regis.Plugins.Controls
             DependencyProperty.Register("StartTime", typeof(DateTime), typeof(StaffControl), new UIPropertyMetadata(DateTime.Now));
 
         #endregion
+
+        #region AutoTime (Dependency Property)
+
+        public bool AutoTime {
+            get { return (bool)GetValue(AutoTimeProperty); }
+            set { SetValue(AutoTimeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for AutoTime.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty AutoTimeProperty =
+            DependencyProperty.Register("AutoTime", typeof(bool), typeof(StaffControl), 
+                new FrameworkPropertyMetadata(false));
+
+        #endregion
+
 
         #region CurrentTime (Dependency Property)
 
@@ -149,8 +161,6 @@ namespace Regis.Plugins.Controls
             }
         }
 
-
-
         private static void GoalNotes_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             ObservableCollection<Note> oldNotes = e.OldValue as ObservableCollection<Note>;
             ObservableCollection<Note> newNotes = e.NewValue as ObservableCollection<Note>;
@@ -174,7 +184,7 @@ namespace Regis.Plugins.Controls
                     RemoveNotes(e.OldItems.Cast<Note>());
 
                 if (e.NewItems != null)
-                    AddNotes(e.NewItems.Cast<Note>(), goalNoteColor);
+                    AddNotes(e.NewItems.Cast<Note>().ToList(), goalNoteColor);
             }));
         }
 
@@ -184,7 +194,7 @@ namespace Regis.Plugins.Controls
                     RemoveNotes(e.OldItems.Cast<Note>());
 
                 if (e.NewItems != null)
-                    AddNotes(e.NewItems.Cast<Note>(), Colors.Black);
+                    AddNotes(e.NewItems.Cast<Note>().ToList(), Colors.Black);
             }));
         }
 
@@ -206,7 +216,10 @@ namespace Regis.Plugins.Controls
         }
 
 
-        private void AddNotes(IEnumerable<Note> notes, Color color) {
+        private void AddNotes(IList<Note> notes, Color color) {
+            if (notes.Count > 0 && AutoTime)
+                CurrentTime = notes.Last().startTime;
+
             foreach (Note n in notes) {
                 NoteControl noteControl = new NoteControl() { Note = n, NoteBrush = new SolidColorBrush(color) };
                 double t = (n.startTime - this.StartTime).TotalMilliseconds;
@@ -214,6 +227,7 @@ namespace Regis.Plugins.Controls
                 Canvas.SetLeft(noteControl, GetLeftFromTime(t));
 
                 rootCanvas.Children.Add(noteControl);
+
             }
         }
     }
