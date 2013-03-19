@@ -59,5 +59,10 @@ namespace RegisUserStatsPlugin
         }
 
         #endregion
+
+
+        public PluginLayout Layout {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

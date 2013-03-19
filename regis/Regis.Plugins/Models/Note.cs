@@ -28,12 +28,6 @@ namespace Regis.Plugins.Models
             }
         }
 
-        public string Text {
-            get {
-                return NoteDictionary.NoteDict[ClosestRealNoteFrequency].ToString();
-            }
-        }
-
         public TimeSpan Duration {
             get {
                 return endTime - startTime;

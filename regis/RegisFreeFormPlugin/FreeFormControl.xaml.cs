@@ -72,6 +72,8 @@ namespace RegisFreeFormPlugin
         public string FriendlyPluginName
         {
             get { return "Free Form"; }
+        }        public PluginLayout Layout {
+            get { return PluginLayout.Button; }
         }
 
         #endregion
@@ -147,5 +149,8 @@ namespace RegisFreeFormPlugin
         //{
         //    //noteBlock.Text = staff;
         //}
+
+
+       
     }
 }

@@ -25,6 +25,8 @@ namespace Regis.ViewModels
         {
             _pluginService.PluginLoaded += new EventHandler<PluginLoadedEventArgs>(_pluginService_PluginLoaded);
             NotifyPropertyChanged(_PluginsChangedArgs);
+            NotifyPropertyChanged(_MenuPlugins_ChangedEventArgs);
+            NotifyPropertyChanged(_ButtonPlugins_ChangedEventArgs);
 
             LoadPluginCommand.Execute("FFTViewerPlugin");
             LoadPluginCommand.Execute("TunerPlugin");
@@ -78,6 +80,7 @@ namespace Regis.ViewModels
             }
         }
 
+
         private PropertyChangedEventArgs _PluginsChangedArgs = new PropertyChangedEventArgs("Plugins");
         public ObservableCollection<IPlugin> Plugins
         {
@@ -86,6 +89,25 @@ namespace Regis.ViewModels
                 return _pluginService.Plugins;
             }
         }
+
+        #region ButtonPlugins
+        private static PropertyChangedEventArgs _ButtonPlugins_ChangedEventArgs = new PropertyChangedEventArgs("ButtonPlugins");
+        public ObservableCollection<IPlugin> ButtonPlugins {
+            get { 
+                return _pluginService.ButtonPlugins; 
+            }
+        }
+        #endregion
+
+        #region MenuPlugins
+        private static PropertyChangedEventArgs _MenuPlugins_ChangedEventArgs = new PropertyChangedEventArgs("MenuPlugins");
+        public ObservableCollection<IPlugin> MenuPlugins {
+            get { 
+                return _pluginService.MenuPlugins; 
+            }
+        }
+        #endregion
+
 
         void _pluginService_PluginLoaded(object sender, PluginLoadedEventArgs e)
         {

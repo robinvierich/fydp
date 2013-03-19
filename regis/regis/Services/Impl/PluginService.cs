@@ -47,6 +47,18 @@ namespace Regis.Services.Impl
             }
         }
 
+        public ObservableCollection<IPlugin> ButtonPlugins {
+            get {
+                return new ObservableCollection<IPlugin>(_plugins.Where(p => p.Layout == PluginLayout.Button));
+            }
+        }
+
+        public ObservableCollection<IPlugin> MenuPlugins {
+            get {
+                return new ObservableCollection<IPlugin>(_plugins.Where(p => p.Layout == PluginLayout.Menu));
+            }
+        }
+
         #region Events
         private void RaisePluginLoaded(IPlugin plugin)
         {

@@ -86,5 +86,10 @@ namespace Regis.Controls
         }
 
         #endregion
+
+
+        public PluginLayout Layout {
+            get { return PluginLayout.Menu; }
+        }
     }
 }

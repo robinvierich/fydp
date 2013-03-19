@@ -215,5 +215,10 @@ namespace RegisTrainingModule
             //GetTimeSpan(
             StopTraining();
         }
+
+
+        public PluginLayout Layout {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

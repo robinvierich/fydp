@@ -36,6 +36,7 @@ namespace RegisTunerPlugin.ViewModels
             FrequencyRange = note.ClosestRealNoteFrequency - prevNote.ClosestRealNoteFrequency;
             GoalFrequency = note.ClosestRealNoteFrequency;
             Frequency = note.frequency;
+            GoalNoteText = note.Name;
         }
 
         public NeedleTunerViewModel() {
@@ -58,7 +59,7 @@ namespace RegisTunerPlugin.ViewModels
         #endregion
 
 
-        double width = 300;
+        double width = 500;
 
         #region X
         private static PropertyChangedEventArgs _X_ChangedEventArgs = new PropertyChangedEventArgs("X");
@@ -116,6 +117,22 @@ namespace RegisTunerPlugin.ViewModels
             }
         }
         #endregion
+
+        #region GoalNoteText
+        private string _GoalNoteText;
+        private static PropertyChangedEventArgs _GoalNoteText_ChangedEventArgs = new PropertyChangedEventArgs("GoalNoteText");
+
+        public string GoalNoteText
+        {
+            get { return _GoalNoteText; }
+            set
+            {
+                _GoalNoteText = value;
+                NotifyPropertyChanged(_GoalNoteText_ChangedEventArgs);
+            }
+        }
+        #endregion
+
 
         #region NeedleLength
         private double _NeedleLength = 100d;

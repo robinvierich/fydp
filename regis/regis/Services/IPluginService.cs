@@ -13,6 +13,8 @@ namespace Regis.Services
         void LoadPlugin(string pluginName);
         event EventHandler<PluginLoadedEventArgs> PluginLoaded;
         ObservableCollection<IPlugin> Plugins { get; }
+        ObservableCollection<IPlugin> ButtonPlugins { get; }
+        ObservableCollection<IPlugin> MenuPlugins { get; }
     }
 
     public class PluginLoadedEventArgs : EventArgs

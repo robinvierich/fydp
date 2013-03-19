@@ -51,6 +51,7 @@
     <Compile Include="Controls\StaffControl.xaml.cs">
       <DependentUpon>StaffControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IAchievementService.cs" />
     <Compile Include="Interfaces\IChordDetectionSource.cs" />
     <Compile Include="Interfaces\IFeedbackService.cs" />
     <Compile Include="Interfaces\IFFTSource.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\ISocialNetworkingService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="Models\Achievement.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\FFTCalculation.cs" />
     <Compile Include="Models\Note.cs" />

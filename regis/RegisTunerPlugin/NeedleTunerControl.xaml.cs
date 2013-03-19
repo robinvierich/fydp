@@ -52,5 +52,10 @@ namespace RegisTunerPlugin
                 return "Tuner";
             }
         }
+
+
+        public PluginLayout Layout {
+            get { return PluginLayout.Panel; }
+        }
     }
 }
