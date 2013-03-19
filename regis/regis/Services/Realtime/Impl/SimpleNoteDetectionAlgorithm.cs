@@ -169,6 +169,11 @@ namespace Regis.Services.Realtime.Impl
             }
         }
 
+        double freq = 0;
+        double currentTotalPower;
+        double[] xorPowerBins;
+        double max;
+        int index;
         private void SimpleDetectNotesImproved()
         {
             while (!_stopDetecting)
@@ -179,15 +184,17 @@ namespace Regis.Services.Realtime.Impl
 
                 double[] powerBins = new double[AudioCapture.AudioCaptureSettings.BufferSize * AudioCapture.AudioCaptureSettings.BufferModifier];
 
-                double freq = 0;
-                double currentTotalPower = powerBins.Sum();
-                double[] xorPowerBins = new double[_xorPowerBins.Length];
-                _xorPowerBins.CopyTo(xorPowerBins, 0);
+                freq = 0;
+                max = 0;
+                index = 0;
 
-                double max = 0;
-                int index = 0;
+                if (xorPowerBins == null)
+                    xorPowerBins = new double[_xorPowerBins.Length];
 
-                for (int i = 0; i < (fftCalc.PowerBins.Length / 2); i++)
+                currentTotalPower = powerBins.Sum();
+                Buffer.BlockCopy(_xorPowerBins, 0, xorPowerBins, 0, _xorPowerBins.Length * sizeof(double));
+
+                for (int i = 0; i < (1500 / _step); i++)//(fftCalc.PowerBins.Length / 2); i++)
                 {
                     powerBins[i] = (fftCalc.PowerBins[i]);// * xorPowerBins[i]);
 
@@ -207,8 +214,8 @@ namespace Regis.Services.Realtime.Impl
                     powerBins[powerBins.Length - 1 - i] = 0;
                 }
 
-                index = index;
-                _lastMax = max;
+
+
                 //_noiseFloor = 0.7 * _lastMax;
 
 
