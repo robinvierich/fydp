@@ -6,7 +6,11 @@
              xmlns:ctrls="clr-namespace:Regis.Plugins.Controls"
              mc:Ignorable="d"
              Width="{x:Static ctrls:NoteControl.NoteWidth}"
-             Height="{x:Static ctrls:NoteControl.NoteHeight}" >
+             Height="{x:Static ctrls:NoteControl.NoteHeight}" 
+             Name="noteControl"
+             >
+    
+    
     <Canvas x:Name="noteCanvas"
             Width="30" 
             Height="20" 
@@ -35,6 +39,13 @@
               X1="27.25" Y1="-52"
 			  X2="27.25" Y2="5" 
 			  StrokeThickness="4" />
+
+        <Image Source="/Regis.Plugins;component/Images/flat.png" 
+               Canvas.Left="-10"
+               Canvas.Top="-25"
+               Width="40" 
+               Visibility="{Binding FlatVisibility, ElementName=noteControl}"
+               />
 
         <!--<Line Stroke="Red" 
               StrokeThickness="3"

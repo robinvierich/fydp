@@ -44,12 +44,31 @@ namespace Regis.Plugins.Controls
             NoteControl me = d as NoteControl;
             if (me == null) return;
 
-            me.DataContext = e.NewValue as Note;
-
+            Note note = e.NewValue as Note;
+            me.DataContext = note;
             me.UpdatePositionAndLedgerLines();
+
+            if (note == null) return;
+
+            if (note.IsFlat)
+                me.FlatVisibility = Visibility.Visible;
+            else
+                me.FlatVisibility = Visibility.Hidden;
         }
 
         #endregion
+
+
+        public Visibility FlatVisibility {
+            get { return (Visibility)GetValue(FlatVisibilityProperty); }
+            set { SetValue(FlatVisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for FlatVisibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FlatVisibilityProperty =
+            DependencyProperty.Register("FlatVisibility", typeof(Visibility), typeof(NoteControl), new UIPropertyMetadata(Visibility.Hidden));
+
+
 
         //#region NoteBrush (Dependency Property)
         //public Brush NoteBrush {
@@ -76,8 +95,10 @@ namespace Regis.Plugins.Controls
         //#endregion
 
         private void UpdatePositionAndLedgerLines() {
-            UpdateTopPosition();
-            RedrawLedgerLines(Canvas.GetTop(this));
+            Dispatcher.BeginInvoke(new Action ( () => {
+                UpdateTopPosition();
+                RedrawLedgerLines(Canvas.GetTop(this));
+            }));
         }
 
         private void UpdateTopPosition() {
@@ -96,15 +117,15 @@ namespace Regis.Plugins.Controls
             // There's definitely a better way, hardcoded for now
             if (semitoneInOneOctave < 1)
                 shift = 0;
-            else if (semitoneInOneOctave < 2)
+            else if (semitoneInOneOctave < 3)
                 shift = 1;
-            else if (semitoneInOneOctave < 4)
+            else if (semitoneInOneOctave < 5)
                 shift = 2;
             else if (semitoneInOneOctave < 6)
                 shift = 3;
-            else if (semitoneInOneOctave < 7)
+            else if (semitoneInOneOctave < 8)
                 shift = 4;
-            else if (semitoneInOneOctave < 9)
+            else if (semitoneInOneOctave < 10)
                 shift = 5;
             else if (semitoneInOneOctave <= 11)
                 shift = 6;
@@ -120,32 +141,49 @@ namespace Regis.Plugins.Controls
             int linesToDraw = 0;
             double diff = 0;
 
-            if (top >= StaffControl.BelowLedgerLineTop)
+            if (top >= StaffControl.BelowLedgerLineTop) {
                 diff = top - StaffControl.BelowLedgerLineTop;
-
-            else if (top <= StaffControl.AboveLedgerLineTop)
+            } else if (top <= StaffControl.AboveLedgerLineTop) {
                 diff = StaffControl.AboveLedgerLineTop - top;
+            } else {
+                return;
+            }
 
             linesToDraw = (int)(diff / StaffControl.DistanceBetweenStaffLines) + 1;
 
-            double x1 = -5d;
-            double x2 = this.ActualWidth + 5d;
+            double x1 = -3d;
+            double x2 = this.noteCanvas.Width + 3d;
+
+
+
+            double y = diff + this.noteCanvas.Height/2d;
+            if (top >= StaffControl.BelowLedgerLineTop)
+                y = -y + this.noteCanvas.Height;
 
             for (int i = 0; i < linesToDraw; i++) {
+
+                //Binding brushBinding = new Binding("NoteBrush") { FallbackValue = Brushes.Black };
+
                 Line ledgerLine = new Line() {
                     X1 = x1,
-                    Y1 = top,
+                    Y1 = y,
                     X2 = x2,
-                    Y2 = top
+                    Y2 = y,
+                    StrokeThickness = 2,
+                    Stroke = Brushes.Black
                 };
+
+                //ledgerLine.SetBinding(Line.StrokeProperty, brushBinding);
 
                 noteCanvas.Children.Add(ledgerLine);
 
                 if (top >= StaffControl.BelowLedgerLineTop)
-                    top += StaffControl.DistanceBetweenStaffLines;
+                    y += StaffControl.DistanceBetweenStaffLines;
 
                 else if (top <= StaffControl.AboveLedgerLineTop)
-                    top -= StaffControl.DistanceBetweenStaffLines;
+                    y -= StaffControl.DistanceBetweenStaffLines;
+
+                
             }
         }
     }

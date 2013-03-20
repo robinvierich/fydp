@@ -115,7 +115,7 @@ namespace RegisPlayAlongPlugin
         private ObservableCollection<Note> GetTwinkleTwinkleNotes(){ 
             ObservableCollection<Note> notes = new ObservableCollection<Note>();
 
-            DateTime t = DateTime.Now;
+            DateTime t = DateTime.Now + TimeSpan.FromSeconds(0.5);
 
             // semitone 48 == C4
             notes.Add(new Note() { Semitone = 48, startTime = t, NoteBrush = new SolidColorBrush(goalNoteColor) });
