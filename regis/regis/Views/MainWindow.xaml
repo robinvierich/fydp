@@ -88,7 +88,8 @@
             </ListView.ItemTemplate>
         </ListView>
      
-        <ctrls:AchievementControl Grid.Row="3" Grid.RowSpan="2" Grid.Column="2" Visibility="{Binding AchievementPopup}" Style="{StaticResource animatedList}"/>
+        <ctrls:AchievementControl Grid.Row="3" Grid.RowSpan="2" Grid.Column="2" 
+                                  Visibility="{Binding AchievementPopup}" Style="{StaticResource animatedList}"/>
        
         <Image Source="/Regis;component/images/regislogo.png"
                Grid.Row="1" Grid.Column="1"
