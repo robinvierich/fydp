@@ -19,5 +19,10 @@ namespace RegisPlayAlongPlugin
         {
             get { return _count; }
         }
+
+        public override string Image
+        {
+            get { return "REGISlogo.png"; }
+        }
     }
 }

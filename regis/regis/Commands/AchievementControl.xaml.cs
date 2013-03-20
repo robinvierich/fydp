@@ -11,33 +11,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Regis.ViewModels;
-using System.ComponentModel.Composition;
-using Regis.Composition;
 
 namespace Regis.Controls
 {
     /// <summary>
     /// Interaction logic for AchievementControl.xaml
     /// </summary>
-    public partial class AchievementControl: IPartImportsSatisfiedNotification
+    public partial class AchievementControl : Page
     {
         public AchievementControl()
         {
             InitializeComponent();
-            Importer.Compose(this);
-        }
-
-        [Import]
-        private AchievementViewModel ViewModel
-        {
-            get;
-            set;
-        }
-
-        public void OnImportsSatisfied()
-        {
-            DataContext = ViewModel;
         }
     }
 }

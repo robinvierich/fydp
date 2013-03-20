@@ -23,7 +23,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="200" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="388*" />
+            <RowDefinition Height="76*" />
             <RowDefinition Height="23" />
         </Grid.RowDefinitions>
         
@@ -70,7 +71,10 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
+     
+        <ctrls:AchievementControl Grid.Row="3" Grid.RowSpan="2" Grid.Column="2"/>
+
+       
         <ctrls:PluginContainer Plugin="{Binding TunerPlugin}"
                                Grid.Column="1"
                                Grid.Row="1" BorderBrush="DarkBlue" BorderThickness="1" />
@@ -83,7 +87,7 @@
         
         <ctrls:PluginContainer Plugin="{Binding CurrentPlugin}" Grid.Column="1" 
                                BorderBrush="DarkBlue" BorderThickness="1,0,1,1"
-                               Grid.Row="2" Grid.ColumnSpan="2" />
+                               Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" />
         <!--<StatusBar Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="1" Height="23" Margin="0,0,0,0" Name="statusBar" />-->
     </Grid>
 </Window>

@@ -14,5 +14,9 @@ namespace Regis.Plugins.Models
         public abstract int Count { 
             get;
         }
+
+        public abstract string Image{
+            get;
+        }
     }
 }

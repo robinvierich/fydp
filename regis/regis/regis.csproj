@@ -98,6 +98,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AudioCapture.cs" />
+    <Compile Include="Commands\AchievementGetCommand.cs" />
     <Compile Include="Commands\AuthorizeTwitterCommand.cs" />
     <Compile Include="Commands\GetTwitterPinCommand.cs" />
     <Compile Include="Commands\LoadDriverCommand.cs" />
@@ -105,6 +106,10 @@
     <Compile Include="Commands\RestartSamplingServiceCommand.cs" />
     <Compile Include="Composition\Importer.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controls\AchievementControl.xaml.cs">
+      <DependentUpon>AchievementControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controls\AuthTwitterControl.xaml.cs">
       <DependentUpon>AuthTwitterControl.xaml</DependentUpon>
     </Compile>
@@ -147,6 +152,7 @@
     <Compile Include="Services\Realtime\ISerialService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Strings.cs" />
+    <Compile Include="ViewModels\AchievementViewModel.cs" />
     <Compile Include="ViewModels\SerialSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\AuthorizeTwitterViewModel.cs" />
@@ -166,6 +172,10 @@
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\AchievementControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\AuthTwitterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -17,6 +17,10 @@ namespace RegisPlayAlongPlugin
         [Import]
         INoteDetectionSource _noteSource;
 
+        [Import]
+        IAchievementService _achievement;
+
+
         public PlayAlongViewModel() {
             PlayedNotes = new ObservableCollection<Note>();
             GoalNotes = new ObservableCollection<Note>();
@@ -85,9 +89,10 @@ namespace RegisPlayAlongPlugin
 
             _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
         }
-
+        //PlayedFirstSongAchievement achievement; 
         public void Stop() {
             _noteSource.NotesDetected -= _noteSource_NotesDetected;
+            _achievement.SetAchievement(new PlayedFirstSongAchievement());
         }
 
         void _noteSource_NotesDetected(object sender, NotesDetectedEventArgs e) {

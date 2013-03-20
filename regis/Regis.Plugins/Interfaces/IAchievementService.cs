@@ -6,6 +6,7 @@ using Regis.Plugins.Models;
 
 namespace Regis.Plugins.Interfaces
 {
+
     public interface IAchievementService
     {
         void SetAchievement(Achievement achievement); 
@@ -17,6 +18,7 @@ namespace Regis.Plugins.Interfaces
         public NewAchievementEventArgs(Achievement achievement) {
             Achievement = achievement;
         }
+
 
         public Achievement Achievement { get; private set; }
     }
