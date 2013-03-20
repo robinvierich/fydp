@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="200" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="23" />
@@ -29,28 +29,17 @@
         
 
         <Menu Name="mainMenu" Grid.ColumnSpan="3">
-            <Menu.Resources>
-                <CollectionViewSource Source="{Binding Path=MenuPlugins}" x:Key="menuPlugins" />
-            </Menu.Resources>
-            
             <Menu.ItemsSource>
                 <CompositeCollection>
                     <MenuItem Header="File">
                         <MenuItem Header="Exit" Click="Exit_Click" />
                     </MenuItem>
-                    <CollectionContainer Collection="{Binding Source={StaticResource menuPlugins}}" />
+                    <MenuItem Header="Plugins" ItemsSource="{Binding MenuPlugins}">
+                    </MenuItem>
                 </CompositeCollection>
             </Menu.ItemsSource>
-
-            <Menu.ItemTemplate>
-                <DataTemplate>
-                    <MenuItem Header="{Binding FriendlyPluginName}">
-                        <ContentPresenter Content="{Binding}" />
-                    </MenuItem>
-                </DataTemplate>
-            </Menu.ItemTemplate>
-
         </Menu>
+
         <ListView ItemsSource="{Binding ButtonPlugins}" 
         Margin="20"
                   Grid.Row="1" Background="#00000000" BorderThickness="0" BorderBrush="{x:Null}">
