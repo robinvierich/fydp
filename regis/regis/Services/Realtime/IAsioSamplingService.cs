@@ -15,5 +15,8 @@ namespace Regis.Services.Realtime
     interface IAsioSamplingService : IRealtimeService<AsioSamplingServiceArgs>
     {
         void ReleaseDriver();
+
+        void StartRecording(string filename);
+        void StopRecording();
     }
 }

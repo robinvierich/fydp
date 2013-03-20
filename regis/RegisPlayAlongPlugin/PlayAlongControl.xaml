@@ -25,6 +25,7 @@
                             Notes="{Binding PlayedNotes}" 
                             GoalNotes="{Binding GoalNotes}" 
                             StartTime="{Binding StartTime}"
-                            CurrentTime="{Binding CurrentTime}" />
+                            CurrentTime="{Binding CurrentTime}"
+                            />
     </Grid>
 </UserControl>

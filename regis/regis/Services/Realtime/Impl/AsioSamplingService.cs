@@ -35,6 +35,11 @@ namespace Regis.Services.Realtime.Impl
         SampleCollection sampleCollFFT = new SampleCollection();
         bool initialized = false;
 
+        bool _recording = false;
+        string _recordingFilename = string.Empty;
+        byte[] _recordingData;
+
+
         public AsioSamplingService()
         {
             _sampleCollectionQueue = new ConcurrentQueue<SampleCollection>();
@@ -113,8 +118,9 @@ namespace Regis.Services.Realtime.Impl
             }
             else
             {
-                if (j == _currentInputChannel.BufferSize)
+                if (j >= _currentInputChannel.BufferSize - 1)
                 {
+
                     if (_fftCounterTail >= (_size * _currentInputChannel.BufferSize * _fftPer))
                     {
                         _fftCounterTail = (_size * _currentInputChannel.BufferSize * _fftPer) / 2;
@@ -166,9 +172,23 @@ namespace Regis.Services.Realtime.Impl
         {
             for (int i = 0; i < _currentInputChannel.BufferSize; i += _skip)
             {
+                if (j == 128)
+                    return;
                 toArray[j] = (long)_currentInputChannel[(i)];
                 j ++;
             }
+
+            if (_recording) {
+            }
+        }
+
+
+        public void StartRecording(string filename) {
+            _recording = true;
+        }
+
+        public void StopRecording() {
+            _recording = false;
         }
     }
 }

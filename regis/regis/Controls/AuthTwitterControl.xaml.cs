@@ -17,7 +17,7 @@ using Regis.ViewModels;
 
 namespace Regis.Controls
 {
-    //[Export(typeof(IPlugin))]
+    [Export(typeof(IPlugin))]
     public partial class AuthTwitterControl : UserControl, IPlugin, IPartImportsSatisfiedNotification
     {
         public AuthTwitterControl()
@@ -66,7 +66,7 @@ namespace Regis.Controls
 
 
         public PluginLayout Layout {
-            get { throw new NotImplementedException(); }
+            get { return PluginLayout.Menu; }
         }
     }
 }

@@ -22,11 +22,8 @@ using System.Windows.Threading;
 
 namespace RegisChordFreeFormPlugin
 {
-    /// <summary>
-    /// Interaction logic for FreeFormControl.xaml
-    /// </summary>
 
-    [Export(typeof(IPlugin))]
+    //[Export(typeof(IPlugin))]
     public partial class ChordFreeFormControl : UserControl, IPlugin, IPartImportsSatisfiedNotification
     {
         Thread _chordFreeformThread;

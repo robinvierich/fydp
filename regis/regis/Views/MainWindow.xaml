@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="23" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="23" />
@@ -34,6 +34,7 @@
             </MenuItem>
             <MenuItem Header="Plugins" ItemsSource="{Binding MenuPlugins}" />
         </Menu>
+
         <ListView ItemsSource="{Binding ButtonPlugins}" 
         Margin="20"
                   Grid.Row="1" Background="#00000000" BorderThickness="0" BorderBrush="{x:Null}">
