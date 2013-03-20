@@ -34,11 +34,14 @@ namespace Regis.Services.Realtime.Impl
                 if (i > 12)
                     i = 0;
 
+                //int semitone = i + 48;
                 int semitone = i + 48;
                 i++;
 
                 //Note randomNote = new Note() { Semitone = semitone, startTime = DateTime.Now, endTime = DateTime.Now + TimeSpan.FromSeconds(0.1) };
                 //_noteQueue.Enqueue(randomNote);
+
+                
 
                 Note note = new Note() { Semitone = semitone, startTime = DateTime.Now, endTime = DateTime.Now + TimeSpan.FromSeconds(0.1) };
                 //_noteQueue.TryDequeue(out note);

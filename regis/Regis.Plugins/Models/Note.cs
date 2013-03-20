@@ -5,10 +5,12 @@ using System.Text;
 using Regis.Plugins.Statics;
 using Regis.Base;
 using System.ComponentModel;
+using Regis.Base.ViewModels;
+using System.Windows.Media;
 
 namespace Regis.Plugins.Models
 {
-    public class Note
+    public class Note: BaseViewModel
     {
         public DateTime startTime;
         public DateTime endTime;
@@ -33,6 +35,19 @@ namespace Regis.Plugins.Models
                 return endTime - startTime;
             }
         }
+
+        #region NoteBrush
+        private Brush _NoteBrush = Brushes.Black;
+        private static PropertyChangedEventArgs _NoteBrush_ChangedEventArgs = new PropertyChangedEventArgs("NoteBrush");
+
+        public Brush NoteBrush {
+            get { return _NoteBrush; }
+            set {
+                _NoteBrush = value;
+                NotifyPropertyChanged(_NoteBrush_ChangedEventArgs);
+            }
+        }
+        #endregion
 
         /// <summary>
         /// Semitone number. 

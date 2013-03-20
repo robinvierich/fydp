@@ -63,24 +63,6 @@ namespace Regis.Plugins.Controls
 
         #endregion
 
-        #region GoalNotes (Dependency Property)
-
-        public ObservableCollection<Note> GoalNotes {
-            get { return (ObservableCollection<Note>)GetValue(GoalNotesProperty); }
-            set { SetValue(GoalNotesProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for GoalNotes.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty GoalNotesProperty =
-            DependencyProperty.Register("GoalNotes", typeof(ObservableCollection<Note>), typeof(StaffControl), 
-                new FrameworkPropertyMetadata(
-                    new ObservableCollection<Note>(),
-                    FrameworkPropertyMetadataOptions.AffectsRender,
-                    new PropertyChangedCallback(GoalNotes_PropertyChanged)
-                ));
-        
-        #endregion
-
         #region StartTime (Dependency Property)
 
         public DateTime StartTime {
@@ -163,7 +145,7 @@ namespace Regis.Plugins.Controls
 
         #endregion
 
-        #region Notes/GoalNotes Property Changed Handlers
+        #region Notes Property Changed Handlers
         private static void Notes_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             ObservableCollection<Note> oldNotes = e.OldValue as ObservableCollection<Note>;
             ObservableCollection<Note> newNotes = e.NewValue as ObservableCollection<Note>;
@@ -175,37 +157,11 @@ namespace Regis.Plugins.Controls
             }
 
             if (newNotes != null) {
-                me.AddNotes(newNotes, Colors.Black);
+                me.AddNotes(newNotes);
                 newNotes.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(me.notes_CollectionChanged);
             }
         }
-
-        private static void GoalNotes_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            ObservableCollection<Note> oldNotes = e.OldValue as ObservableCollection<Note>;
-            ObservableCollection<Note> newNotes = e.NewValue as ObservableCollection<Note>;
-            StaffControl me = d as StaffControl;
-
-            if (oldNotes != null) {
-                oldNotes.CollectionChanged -= me.goalNotes_CollectionChanged;
-                me.RemoveNotes(oldNotes);
-            }
-
-            if (newNotes != null) {
-                me.AddNotes(newNotes, goalNoteColor);
-                newNotes.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(me.goalNotes_CollectionChanged);
-            }
-        }
         #endregion
-
-        void goalNotes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
-            this.Dispatcher.Invoke(new Action(() => {
-                if (e.OldItems != null)
-                    RemoveNotes(e.OldItems.Cast<Note>());
-
-                if (e.NewItems != null)
-                    AddNotes(e.NewItems.Cast<Note>().ToList(), goalNoteColor);
-            }));
-        }
 
         void notes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             this.Dispatcher.Invoke(new Action(() => {
@@ -213,19 +169,18 @@ namespace Regis.Plugins.Controls
                     RemoveNotes(e.OldItems.Cast<Note>());
 
                 if (e.NewItems != null)
-                    AddNotes(e.NewItems.Cast<Note>().ToList(), Colors.Black);
+                    AddNotes(e.NewItems.Cast<Note>().ToList());
             }));
         }
 
-        private void AddNotes(IList<Note> notes, Color color) {
+        private void AddNotes(IList<Note> notes) {
             foreach (Note n in notes) {
-                NoteControl noteControl = new NoteControl() { Note = n, NoteBrush = new SolidColorBrush(color) };
+                NoteControl noteControl = new NoteControl() { Note = n};
                 double t = (n.startTime - this.StartTime).TotalMilliseconds;
 
                 Canvas.SetLeft(noteControl, GetLeftFromTime(t));
 
                 rootCanvas.Children.Add(noteControl);
-
             }
         }
 

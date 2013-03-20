@@ -12,7 +12,7 @@ namespace Regis.Services.Impl
     public class FeedbackService : IFeedbackService
     {
 
-        double maxTimeDiffForMatch = 0.1; // s
+        double maxTimeDiffForMatch = 0.2; // s
 
         private Dictionary<Note, List<Note>> GetMatches(IList<Note> playedNotes, IList<Note> goalNotes){
             Dictionary<Note, List<Note>> matches = new Dictionary<Note, List<Note>>();
@@ -43,39 +43,54 @@ namespace Regis.Services.Impl
             return closestNote;
         }
 
-        private Feedback GetTimingFeedback(Note goalNote, IList<Note> playedNotes) {
-            Note closestNote = FindClosestNote(goalNote, playedNotes);
+        private double _goodTiming = 0.05;
+        private double _mediumTiming = 0.1;
 
+        private Feedback GetTimingFeedback(Note goalNote, Note closestNote) {
             double diff = (closestNote.startTime - goalNote.startTime).TotalSeconds;
             double absDiff = Math.Abs(diff);
 
             string slowOrFastStr = diff > 0 ? "slow" : "fast"; // user is slow if difference is positive (played after goal note)
 
-            if (absDiff < 0.03) {
-                return new Feedback() { FeedbackString = "Good timing!" };
-            } else if (absDiff < 0.05) {
-                return new Feedback() { FeedbackString = String.Format("You were just a little bit {0}", slowOrFastStr) };
+            if (absDiff < _goodTiming) {
+                return new GoodTimingFeedback(diff) { Note = closestNote };
+            } else if (absDiff < _mediumTiming) {
+                return new MediumTimingFeedback(diff) { Note = closestNote };
             } else {
-                return new Feedback() { FeedbackString = String.Format("You were {0}", slowOrFastStr) };
+                return new BadTimingFeedback(diff) { Note = closestNote };
             }
         }
 
-        public List<Feedback> GetFeedback(IList<Note> allPlayedNotes, IList<Note> goalNotes) {
+        private Feedback GetPitchFeedback(Note goalNote, Note closestNote) {
+            if (goalNote.Semitone == closestNote.Semitone)
+                return new GoodPitchFeedback();
+               
+            int diff = closestNote.Semitone - goalNote.Semitone;
+            return new BadPitchFeedback(diff);
+        }
+
+
+        Dictionary<Note, List<Feedback>> IFeedbackService.GetFeedback(IList<Note> allPlayedNotes, IList<Note> goalNotes) {
             string feedbackString = string.Empty;
 
-            List<Feedback> feedback = new List<Feedback>();
-
             Dictionary<Note, List<Note>> matches = GetMatches(allPlayedNotes, goalNotes);
+            Dictionary<Note, List<Feedback>> allFeedback = new Dictionary<Note, List<Feedback>>();
 
             // loop through each match
             foreach (KeyValuePair<Note, List<Note>> match in matches.Where(match => match.Value.Count > 0)) {
                 Note goalNote = match.Key;
                 List<Note> playedNotes = match.Value;
+                Note closestNote = FindClosestNote(goalNote, playedNotes);
 
-                feedback.Add(GetTimingFeedback(goalNote, playedNotes));
+                List<Feedback> feedback = new List<Feedback>();
+
+                feedback.Add(GetTimingFeedback(goalNote, closestNote));
+                feedback.Add(GetPitchFeedback(goalNote, closestNote));
+
+                allFeedback.Add(closestNote, feedback);
             }
 
-            return feedback;
+            return allFeedback;
         }
     }
 }

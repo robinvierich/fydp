@@ -62,6 +62,11 @@
     <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Models\Achievement.cs" />
     <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\Feedback\BadPitchFeedback.cs" />
+    <Compile Include="Models\Feedback\BadTimingFeedback.cs" />
+    <Compile Include="Models\Feedback\GoodPitchFeedback.cs" />
+    <Compile Include="Models\Feedback\GoodTimingFeedback.cs" />
+    <Compile Include="Models\Feedback\MediumTimingFeedback.cs" />
     <Compile Include="Models\FFTCalculation.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\TimeSignature.cs" />

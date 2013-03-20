@@ -5,9 +5,13 @@ using System.Text;
 
 namespace Regis.Plugins.Models
 {
-    public class Feedback
+    public abstract class Feedback
     {
-        public string FeedbackString {
+        public abstract string FeedbackString {
+            get;
+        }
+
+        public Note Note {
             get;
             set;
         }

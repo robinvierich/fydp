@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using Regis.Plugins.Interfaces;
 using System.Windows.Threading;
+using System.Windows.Media;
 
 namespace RegisPlayAlongPlugin
 {
@@ -17,6 +18,8 @@ namespace RegisPlayAlongPlugin
     {
         [Import]
         INoteDetectionSource _noteSource = null;
+
+        private static Color goalNoteColor = Color.FromArgb(100, 0, 0, 0);
 
         [Import]
         IFeedbackService _feedbackService = null;
@@ -31,6 +34,7 @@ namespace RegisPlayAlongPlugin
         public PlayAlongViewModel() {
             PlayedNotes = new ObservableCollection<Note>();
             GoalNotes = new ObservableCollection<Note>();
+            Notes = new ObservableCollection<Note>();
 
 
             _timer = new DispatcherTimer() {
@@ -51,40 +55,92 @@ namespace RegisPlayAlongPlugin
         void _feedbackTimer_Tick(object sender, EventArgs e) {
             if (_feedbackService == null) return;
 
-            _feedbackService.GetFeedback(PlayedNotes, GoalNotes);
+            Dictionary<Note, List<Feedback>> noteFeedback = _feedbackService.GetFeedback(PlayedNotes, GoalNotes);
+
+
+            foreach (KeyValuePair<Note, List<Feedback>> kvp in noteFeedback) {
+
+                Note note = kvp.Key as Note;
+                List<Feedback> feedbackList = kvp.Value;
+
+                if (feedbackList.OfType<BadPitchFeedback>().Count() > 0) {
+                    note.NoteBrush = Brushes.Red;
+                    continue;
+                } 
+                
+
+                if (feedbackList.OfType<GoodTimingFeedback>().Count() > 0) {
+                    note.NoteBrush = Brushes.Green;
+                } else if (feedbackList.OfType<MediumTimingFeedback>().Count() > 0) {
+                    note.NoteBrush = Brushes.Yellow;
+                } else if (feedbackList.OfType<BadTimingFeedback>().Count() > 0) {
+                    note.NoteBrush = Brushes.Red;
+                }
+            }
         }
 
-        private ObservableCollection<Note> GetTwinkleTwinkleNotes(){ 
+        public void Start() {
+            StartTime = DateTime.Now;
+            CurrentTime = DateTime.Now;
+
+            Notes.Clear();
+            PlayedNotes.Clear();
+            GoalNotes = GetTwinkleTwinkleNotes();
+
+            foreach (Note goalNote in GoalNotes)
+            {
+                Notes.Add(goalNote);
+            }
+
+            _timer.Start();
+            _feedbackTimer.Start();
+
+            _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
+        }
+
+        public void Stop() {
+            _timer.Stop();
+            _feedbackTimer.Stop();
+            _noteSource.NotesDetected -= _noteSource_NotesDetected;
+        }
+
+        void _noteSource_NotesDetected(object sender, NotesDetectedEventArgs e) {
+            foreach (Note n in e.Notes) {
+                PlayedNotes.Add(n);
+                Notes.Add(n);
+            }
+        }
+        private ObservableCollection<Note> GetTwinkleTwinkleNotes(){ 
             ObservableCollection<Note> notes = new ObservableCollection<Note>();
 
             DateTime t = DateTime.Now;
 
             // semitone 48 == C4
-            notes.Add(new Note() { Semitone = 48, startTime = t, endTime = t + TimeSpan.FromSeconds(0.1) });
+            // semitone 48 == C4
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 48 == C4
-            notes.Add(new Note() { Semitone = 48, startTime = t, endTime = t + TimeSpan.FromSeconds(0.1) });
+            // semitone 48 == C4
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 55 == G4
-            notes.Add(new Note() { Semitone = 55, startTime = t, endTime = t + TimeSpan.FromSeconds(0.1) });
+            // semitone 55 == G4
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 55 == G4
-            notes.Add(new Note() { Semitone = 55, startTime = t, endTime = t + TimeSpan.FromSeconds(0.1) });
+            // semitone 55 == G4
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 57 == A5
-            notes.Add(new Note() { Semitone = 57, startTime = t, endTime = t + TimeSpan.FromSeconds(0.1) });
+            // semitone 57 == A5
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 57 == A5
-            notes.Add(new Note() { Semitone = 57, startTime = t, endTime = t + TimeSpan.FromSeconds(0.1) });
+            // semitone 57 == A5
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 48 == C4
-            notes.Add(new Note() { Semitone = 48, startTime = t, endTime = t + TimeSpan.FromSeconds(0.1) });
+            // semitone 48 == C4
             t += TimeSpan.FromSeconds(0.5);
 
             return notes;
@@ -104,9 +160,7 @@ namespace RegisPlayAlongPlugin
         }
         #endregion
 
-        public void Start() {
-            StartTime = DateTime.Now;
-            CurrentTime = DateTime.Now;
+
 
             PlayedNotes.Clear();
             GoalNotes = GetTwinkleTwinkleNotes();
@@ -156,6 +210,19 @@ namespace RegisPlayAlongPlugin
         }
         #endregion
 
+
+        #region Notes
+        private ObservableCollection<Note> _Notes;
+        private static PropertyChangedEventArgs _Notes_ChangedEventArgs = new PropertyChangedEventArgs("Notes");
+
+        public ObservableCollection<Note> Notes {
+            get { return _Notes; }
+            private set {
+                _Notes = value;
+                NotifyPropertyChanged(_Notes_ChangedEventArgs);
+            }
+        }
+        #endregion
         #region CurrentTime
         private DateTime _CurrentTime;
         private static PropertyChangedEventArgs _CurrentTime_ChangedEventArgs = new PropertyChangedEventArgs("CurrentTime");
@@ -181,7 +248,6 @@ namespace RegisPlayAlongPlugin
             }
         }
         #endregion
-
         
     }
 }
