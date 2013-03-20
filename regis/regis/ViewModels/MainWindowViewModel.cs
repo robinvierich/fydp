@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using Regis.Base.ViewModels;
 using Regis.Commands;
 using Regis.Plugins.Interfaces;
+using System.Windows;
 
 namespace Regis.ViewModels
 {
@@ -126,6 +127,13 @@ namespace Regis.ViewModels
                 return;
             }
 
+            if(e.Plugin.PluginName == "AchievementsPlugin") {
+                Window w = new Window();
+                w.Content = e.Plugin.GetVisualContent();
+                w.ShowDialog();
+                w.SizeToContent = SizeToContent.Width;
+                return;
+            }
 
             CurrentPlugin = e.Plugin;
         }

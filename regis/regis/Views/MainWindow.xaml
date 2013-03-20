@@ -63,7 +63,7 @@
         </Menu>
 
         <ListView ItemsSource="{Binding ButtonPlugins}" 
-        Margin="20"
+        Margin="20" Grid.RowSpan="2"
                   Grid.Row="1" Background="#00000000" BorderThickness="0" BorderBrush="{x:Null}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">

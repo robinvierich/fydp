@@ -25,7 +25,7 @@ namespace RegisPlayAlongPlugin
 
         public override string Image
         {
-            get { return "/RegisPlayAlongPlugin;component/images/Playalong.png"; }
+            get { return "/RegisPlayAlongPlugin;component/images/Newbie.png"; }
         }
     }
 }
