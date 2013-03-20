@@ -46,6 +46,8 @@ namespace RegisFreeFormPlugin.ViewModels
         }
 
         internal void Start() {
+            StartTime = DateTime.Now;
+            CurrentTime = DateTime.Now;
             _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
         }
 
@@ -63,6 +65,19 @@ namespace RegisFreeFormPlugin.ViewModels
             set {
                 _CurrentTime = value;
                 NotifyPropertyChanged(_CurrentTime_ChangedEventArgs);
+            }
+        }
+        #endregion
+
+        #region StartTime
+        private DateTime _StartTime;
+        private static PropertyChangedEventArgs _StartTime_ChangedEventArgs = new PropertyChangedEventArgs("StartTime");
+
+        public DateTime StartTime {
+            get { return _StartTime; }
+            set {
+                _StartTime = value;
+                NotifyPropertyChanged(_StartTime_ChangedEventArgs);
             }
         }
         #endregion

@@ -11,23 +11,42 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Free Form Mode"
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <!--<TextBlock Text="Free Form Mode"
                    Grid.Row="0"
                    FontSize="32"
-                   />
+                   />-->
 
-        <!--<pluginCtrls:ScrollingScale NotesPlayed="{Binding NotesPlayed}" 
-                                    Margin="10"
-                                    Grid.Row="1" />-->
+        <StackPanel Grid.Row="0"
+                    Grid.Column="1"
+                    Orientation="Horizontal" >
+            <Button Content="Start Free Form" 
+                    MinWidth="50"
+                    Command="{Binding StartFreeFormCommand}"
+                    CommandParameter="{Binding}"
+                    Margin="5" />
 
-        <pluginCtrls:StaffControl x:Name="staff" Notes="{Binding NotesPlayed}" CurrentTime="{Binding CurrentTime}" Grid.Row="1" />
+            <Button Content="Stop Free Form" 
+                    Grid.Row="0"
+                    MinWidth="50"
+                    Command="{Binding StopFreeFormCommand}"
+                    CommandParameter="{Binding}"
+                    Margin="5" />
+        </StackPanel>
 
-        <Button Content="Start Free Form" 
-                Grid.Row="2"
-                MinWidth="50"
-                MinHeight="30"
-                Command="{Binding StartFreeFormCommand}"
-                CommandParameter="{Binding}"
-                Click="startButton_Click" Margin="371,0,370,0" />
+        <pluginCtrls:StaffControl x:Name="staff" 
+                                  Notes="{Binding NotesPlayed}" 
+                                  StartTime="{Binding StartTime}"
+                                  CurrentTime="{Binding CurrentTime}"
+                                  Grid.Row="1"
+                                  Grid.ColumnSpan="2"
+                                  />
+
+        
     </Grid>
 </UserControl>

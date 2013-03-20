@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using Regis.Plugins.Models;
 using System.Windows.Threading;
 using System.Threading;
+using System.Collections.Specialized;
 
 namespace Regis.Plugins.Controls
 {
@@ -34,15 +35,18 @@ namespace Regis.Plugins.Controls
 
         public const double FullControlWidth = 800; // px
 
+
         private static Color goalNoteColor = Color.FromArgb(100, 0, 0, 0);
 
         private int _resizedCount = 1;
 
+        private const int _maxResizeCount = 2;
+
 
         public StaffControl() {
             InitializeComponent();
-            _autoTimeTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(20) };
-            _autoTimeTimer.Tick += new EventHandler(_autoTimeTimer_Tick);
+            //_autoTimeTimer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(20) };
+            //_autoTimeTimer.Tick += new EventHandler(_autoTimeTimer_Tick);
         }
 
         #region Notes (Dependency Property)
@@ -80,36 +84,45 @@ namespace Regis.Plugins.Controls
 
         #endregion
 
-        #region AutoTime (Dependency Property)
-        private DispatcherTimer _autoTimeTimer;
+        //#region AutoTime (Dependency Property)
+        ////private DispatcherTimer _autoTimeTimer;
 
-        void _autoTimeTimer_Tick(object sender, EventArgs e) {
-            CurrentTime = DateTime.Now;
+        //void _autoTimeTimer_Tick(object sender, EventArgs e) {
+        //    CurrentTime = DateTime.Now;
+        //}
+
+        //public bool AutoTime {
+        //    get { return (bool)GetValue(AutoTimeProperty); }
+        //    set { SetValue(AutoTimeProperty, value); }
+        //}
+
+        //// Using a DependencyProperty as the backing store for AutoTime.  This enables animation, styling, binding, etc...
+        //public static readonly DependencyProperty AutoTimeProperty =
+        //    DependencyProperty.Register("AutoTime", typeof(bool), typeof(StaffControl), 
+        //        new FrameworkPropertyMetadata(false, 
+        //            FrameworkPropertyMetadataOptions.None,
+        //            new PropertyChangedCallback(AutoTime_PropertyChanged)
+        //        )
+        //    );
+
+        //private static void AutoTime_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        //    StaffControl me = d as StaffControl;
+
+        //    if ((bool)e.NewValue)
+        //        me._autoTimeTimer.Start();
+        //    else
+        //        me._autoTimeTimer.Stop();
+        //}
+        //#endregion
+
+        public event EventHandler StaffEndReached;
+
+        private void Raise_StaffEndReached() {
+            EventHandler h = StaffEndReached;
+            if (h == null) return;
+
+            h(this, new EventArgs());
         }
-
-        public bool AutoTime {
-            get { return (bool)GetValue(AutoTimeProperty); }
-            set { SetValue(AutoTimeProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for AutoTime.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty AutoTimeProperty =
-            DependencyProperty.Register("AutoTime", typeof(bool), typeof(StaffControl), 
-                new FrameworkPropertyMetadata(false, 
-                    FrameworkPropertyMetadataOptions.None,
-                    new PropertyChangedCallback(AutoTime_PropertyChanged)
-                )
-            );
-
-        private static void AutoTime_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-            StaffControl me = d as StaffControl;
-
-            if ((bool)e.NewValue)
-                me._autoTimeTimer.Start();
-            else
-                me._autoTimeTimer.Stop();
-        }
-        #endregion
 
         #region CurrentTime (Dependency Property)
 
@@ -131,6 +144,7 @@ namespace Regis.Plugins.Controls
             StaffControl me = d as StaffControl;
 
             if ((me.CurrentTime - me.StartTime).TotalMilliseconds > FullControlTime * me._resizedCount) {
+                me.Raise_StaffEndReached();
                 me._resizedCount++;
                 me.rootCanvas.Width += FullControlWidth;
                 me.Dispatcher.Invoke(new Action(() => {
@@ -165,12 +179,25 @@ namespace Regis.Plugins.Controls
 
         void notes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
             this.Dispatcher.Invoke(new Action(() => {
-                if (e.OldItems != null)
-                    RemoveNotes(e.OldItems.Cast<Note>());
+                if (e.Action == NotifyCollectionChangedAction.Reset) {
+                    RemoveAllNotes();
+                }
 
-                if (e.NewItems != null)
+                if (e.OldItems != null) {
+                    RemoveNotes(e.OldItems.Cast<Note>());
+                }
+
+                if (e.NewItems != null) {
                     AddNotes(e.NewItems.Cast<Note>().ToList());
+                }
             }));
+        }
+
+        private void RemoveAllNotes() {
+            List<NoteControl> noteControls = rootCanvas.Children.Cast<UIElement>().OfType<NoteControl>().ToList();
+            foreach (NoteControl noteControl in noteControls) {
+                rootCanvas.Children.Remove(noteControl);
+            }
         }
 
         private void AddNotes(IList<Note> notes) {

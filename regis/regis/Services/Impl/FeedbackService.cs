@@ -11,8 +11,7 @@ namespace Regis.Services.Impl
     [Export(typeof(IFeedbackService))]
     public class FeedbackService : IFeedbackService
     {
-
-        double maxTimeDiffForMatch = 0.2; // s
+        double maxTimeDiffForMatch = 0.1; // s
 
         private Dictionary<Note, List<Note>> GetMatches(IList<Note> playedNotes, IList<Note> goalNotes){
             Dictionary<Note, List<Note>> matches = new Dictionary<Note, List<Note>>();
@@ -44,7 +43,7 @@ namespace Regis.Services.Impl
         }
 
         private double _goodTiming = 0.05;
-        private double _mediumTiming = 0.1;
+        private double _mediumTiming = 0.08;
 
         private Feedback GetTimingFeedback(Note goalNote, Note closestNote) {
             double diff = (closestNote.startTime - goalNote.startTime).TotalSeconds;
