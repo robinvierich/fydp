@@ -12,8 +12,8 @@ using Regis.Plugins.Statics;
 
 namespace Regis.Services.Realtime.Impl
 {
-    //[Export(typeof(INoteDetectionSource))]
-    //[Export(typeof(INoteDetectionService))]
+    [Export(typeof(INoteDetectionSource))]
+    [Export(typeof(INoteDetectionService))]
     public class SimpleNoteDetectionAlgorithm : INoteDetectionSource, INoteDetectionService
     {
         private ConcurrentQueue<Note[]> NoteQueue { get; set; }
@@ -588,8 +588,8 @@ namespace Regis.Services.Realtime.Impl
 
                 Buffer.BlockCopy(fftCalc.PowerBins, 0, _powerBinsOld, 0, _powerBinsOld.Length * sizeof(double));
 
-                //_impulseCutoff = _lowImpulseCutoff;
-                _impulseCutoff = _highImpulseCutoff;
+                _impulseCutoff = _lowImpulseCutoff;
+                //_impulseCutoff = _highImpulseCutoff;
                 if (impulse> _lowImpulseCutoff)
                 {
                     Note[] notes = new Note[6];

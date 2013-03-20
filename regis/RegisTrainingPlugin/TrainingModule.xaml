@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="RegisTrainingPlugin.TrainingModule"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ctrls="clr-namespace:Regis.Plugins.Controls;assembly=regis.plugins"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Start" 
+                    Command="{Binding StartTrainingCommand}" 
+                    CommandParameter="{Binding}"
+                    Margin="5" Padding="5" />
+            <Button Content="Stop" 
+                    Command="{Binding StopTrainingCommand}" 
+                    CommandParameter="{Binding}"
+                    Margin="5" Padding="5" />
+        </StackPanel>
+        <ctrls:StaffControl Grid.Row="1" 
+                            Notes="{Binding Notes}" 
+                            StartTime="{Binding StartTime}"
+                            CurrentTime="{Binding CurrentTime}"
+                            />
+    </Grid>
+</UserControl>

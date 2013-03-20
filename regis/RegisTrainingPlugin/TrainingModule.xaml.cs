@@ -11,26 +11,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Regis.Plugins.Interfaces;
 using System.ComponentModel.Composition;
+using Regis.Plugins.Interfaces;
 
-namespace RegisPlayAlongPlugin
+namespace RegisTrainingPlugin
 {
-    //[Export(typeof(IPlugin))]
-    public partial class PlayAlongControl : UserControl, IPartImportsSatisfiedNotification, IPlugin
+
+    [Export(typeof(IPlugin))]
+    public partial class TrainingModule : UserControl, IPlugin, IPartImportsSatisfiedNotification
     {
-        public PlayAlongControl() {
+        public TrainingModule() {
             InitializeComponent();
+        }
+
+        [Import]
+        private TrainingViewModel ViewModel {
+            get;
+            set;
         }
 
         public void OnImportsSatisfied() {
             DataContext = ViewModel;
-        }
-
-        [Import]
-        public PlayAlongViewModel ViewModel {
-            get;
-            set;
         }
 
         public void Load() {
@@ -41,15 +42,17 @@ namespace RegisPlayAlongPlugin
         }
 
         public string PluginName {
-            get { return "PlayAlongControl"; }
+            get {
+                return "TrainingPlugin"; 
+            }
         }
 
         public string FriendlyPluginName {
-            get { return "Play Along"; }
+            get { return "Training Plugin"; }
+
         }
 
-        public string PluginIcon
-        {
+        public string PluginIcon {
             get { return "/Regis;component/Images/Playalong.png"; }
         }
 
@@ -57,9 +60,6 @@ namespace RegisPlayAlongPlugin
             get { return PluginLayout.Button; }
         }
 
-        private void StaffControl_StaffEndReached(object sender, Regis.Plugins.Controls.EndOfStaffEventArgs e) {
-            e.Cancel = true;
-            ViewModel.Start();
-        }
+        
     }
 }
