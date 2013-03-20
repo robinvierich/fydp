@@ -23,8 +23,18 @@ namespace RegisTunerPlugin.ViewModels
         }
 
         public void _noteSource_NotesDetected(object sender, NotesDetectedEventArgs e) {
-            Note note = e.Notes.Last();
-
+            Note note = null;
+            
+            foreach (Note n in e.Notes)
+            {
+                if (n.frequency > 0)
+                {
+                    note = n;
+                    break;
+                }
+            }
+            if (note == null)
+                return;
 
             if (note.Semitone < 1)
                 return;

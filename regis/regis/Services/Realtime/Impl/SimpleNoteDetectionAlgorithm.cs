@@ -29,7 +29,8 @@ namespace Regis.Services.Realtime.Impl
         private double _step;
         private double _noiseFloor = AudioCapture.AudioCaptureSettings.NoiseFloor;//500000000000000;
         private int _subPeaks = AudioCapture.AudioCaptureSettings.SubPeaks;
-        private double _impulseCutoff = AudioCapture.AudioCaptureSettings.ImpulseCutoff;
+        private double _highImpulseCutoff = AudioCapture.AudioCaptureSettings.HighImpulseCutoff;
+        private double _lowImpulseCutoff = AudioCapture.AudioCaptureSettings.HighImpulseCutoff;
         private bool _impulseAlg = false;
         private double[] _powerBinsOld, _powerBinsDelta;
         private double _powerBinsDeltaCutoff = 0;
@@ -49,6 +50,7 @@ namespace Regis.Services.Realtime.Impl
         double[,] stringFreq;
         private int _maxNoteQueueSize = 5;
         double _cutoffFrequency;
+        double _impulseCutoff;
 
         private double _previousTotalPower;
         private const double MAX_POWER_DECAY = 100000;
@@ -248,24 +250,31 @@ namespace Regis.Services.Realtime.Impl
                                     xorPowerBins[j + 2] = 1;
                                 }
                             }
+                            stringFreq[Math.Min((p + 1), 5), 0] = (index * _step);
                             break;
                         }
                     }
                 }
 
-
-
-                if (impulseArray.Sum() > _impulseCutoff)
+                for (int j = 0; j < 6; j++)
                 {
-                    Note[] notes = new Note[6];
-                    for (int i = 0; i < 6; i++)
+                    if (j == 0)
+                        _impulseCutoff = _lowImpulseCutoff;
+                    else
+                        _impulseCutoff = _highImpulseCutoff;
+                    if (impulseArray[j] > _lowImpulseCutoff)
                     {
-                        freqArray[i] = DetectFrequency_Mirrored(fftCalc.PowerBins, indexArray[i] - _subPeaks, indexArray[i] + _subPeaks);
-                        notes[i] = new Note();
-                        notes[i].startTime = DateTime.Now;
-                        notes[i].frequency = freqArray[i];
+                        Note[] notes = new Note[6];
+                        for (int i = 0; i < 6; i++)
+                        {
+                            freqArray[i] = DetectFrequency_Mirrored(fftCalc.PowerBins, indexArray[i] - _subPeaks, indexArray[i] + _subPeaks);
+                            notes[i] = new Note();
+                            notes[i].startTime = DateTime.Now;
+                            notes[i].frequency = freqArray[i];
+                        }
+                        Raise_NotesDetected(notes);
+                        break;
                     }
-                    Raise_NotesDetected(notes);
                 }
 
                 Buffer.BlockCopy(fftCalc.PowerBins, 0, _powerBinsOld, 0, _powerBinsOld.Length * sizeof(double));
