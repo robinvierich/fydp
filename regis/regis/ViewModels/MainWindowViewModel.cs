@@ -29,7 +29,6 @@ namespace Regis.ViewModels
             NotifyPropertyChanged(_ButtonPlugins_ChangedEventArgs);
 
             LoadPluginCommand.Execute("FFTViewerPlugin");
-            LoadPluginCommand.Execute("TunerPlugin");
         }
 
         [Import]
@@ -112,7 +111,13 @@ namespace Regis.ViewModels
         void _pluginService_PluginLoaded(object sender, PluginLoadedEventArgs e)
         {
             if (e.Plugin.PluginName == "TunerPlugin") {
-                TunerPlugin = e.Plugin;
+                if (TunerPlugin == null)
+                {
+                    TunerPlugin = e.Plugin;
+                }
+                else {
+                    TunerPlugin = null;
+                }
                 return;
             }
 

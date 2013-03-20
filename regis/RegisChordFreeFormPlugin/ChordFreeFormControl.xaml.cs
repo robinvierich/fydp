@@ -82,6 +82,14 @@ namespace RegisChordFreeFormPlugin
             get { return "ChordFreeFormMode"; }
         }
 
+        public string PluginIcon
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         #endregion
 
         private void button1_Click(object sender, RoutedEventArgs e)

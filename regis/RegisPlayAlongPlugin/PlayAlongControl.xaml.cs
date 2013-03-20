@@ -48,6 +48,11 @@ namespace RegisPlayAlongPlugin
             get { return "Play Along"; }
         }
 
+        public string PluginIcon
+        {
+            get { return "/Regis;component/Images/Playalong.png"; }
+        }
+
         public PluginLayout Layout {
             get { return PluginLayout.Button; }
         }

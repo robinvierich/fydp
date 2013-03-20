@@ -72,6 +72,11 @@ namespace RegisFreeFormPlugin
         public string FriendlyPluginName
         {
             get { return "Free Form"; }
+        }
+
+        public string PluginIcon
+        {
+            get { return "/Regis;component/Images/Freeform.png"; }
         }        public PluginLayout Layout {
             get { return PluginLayout.Button; }
         }

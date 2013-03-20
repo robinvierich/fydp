@@ -67,7 +67,7 @@ namespace RegisTunerPlugin.ViewModels
 
         public double X {
             get {
-                return (Frequency - GoalFrequency) * width / (FrequencyRange) + width/2d; 
+                return (Frequency - GoalFrequency) * (width*0.90) / (FrequencyRange) + width/2d; 
             }
         }
         #endregion
