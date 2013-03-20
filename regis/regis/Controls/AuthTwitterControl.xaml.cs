@@ -44,6 +44,14 @@ namespace Regis.Controls
             get { return "Login to Twitter"; }
         }
 
+        public string PluginIcon
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         [Import(typeof(AuthorizeTwitterViewModel))]
         private AuthorizeTwitterViewModel ViewModel
         {

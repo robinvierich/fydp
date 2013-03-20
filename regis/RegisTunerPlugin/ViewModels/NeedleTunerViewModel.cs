@@ -34,7 +34,6 @@ namespace RegisTunerPlugin.ViewModels
             Note prevNote = new Note { Semitone = note.Semitone - 1 };
 
             FrequencyRange = note.ClosestRealNoteFrequency - prevNote.ClosestRealNoteFrequency;
-
             GoalFrequency = note.ClosestRealNoteFrequency;
             Frequency = note.frequency;
             GoalNoteText = note.Name;
@@ -67,7 +66,7 @@ namespace RegisTunerPlugin.ViewModels
 
         public double X {
             get {
-                return (Frequency - GoalFrequency) * width / (FrequencyRange) + width/2d; 
+                return (Frequency - GoalFrequency) * (width*0.90) / (FrequencyRange) + width/2d; 
             }
         }
         #endregion

@@ -85,6 +85,14 @@ namespace Regis.Controls
             get { return "Settings"; }
         }
 
+        public string PluginIcon
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         #endregion
 
 

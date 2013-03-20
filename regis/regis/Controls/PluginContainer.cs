@@ -52,7 +52,11 @@ namespace Regis.Controls
             if (me == null) return;
 
             IPlugin newPlugin = e.NewValue as IPlugin;
-            if (e.NewValue == null) return;
+            if (e.NewValue == null)
+            {
+                me._contentPresenter.Content = null;
+                return;
+            }
 
             me._contentPresenter.Content = newPlugin.GetVisualContent();
         }

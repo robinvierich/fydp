@@ -54,6 +54,14 @@ namespace TestModule
             }
         }
 
+        public string PluginIcon
+        {
+            get
+            {
+                return "";
+            }
+        }
+
 
         public PluginLayout Layout {
             get { throw new NotImplementedException(); }
