@@ -47,7 +47,14 @@ namespace RegisFreeFormPlugin.ViewModels
             
         }
 
+        private int addedHandlers = 0;
+
         public void Reset() {
+            if (addedHandlers > 0) {
+                _noteSource.NotesDetected -= _noteSource_NotesDetected;
+                addedHandlers--;
+            }
+
             this.NotesPlayed.Clear();
             StartTime = DateTime.Now;
             CurrentTime = DateTime.Now;
@@ -56,11 +63,13 @@ namespace RegisFreeFormPlugin.ViewModels
         internal void Start() {
             Reset();
             _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
+            addedHandlers++;
         }
 
 
         internal void Stop() {
             _noteSource.NotesDetected -= _noteSource_NotesDetected;
+            addedHandlers--;
         }
 
         #region CurrentTime

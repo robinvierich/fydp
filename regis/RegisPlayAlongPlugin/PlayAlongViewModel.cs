@@ -79,7 +79,15 @@ namespace RegisPlayAlongPlugin
             }
         }
 
+        int addedHandlers = 0;
+
         public void Start() {
+
+            if (addedHandlers > 0) {
+                _noteSource.NotesDetected -= _noteSource_NotesDetected;
+                addedHandlers--;
+            }
+
             StartTime = DateTime.Now;
             CurrentTime = DateTime.Now;
 
@@ -96,12 +104,16 @@ namespace RegisPlayAlongPlugin
             _feedbackTimer.Start();
 
             _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
+            addedHandlers++;
         }
 
         public void Stop() {
             _timer.Stop();
             _feedbackTimer.Stop();
+
             _noteSource.NotesDetected -= _noteSource_NotesDetected;
+            addedHandlers--;
+
             _achievement.SetAchievement(new PlayedFirstSongAchievement());
         }
 
