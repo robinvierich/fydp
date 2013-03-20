@@ -11,7 +11,8 @@ namespace Regis.Plugins.Interfaces
     {
         Button,
         Menu,
-        Panel
+        Panel,
+        Window
     }
 
     public interface IPlugin

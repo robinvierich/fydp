@@ -73,7 +73,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Newbie.png" />
+    <Resource Include="Images\Newbie.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Playalong.png">

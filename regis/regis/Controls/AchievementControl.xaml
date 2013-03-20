@@ -6,6 +6,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="64" d:DesignWidth="313" > <!--86-->
     
+    <Border BorderThickness="3" BorderBrush="Black" CornerRadius="5" >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="9*" />
@@ -22,4 +23,5 @@
         <Image Source="{Binding AchvPicSrc}" Grid.Column="1" Grid.Row="1" ></Image>
         <TextBlock Text="{Binding AchvTxt}" Grid.Column="3" Grid.Row="1" FontSize="32" ></TextBlock>
     </Grid>
+    </Border>
 </UserControl>
