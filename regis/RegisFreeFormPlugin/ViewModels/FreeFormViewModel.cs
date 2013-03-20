@@ -20,7 +20,7 @@ namespace RegisFreeFormPlugin.ViewModels
     {
         [Import]
         private INoteDetectionSource _noteSource;
-        //private DispatcherTimer _noteTimer;
+        private DispatcherTimer _noteTimer;
 
         public void OnImportsSatisfied() {
         }
@@ -35,19 +35,30 @@ namespace RegisFreeFormPlugin.ViewModels
         private double[] _frequencies;
         public FreeFormViewModel() {
             _frequencies = NoteDictionary.NoteDict.Keys.ToArray<double>();
-            //_noteTimer = new DispatcherTimer() {
-            //    Interval = TimeSpan.FromMilliseconds(20)
-            //};
+            _noteTimer = new DispatcherTimer() {
+                Interval = TimeSpan.FromMilliseconds(20)
+            };
 
-            //_noteTimer.Tick += new EventHandler(_noteTimer_Tick);
+            _noteTimer.Tick += new EventHandler(_noteTimer_Tick);
 
             NotesPlayed = new ObservableCollection<Note>();
             CurrentTime = DateTime.Now;
-
-            
         }
 
+        void _noteTimer_Tick(object sender, EventArgs e) {
+            CurrentTime = DateTime.Now;
+        }
+
+        private int addedHandlers = 0;
+
         public void Reset() {
+            if (addedHandlers > 0) {
+
+
+                _noteSource.NotesDetected -= _noteSource_NotesDetected;
+                addedHandlers--;
+            }
+
             this.NotesPlayed.Clear();
             StartTime = DateTime.Now;
             CurrentTime = DateTime.Now;
@@ -56,11 +67,16 @@ namespace RegisFreeFormPlugin.ViewModels
         internal void Start() {
             Reset();
             _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
+            addedHandlers++;
+
+            _noteTimer.Start();
         }
 
 
         internal void Stop() {
             _noteSource.NotesDetected -= _noteSource_NotesDetected;
+            addedHandlers--;
+            _noteTimer.Stop();
         }
 
         #region CurrentTime
