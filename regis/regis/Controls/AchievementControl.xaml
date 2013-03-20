@@ -20,7 +20,6 @@
             <ColumnDefinition Width="10*" />
         </Grid.ColumnDefinitions>
         <Image Source="{Binding AchvPicSrc}" Grid.Column="1" Grid.Row="1" ></Image>
-        <TextBlock Text="{Binding AchvTxt}" Grid.Column="3" Grid.Row="1" FontSize="32" ></TextBlock>  
-        
+        <TextBlock Text="{Binding AchvTxt}" Grid.Column="3" Grid.Row="1" FontSize="32" ></TextBlock>
     </Grid>
 </UserControl>
