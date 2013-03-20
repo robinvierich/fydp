@@ -5,11 +5,11 @@
               x:Class="Regis.App"
              StartupUri="Views\MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary>
+        <!--<ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Regis;component/Themes/BureauBlue.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        </ResourceDictionary>-->
 
         <!--<Style TargetType="{x:Type Control}">
             <Setter Property="Margin" Value="{x:Static local:Constants.Margin}" />
