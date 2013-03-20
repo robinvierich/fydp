@@ -16,7 +16,7 @@ using Regis.Plugins.Interfaces;
 
 namespace RegisUserStatsPlugin
 {
-    //[Export(typeof(IPlugin))]
+    [Export(typeof(IPlugin))]
     public partial class UserStatsControl : UserControl, IPlugin, IPartImportsSatisfiedNotification
     {
         public UserStatsControl()
@@ -50,19 +50,19 @@ namespace RegisUserStatsPlugin
 
         public string PluginName
         {
-            get { return "UserStatsPlugin"; }
+            get { return "AchievementsPlugin"; }
         }
 
         public string FriendlyPluginName
         {
-            get { return "User Statistics"; }
+            get { return "Achievements"; }
         }
 
         public string PluginIcon
         {
             get
             {
-                return "";
+                return "/Regis;component/Images/Achievements.png";
             }
         }
 
@@ -70,7 +70,7 @@ namespace RegisUserStatsPlugin
 
 
         public PluginLayout Layout {
-            get { throw new NotImplementedException(); }
+            get { return PluginLayout.Button; }
         }
     }
 }

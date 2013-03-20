@@ -102,6 +102,7 @@ namespace RegisPlayAlongPlugin
             _timer.Stop();
             _feedbackTimer.Stop();
             _noteSource.NotesDetected -= _noteSource_NotesDetected;
+            _achievement.SetAchievement(new PlayedFirstSongAchievement());
         }
 
         void _noteSource_NotesDetected(object sender, NotesDetectedEventArgs e) {
@@ -110,7 +111,8 @@ namespace RegisPlayAlongPlugin
                 Notes.Add(n);
             }
         }
-        private ObservableCollection<Note> GetTwinkleTwinkleNotes(){ 
+
+        private ObservableCollection<Note> GetTwinkleTwinkleNotes(){ 
             ObservableCollection<Note> notes = new ObservableCollection<Note>();
 
             DateTime t = DateTime.Now;

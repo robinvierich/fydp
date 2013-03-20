@@ -6,44 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock FontSize="24" Text="Current User: " VerticalAlignment="Center"/>
-            <TextBlock FontSize="24" Text="{Binding CurrentUser.Name}" VerticalAlignment="Center"/>
-        </StackPanel>
-
-        <TextBlock Text="Stats:" Grid.Row="1" FontSize="16" Margin="0,6,0,0" />
-        
-        <ListView ItemsSource="{Binding CurrentUser.TrainingStats}" Grid.Row="2" >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Margin="0,0,0,10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition MinWidth="150" />
-                            <ColumnDefinition  />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="Date" Grid.Row="0" />
-                        <TextBlock Text="{Binding TimeStamp}" Grid.Row="0" Grid.Column="1" />
-                        
-                        <TextBlock Text="Total Notes Played" Grid.Row="1"/>
-                        <TextBlock Text="{Binding TotalNotesPlayed}" Grid.Row="1" Grid.Column="1" />
-                        
-                        <TextBlock Text="Percent Correct" Grid.Row="2" />
-                        <TextBlock Text="{Binding PercentCorrectNotes}" Grid.Row="2" Grid.Column="1" />
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Image Source="/Images/trophycase.png"></Image>
     </Grid>
 </UserControl>

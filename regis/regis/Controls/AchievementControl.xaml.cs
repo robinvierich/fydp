@@ -20,6 +20,7 @@ namespace Regis.Controls
     /// <summary>
     /// Interaction logic for AchievementControl.xaml
     /// </summary>
+    
     public partial class AchievementControl: IPartImportsSatisfiedNotification
     {
         public AchievementControl()
