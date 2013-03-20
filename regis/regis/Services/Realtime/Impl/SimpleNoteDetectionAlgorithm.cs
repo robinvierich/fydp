@@ -30,7 +30,7 @@ namespace Regis.Services.Realtime.Impl
         private double _noiseFloor = AudioCapture.AudioCaptureSettings.NoiseFloor;//500000000000000;
         private int _subPeaks = AudioCapture.AudioCaptureSettings.SubPeaks;
         private double _highImpulseCutoff = AudioCapture.AudioCaptureSettings.HighImpulseCutoff;
-        private double _lowImpulseCutoff = AudioCapture.AudioCaptureSettings.HighImpulseCutoff;
+        private double _lowImpulseCutoff = AudioCapture.AudioCaptureSettings.LowImpulseCutoff;
         private bool _impulseAlg = false;
         private double[] _powerBinsOld, _powerBinsDelta;
         private double _powerBinsDeltaCutoff = 0;

@@ -23,12 +23,27 @@ namespace Regis.Services.Realtime.Impl
             _noteDetectionThread = new Thread(NoteDetectionThread);
         }
 
-        private void NoteDetectionThread() {
+       
 
+        private void NoteDetectionThread() {
+            FFTPower prevfftPower = null;
+            double[] diffPowerBins = null;
+           
             while (_runThread) {
                 FFTPower fftPower;
                 if (!_fftSource.FFTQueue.TryDequeue(out fftPower))
                     continue;
+
+                if (diffPowerBins == null)
+                    diffPowerBins = new double[fftPower.PowerBins.Length];
+
+                if (prevfftPower == null)
+                    continue;
+
+
+
+
+                prevfftPower = fftPower;
             }
 
         }

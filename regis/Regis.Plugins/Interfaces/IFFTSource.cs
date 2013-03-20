@@ -10,5 +10,6 @@ namespace Regis.Plugins.Interfaces
     public interface IFFTSource
     {
         ConcurrentQueue<FFTPower> FFTQueue { get; }
+        int FFTSize;
     }
 }
