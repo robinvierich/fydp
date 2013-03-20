@@ -27,7 +27,7 @@ namespace Regis.Services.Realtime.Impl
         private Thread _calculationThread;
         private bool _stopCalculating;
         private uint _maxQueueSize;
-        private uint _fftSize;
+        
 
         public void Start(FFTArgs args)
         {
@@ -35,7 +35,9 @@ namespace Regis.Services.Realtime.Impl
                 return;
 
             _maxQueueSize = args.MaxQueueSize;
-            _fftSize = args.FFTSize;
+            //fftSize = args.FFTSize;
+
+
 
             _stopCalculating = false;
 
