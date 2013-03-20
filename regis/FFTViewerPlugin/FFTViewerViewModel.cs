@@ -28,7 +28,12 @@ namespace FFTViewerPlugin
 
         public void _noteSource_NotesDetected(object sender, NotesDetectedEventArgs e) {
             if (e.Notes.Length > 0)
-                Frequency = e.Notes.Last().frequency;
+                for (int i = 0; i < e.Notes.Length; i++)
+                    if (e.Notes[i].frequency > 0)
+                    {
+                        Frequency = e.Notes[i].frequency;
+                        break;
+                    }
         }
 
         private DispatcherTimer _fftUpdateTimer = new DispatcherTimer();
