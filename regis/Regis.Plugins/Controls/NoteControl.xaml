@@ -13,7 +13,8 @@
             Background="Transparent"  >
 
         <Ellipse x:Name="noteEllipse"
-                Fill="Black" Stroke="Black" 
+                Fill="{Binding NoteBrush, FallbackValue=Black}" 
+                Stroke="{Binding NoteBrush, FallbackValue=Black}" 
 				Width="{x:Static ctrls:NoteControl.NoteWidth}" 
 				Height="{x:Static ctrls:NoteControl.NoteHeight}" 
 				Canvas.Top="0"
@@ -29,9 +30,10 @@
         </Ellipse>
 
         <Line x:Name="noteStem"
-            X1="27.25" Y1="-52"
+              Fill="{Binding NoteBrush, FallbackValue=Black}" 
+              Stroke="{Binding NoteBrush, FallbackValue=Black}" 
+              X1="27.25" Y1="-52"
 			  X2="27.25" Y2="5" 
-			  Stroke="Black"
 			  StrokeThickness="4" />
 
         <!--<Line Stroke="Red" 

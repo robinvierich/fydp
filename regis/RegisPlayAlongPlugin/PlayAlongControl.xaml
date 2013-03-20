@@ -22,8 +22,7 @@
                     Margin="5" Padding="5" />
         </StackPanel>
         <ctrls:StaffControl Grid.Row="1" 
-                            Notes="{Binding PlayedNotes}" 
-                            GoalNotes="{Binding GoalNotes}" 
+                            Notes="{Binding Notes}" 
                             StartTime="{Binding StartTime}"
                             CurrentTime="{Binding CurrentTime}"
                             />

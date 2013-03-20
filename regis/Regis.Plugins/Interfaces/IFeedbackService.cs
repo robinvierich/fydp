@@ -8,6 +8,6 @@ namespace Regis.Plugins.Interfaces
 {
     public interface IFeedbackService
     {
-        List<Feedback> GetFeedback(IList<Note> playedNotes, IList<Note> goalNotes);
+        Dictionary<Note, List<Feedback>> GetFeedback(IList<Note> playedNotes, IList<Note> goalNotes);
     }
 }
