@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="83" d:DesignWidth="313" >
+      d:DesignHeight="{Binding AchievDrawH}" d:DesignWidth="313" > <!--86-->
     
     <Grid>
         <Grid.RowDefinitions>
@@ -20,7 +20,7 @@
             <ColumnDefinition Width="10*" />
         </Grid.ColumnDefinitions>
         <Image Source="{Binding AchvPicSrc}" Grid.Column="1" Grid.Row="1" ></Image>
-        <TextBlock Text="{Binding AchvTxt}" Grid.Column="3" Grid.Row="1" ></TextBlock>  
+        <TextBlock Text="{Binding AchvTxt}" Grid.Column="3" Grid.Row="1" Background="#FFF23838"></TextBlock>  
         
     </Grid>
 </UserControl>

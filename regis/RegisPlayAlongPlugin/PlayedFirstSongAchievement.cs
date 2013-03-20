@@ -25,7 +25,7 @@ namespace RegisPlayAlongPlugin
 
         public override string Image
         {
-            get { return "REGISlogo.png"; }
+            get { return "D:\\GitHub\\fydp\\regis\\regis\\Images\\REGISlogo.png"; }
         }
     }
 }
