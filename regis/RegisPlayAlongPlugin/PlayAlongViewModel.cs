@@ -36,6 +36,7 @@ namespace RegisPlayAlongPlugin
             GoalNotes = new ObservableCollection<Note>();
             Notes = new ObservableCollection<Note>();
 
+            
 
             _timer = new DispatcherTimer() {
                 Interval = TimeSpan.FromMilliseconds(20)
