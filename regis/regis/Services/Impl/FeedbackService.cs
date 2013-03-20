@@ -12,7 +12,7 @@ namespace Regis.Services.Impl
     public class FeedbackService : IFeedbackService
     {
 
-        double maxTimeDiffForMatch = 0.1; // s
+        double maxTimeDiffForMatch = 0.2; // s
 
         private Dictionary<Note, List<Note>> GetMatches(IList<Note> playedNotes, IList<Note> goalNotes){
             Dictionary<Note, List<Note>> matches = new Dictionary<Note, List<Note>>();
@@ -43,15 +43,18 @@ namespace Regis.Services.Impl
             return closestNote;
         }
 
+        private double _goodTiming = 0.05;
+        private double _mediumTiming = 0.1;
+
         private Feedback GetTimingFeedback(Note goalNote, Note closestNote) {
             double diff = (closestNote.startTime - goalNote.startTime).TotalSeconds;
             double absDiff = Math.Abs(diff);
 
             string slowOrFastStr = diff > 0 ? "slow" : "fast"; // user is slow if difference is positive (played after goal note)
 
-            if (absDiff < 0.03) {
+            if (absDiff < _goodTiming) {
                 return new GoodTimingFeedback(diff) { Note = closestNote };
-            } else if (absDiff < 0.05) {
+            } else if (absDiff < _mediumTiming) {
                 return new MediumTimingFeedback(diff) { Note = closestNote };
             } else {
                 return new BadTimingFeedback(diff) { Note = closestNote };
@@ -70,9 +73,7 @@ namespace Regis.Services.Impl
         Dictionary<Note, List<Feedback>> IFeedbackService.GetFeedback(IList<Note> allPlayedNotes, IList<Note> goalNotes) {
             string feedbackString = string.Empty;
 
-
             Dictionary<Note, List<Note>> matches = GetMatches(allPlayedNotes, goalNotes);
-
             Dictionary<Note, List<Feedback>> allFeedback = new Dictionary<Note, List<Feedback>>();
 
             // loop through each match
