@@ -133,6 +133,7 @@
     <Compile Include="Services\IWaveFileService.cs" />
     <Compile Include="Services\Realtime\Impl\AsioDeviceService.cs" />
     <Compile Include="Services\Realtime\Impl\AsioSamplingService.cs" />
+    <Compile Include="Services\Realtime\Impl\NoteDetection.cs" />
     <Compile Include="Services\Realtime\Impl\OffTuneNoteService.cs" />
     <Compile Include="Services\Realtime\Impl\RandomNoteService.cs" />
     <Compile Include="Services\Realtime\Serial\ByteArraySerialService.cs" />

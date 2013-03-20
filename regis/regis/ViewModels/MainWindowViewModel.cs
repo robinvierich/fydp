@@ -130,8 +130,12 @@ namespace Regis.ViewModels
             if(e.Plugin.PluginName == "AchievementsPlugin") {
                 Window w = new Window();
                 w.Content = e.Plugin.GetVisualContent();
+                w.SizeToContent = SizeToContent.WidthAndHeight;
+                w.Left = 0;
+                w.Top = 0;
                 w.ShowDialog();
-                w.SizeToContent = SizeToContent.Width;
+
+                w.Content = null;
                 return;
             }
 
