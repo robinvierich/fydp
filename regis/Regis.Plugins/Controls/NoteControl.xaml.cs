@@ -45,10 +45,14 @@ namespace Regis.Plugins.Controls
             if (me == null) return;
 
             Note note = e.NewValue as Note;
+            if (note == null) return;
+            if (note.Semitone < 1) return;
+
+
             me.DataContext = note;
             me.UpdatePositionAndLedgerLines();
 
-            if (note == null) return;
+            
 
             if (note.IsFlat)
                 me.FlatVisibility = Visibility.Visible;
@@ -102,6 +106,8 @@ namespace Regis.Plugins.Controls
         }
 
         private void UpdateTopPosition() {
+            
+
             int diff = Note.Semitone - Note.C5Semitone;
 
             int shift = 0;
