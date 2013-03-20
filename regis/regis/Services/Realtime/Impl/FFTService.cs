@@ -57,11 +57,12 @@ namespace Regis.Services.Realtime.Impl
             Complex[] fftArray;
             while (!_stopCalculating)
             {
+                Thread.Sleep(10);
                 SampleCollection sampleCollection;
-                _sampleSource.SampleCollectionQueue.TryDequeue(out sampleCollection);
-
-                if (sampleCollection == null)
+                if (!_sampleSource.SampleCollectionQueue.TryDequeue(out sampleCollection))
+                {
                     continue;
+                }
 
                 fftArray = Array.ConvertAll(sampleCollection.Samples, new Converter<long, Complex>(x => (Complex)x));
 
