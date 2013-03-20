@@ -58,6 +58,14 @@ namespace RegisUserStatsPlugin
             get { return "User Statistics"; }
         }
 
+        public string PluginIcon
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         #endregion
 
 

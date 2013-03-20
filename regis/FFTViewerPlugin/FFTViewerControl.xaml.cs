@@ -81,6 +81,15 @@ namespace FFTViewerPlugin
         {
             get { return "FFT"; }
         }
+
+        public string PluginIcon
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         #endregion
 
 

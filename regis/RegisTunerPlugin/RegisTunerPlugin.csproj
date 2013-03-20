@@ -110,6 +110,11 @@
   <ItemGroup>
     <Resource Include="Images\arrow.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Tuner.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy $(TargetDir) $(SolutionDir)regisPlugins\ $(TargetName).dll $(TargetName).pdb

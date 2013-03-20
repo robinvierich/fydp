@@ -80,6 +80,14 @@ namespace RegisTrainingModule
             get { return "TrainingModule"; }
         }
 
+        public string PluginIcon
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         #endregion
 
         private void startButton_Click(object sender, RoutedEventArgs e)

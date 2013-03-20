@@ -53,9 +53,17 @@ namespace RegisTunerPlugin
             }
         }
 
+        public string PluginIcon
+        {
+            get
+            {
+                return "/Regis;component/Images/Tuner.png";
+            }
+        }
+
 
         public PluginLayout Layout {
-            get { return PluginLayout.Panel; }
+            get { return PluginLayout.Button; }
         }
     }
 }

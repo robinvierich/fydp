@@ -99,6 +99,11 @@
       <Name>Regis.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Freeform.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>robocopy $(TargetDir) $(SolutionDir)regisPlugins\ $(TargetName).dll $(TargetName).pdb

@@ -20,6 +20,7 @@ namespace Regis.Plugins.Interfaces
         FrameworkElement GetVisualContent();
         string PluginName { get; }
         string FriendlyPluginName { get; }
+        string PluginIcon { get; }
         PluginLayout Layout { get; }
     }
 }
