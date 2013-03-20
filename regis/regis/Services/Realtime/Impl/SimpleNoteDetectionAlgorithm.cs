@@ -12,8 +12,8 @@ using Regis.Plugins.Statics;
 
 namespace Regis.Services.Realtime.Impl
 {
-    [Export(typeof(INoteDetectionSource))]
-    [Export(typeof(INoteDetectionService))]
+    //[Export(typeof(INoteDetectionSource))]
+    //[Export(typeof(INoteDetectionService))]
     public class SimpleNoteDetectionAlgorithm : INoteDetectionSource, INoteDetectionService
     {
         private ConcurrentQueue<Note[]> NoteQueue { get; set; }

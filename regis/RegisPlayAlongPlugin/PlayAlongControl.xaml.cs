@@ -56,5 +56,10 @@ namespace RegisPlayAlongPlugin
         public PluginLayout Layout {
             get { return PluginLayout.Button; }
         }
+
+        private void StaffControl_StaffEndReached(object sender, Regis.Plugins.Controls.EndOfStaffEventArgs e) {
+            e.Cancel = true;
+            ViewModel.Start();
+        }
     }
 }

@@ -18,6 +18,7 @@ using System.Threading;
 using Regis.Plugins.Models;
 using Regis.Plugins.Statics;
 using System.Windows.Threading;
+using Regis.Plugins.Controls;
 
 
 namespace RegisFreeFormPlugin
@@ -86,6 +87,12 @@ namespace RegisFreeFormPlugin
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
             staff.StartTime = DateTime.Now;
+        }
+
+        private void staff_StaffEndReached(object sender, EndOfStaffEventArgs e) {
+            e.Cancel = true;
+            ViewModel.Reset();
+            
         }
 
         //private void StartFreeform()

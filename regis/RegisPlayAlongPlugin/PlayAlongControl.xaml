@@ -25,6 +25,7 @@
                             Notes="{Binding Notes}" 
                             StartTime="{Binding StartTime}"
                             CurrentTime="{Binding CurrentTime}"
+                            StaffEndReached="StaffControl_StaffEndReached"
                             />
     </Grid>
 </UserControl>
