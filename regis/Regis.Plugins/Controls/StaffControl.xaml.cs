@@ -22,6 +22,12 @@ namespace Regis.Plugins.Controls
     /// <summary>
     /// Interaction logic for StaffControl.xaml
     /// </summary>
+
+    public class EndOfStaffEventArgs : EventArgs
+    {
+        public bool Cancel { get; set; }
+    }
+
     public partial class StaffControl : UserControl
     {
         public const double C5Top = 90;
@@ -30,10 +36,10 @@ namespace Regis.Plugins.Controls
         public const double AboveLedgerLineTop = 40;
         public const double BelowLedgerLineTop = 160;
 
-        public const double FullControlTime = 5000d; // ms - time from start of staff to end of staff.. 
+        public const double FullControlTime = 8000d; // ms - time from start of staff to end of staff.. 
         // Notes are actually ordered relatively (not based on absolute time), but this will work for now..
 
-        public const double FullControlWidth = 800; // px
+        public const double FullControlWidth = 1600; // px
 
 
         private static Color goalNoteColor = Color.FromArgb(100, 0, 0, 0);
@@ -115,13 +121,15 @@ namespace Regis.Plugins.Controls
         //}
         //#endregion
 
-        public event EventHandler StaffEndReached;
+        
 
-        private void Raise_StaffEndReached() {
-            EventHandler h = StaffEndReached;
+        public event EventHandler<EndOfStaffEventArgs> StaffEndReached;
+
+        private void Raise_StaffEndReached(EndOfStaffEventArgs args) {
+            EventHandler<EndOfStaffEventArgs> h = StaffEndReached;
             if (h == null) return;
 
-            h(this, new EventArgs());
+            h(this, args);
         }
 
         #region CurrentTime (Dependency Property)
@@ -144,7 +152,11 @@ namespace Regis.Plugins.Controls
             StaffControl me = d as StaffControl;
 
             if ((me.CurrentTime - me.StartTime).TotalMilliseconds > FullControlTime * me._resizedCount) {
-                me.Raise_StaffEndReached();
+                EndOfStaffEventArgs args = new EndOfStaffEventArgs();
+                me.Raise_StaffEndReached(args);
+
+                if (args.Cancel) return;
+
                 me._resizedCount++;
                 me.rootCanvas.Width += FullControlWidth;
                 me.Dispatcher.Invoke(new Action(() => {

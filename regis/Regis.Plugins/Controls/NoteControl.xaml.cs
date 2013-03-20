@@ -52,7 +52,6 @@ namespace Regis.Plugins.Controls
             me.DataContext = note;
             me.UpdatePositionAndLedgerLines();
 
-            
 
             if (note.IsFlat)
                 me.FlatVisibility = Visibility.Visible;

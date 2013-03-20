@@ -9,7 +9,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -45,6 +44,8 @@
                                   CurrentTime="{Binding CurrentTime}"
                                   Grid.Row="1"
                                   Grid.ColumnSpan="2"
+
+                                  StaffEndReached="staff_StaffEndReached"
                                   />
 
         

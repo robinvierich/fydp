@@ -43,11 +43,18 @@ namespace RegisFreeFormPlugin.ViewModels
 
             NotesPlayed = new ObservableCollection<Note>();
             CurrentTime = DateTime.Now;
+
+            
+        }
+
+        public void Reset() {
+            this.NotesPlayed.Clear();
+            StartTime = DateTime.Now;
+            CurrentTime = DateTime.Now;
         }
 
         internal void Start() {
-            StartTime = DateTime.Now;
-            CurrentTime = DateTime.Now;
+            Reset();
             _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
         }
 
