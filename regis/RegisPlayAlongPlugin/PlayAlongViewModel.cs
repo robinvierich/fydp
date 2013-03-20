@@ -116,31 +116,31 @@ namespace RegisPlayAlongPlugin
             DateTime t = DateTime.Now;
 
             // semitone 48 == C4
-            // semitone 48 == C4
+            notes.Add(new Note() { Semitone = 48, startTime = t, NoteBrush = new SolidColorBrush(goalNoteColor) });
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 48 == C4
-            // semitone 48 == C4
+            notes.Add(new Note() { Semitone = 48, startTime = t, NoteBrush = new SolidColorBrush(goalNoteColor) });
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 55 == G4
-            // semitone 55 == G4
+            notes.Add(new Note() { Semitone = 55, startTime = t, NoteBrush = new SolidColorBrush(goalNoteColor) });
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 55 == G4
-            // semitone 55 == G4
+            notes.Add(new Note() { Semitone = 55, startTime = t, NoteBrush = new SolidColorBrush(goalNoteColor) });
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 57 == A5
-            // semitone 57 == A5
+            notes.Add(new Note() { Semitone = 57, startTime = t, NoteBrush = new SolidColorBrush(goalNoteColor) });
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 57 == A5
-            // semitone 57 == A5
+            notes.Add(new Note() { Semitone = 57, startTime = t, NoteBrush = new SolidColorBrush(goalNoteColor) });
             t += TimeSpan.FromSeconds(0.5);
 
             // semitone 48 == C4
-            // semitone 48 == C4
+            notes.Add(new Note() { Semitone = 48, startTime = t, NoteBrush = new SolidColorBrush(goalNoteColor) });
             t += TimeSpan.FromSeconds(0.5);
 
             return notes;
@@ -159,30 +159,6 @@ namespace RegisPlayAlongPlugin
             get { return _StopPlayAlongCommand; }
         }
         #endregion
-
-
-
-            PlayedNotes.Clear();
-            GoalNotes = GetTwinkleTwinkleNotes();
-
-            _timer.Start();
-            _feedbackTimer.Start();
-
-            _noteSource.NotesDetected += new EventHandler<NotesDetectedEventArgs>(_noteSource_NotesDetected);
-        }
-        //PlayedFirstSongAchievement achievement; 
-        public void Stop() {
-            _timer.Stop();
-            _feedbackTimer.Stop();
-            _noteSource.NotesDetected -= _noteSource_NotesDetected;
-            _achievement.SetAchievement(new PlayedFirstSongAchievement());
-        }
-
-        void _noteSource_NotesDetected(object sender, NotesDetectedEventArgs e) {
-            foreach (Note n in e.Notes) {
-                PlayedNotes.Add(n);
-            }
-        }
 
         #region GoalNotes
         private ObservableCollection<Note> _GoalNotes;
@@ -210,7 +186,6 @@ namespace RegisPlayAlongPlugin
         }
         #endregion
 
-
         #region Notes
         private ObservableCollection<Note> _Notes;
         private static PropertyChangedEventArgs _Notes_ChangedEventArgs = new PropertyChangedEventArgs("Notes");
@@ -223,6 +198,7 @@ namespace RegisPlayAlongPlugin
             }
         }
         #endregion
+
         #region CurrentTime
         private DateTime _CurrentTime;
         private static PropertyChangedEventArgs _CurrentTime_ChangedEventArgs = new PropertyChangedEventArgs("CurrentTime");
