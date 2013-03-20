@@ -93,7 +93,7 @@ namespace Regis.Services.Realtime.Impl
             //if (_impulseAlg)
                 //_noteDetectionThread = new Thread(new ThreadStart(ImpulseDetectNotes));
             //else
-            _noteDetectionThread = new Thread(new ThreadStart(MultiImpulseDetectNotes));
+            _noteDetectionThread = new Thread(new ThreadStart(ImpulseDetectNotes));
 
             _noteDetectionThread.Start();
         }
@@ -516,7 +516,7 @@ namespace Regis.Services.Realtime.Impl
             }
         }
         #endregion
-
+        double impulse;
         #region Impulse Detection
         private void ImpulseDetectNotes()
         {
@@ -526,82 +526,82 @@ namespace Regis.Services.Realtime.Impl
                 if (!_fftSource.FFTQueue.TryPeek(out fftCalc))
                     continue;
 
-                double[] powerBins = new double[AudioCapture.AudioCaptureSettings.BufferSize * AudioCapture.AudioCaptureSettings.BufferModifier];
-                _powerBinsDelta = new double[powerBins.Length];
-                //fftCalc.PowerBins.CopyTo(powerBins, 0);
+                if (powerBins == null)
+                    powerBins = new double[AudioCapture.AudioCaptureSettings.BufferSize * AudioCapture.AudioCaptureSettings.BufferModifier];
+
+                if (_powerBinsDelta == null)
+                    _powerBinsDelta = new double[powerBins.Length];
 
                 if (_powerBinsOld == null)
+                    _powerBinsOld = new double[powerBins.Length];
+
+                if (xorPowerBins == null)
+                    xorPowerBins = new double[_xorPowerBins.Length];
+
+                Array.Clear(xorPowerBins, 0, xorPowerBins.Length);
+
+                freq = 0;
+                max = 0;
+                index = 0;
+                _relativePower = 0;
+                impulse = 0;
+
+                for (int i = (int)(stringFreq[0, 0] / _step); i < (stringFreq[5, 1] / _step); i++)
                 {
-                    _powerBinsOld = new double[AudioCapture.AudioCaptureSettings.BufferSize * AudioCapture.AudioCaptureSettings.BufferModifier];
-                    powerBins.CopyTo(_powerBinsOld, 0);
-                    continue;
-                }
+                    powerBins[i] = (fftCalc.PowerBins[i] * (1 - xorPowerBins[i]));
+                    powerBins[i + 1] = (fftCalc.PowerBins[i + 1] * (1 - xorPowerBins[i + 1]));
+                    _powerBinsDelta[i] = (fftCalc.PowerBins[i] - _powerBinsOld[i]) * (1 - xorPowerBins[i]);
 
-                double freq = 0;
-
-                //Start Note Detection
-                double currentTotalPower = powerBins.Sum();
-                //if (currentTotalPower < _previousTotalPower) // if our power is less than thy previous power by at least MAX_POWER_DECAY, ignore the rest
-                //{
-                //    freq = 0;
-                //}/
-                //else
-                //{
-
-                double max = 0;
-                int index = 0;
-
-                for (int i = 0; i < (fftCalc.PowerBins.Length / 2); i++)
-                {
-                    if (i < (80 / _step))
+                    if (powerBins[i] < _noiseFloor)
                     {
                         powerBins[i] = 0;
+                        powerBins[i + 1] = 0;
+                        _powerBinsDelta[i] = 0;
                     }
-                    else
+
+                    _relativePower = powerBins[Math.Max(i - 1, 0)] + powerBins[Math.Max(i + 1, 0)] + powerBins[Math.Max(i, 0)];
+
+
+                    if ((max < _relativePower))
                     {
-                        powerBins[i] = powerBins[i] * _xorPowerBins[i];
-                        _powerBinsDelta[i] = (powerBins[i] - _powerBinsOld[i]);
-
-                        if (powerBins[i] < _noiseFloor)
+                        max = _relativePower;
+                        index = i;
+                        if (_powerBinsDelta[i] > 0)
+                            impulse = _powerBinsDelta[i];
+                    }
+                    else if (max > _relativePower)
+                    {
+                        if (index > 1)
                         {
-                            powerBins[i] = 0;
-                            _powerBinsDelta[i] = 0;
+                            for (int j = index; (j < (((_sampleRate / 2) / _step) - 2)) && (j < index * 6); j = j + index)
+                            {
+                                xorPowerBins[j - 2] = 1;
+                                xorPowerBins[j - 1] = 1;
+                                xorPowerBins[j] = 1;
+                                xorPowerBins[j + 1] = 1;
+                                xorPowerBins[j + 2] = 1;
+                            }
                         }
-                        if (_powerBinsDelta[i] < _powerBinsDeltaCutoff)
-                            _powerBinsDelta[i] = 0;
-
-                        double _relativePower = _powerBinsDelta[Math.Max(i - 1, 0)] + _powerBinsDelta[Math.Max(i + 1, 0)] + _powerBinsDelta[Math.Max(i, 0)];
-                        if ((max < _relativePower) && (_powerBinsDelta[i] > 0))
-                        {
-                            max = _relativePower;
-                            index = i;
-                        }
-                        powerBins[powerBins.Length - 1 - i] = 0;
-                        _powerBinsDelta[powerBins.Length - 1 - i] = 0;
+                        break;
                     }
                 }
 
+                Buffer.BlockCopy(fftCalc.PowerBins, 0, _powerBinsOld, 0, _powerBinsOld.Length * sizeof(double));
 
-                index = index;
-                max = max;
-
-                //freq = DetectFrequency2(powerBins, index);
-                freq = DetectFrequency_Mirrored(fftCalc.PowerBins, index - 1, index + 1);
-                //System.Diagnostics.Debug.Write(freq + "\n");
-
-                Note[] notes = new Note[1] { new Note() };
-                notes[0].startTime = DateTime.Now;
-                notes[0].frequency = freq;
-
-                //Console.WriteLine(notes[0].closestRealNoteFrequency);
-                NoteQueue.Enqueue(notes);
-                if (NoteQueue.Count > _maxNoteQueueSize)
+                //_impulseCutoff = _lowImpulseCutoff;
+                _impulseCutoff = _highImpulseCutoff;
+                if (impulse> _lowImpulseCutoff)
                 {
-                    Note[] dqnotes;
-                    NoteQueue.TryDequeue(out dqnotes);
+                    Note[] notes = new Note[6];
+                    for (int i = 0; i < 6; i++)
+                    {
+                        freq = DetectFrequency_Mirrored(fftCalc.PowerBins, index - _subPeaks, index + _subPeaks);
+                        notes[i] = new Note();
+                        notes[i].startTime = DateTime.Now;
+                        notes[i].frequency = freq;
+                    }
+                    Raise_NotesDetected(notes);
                 }
-
-                powerBins.CopyTo(_powerBinsOld, 0);
             }
         }
         #endregion
