@@ -11,7 +11,7 @@ using System.Windows.Threading;
 namespace Regis.ViewModels
 {
     [Export]
-    class AchievementViewModel:BaseViewModel, IPartImportsSatisfiedNotification
+    public class AchievementViewModel:BaseViewModel, IPartImportsSatisfiedNotification
     {
         [Import]
         IAchievementService _achievementService;
